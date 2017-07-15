@@ -6,12 +6,15 @@
 
 let
   nodeEnv = import "/etc/nixos/extra-envs/node/default.nix" {};
+  local = import "/etc/nixos/extra-envs/local/localpkgs.nix";
 in {
   imports =
     [ 
 	    ./hardware-configuration.nix
 	    ./vim.nix
       ./tex.nix
+      ./firefox.nix
+      ./fish.nix
     ];
 
   # Startup Settings
@@ -30,27 +33,40 @@ in {
     };
   };
 
+  system.activationScripts = { 
+    # dots = {
+    #   text = pkgs.lib.fileContents /etc/nixos/nix-dots/ln-config.sh ;
+    #   deps = [ pkgs.nix ];
+    # };
+  };
+
   # Nix settings
   nix = {
     gc.automatic = true;
     useSandbox = true;
   };
 
+  # nixpkgs.overlays = [ local ];
   nixpkgs.config = {
     allowUnfree = true;
 
-    packageOverrides = pkgs: {
-      polybar = pkgs.polybar.override {
-	      i3Support = true;
-        mpdSupport = true;
-      };
-    };
+    polybar.i3Support = true;
+    polybar.mpdSupport = true;
+
+    # packageOverrides = pkgs: {
+    #   polybar = pkgs.polybar.override {
+	      # i3Support = true;
+    #     mpdSupport = true;
+    #   };
+    # };
   };
 
   networking = { 
     hostName = "Hadron"; # Define your hostname.
     networkmanager.enable = true;
     wireless.enable = false;
+
+    # extraHosts = "146.185.144.154 lipa.ms.cuni.cz";
   };
 
   programs.vim.defaultEditor = true;
@@ -81,6 +97,7 @@ in {
       taskwarrior 
       tree 
       nix-repl
+      xclip
 
       # Window Manager & Accessories 
       rofi 
@@ -122,6 +139,7 @@ in {
       xlibs.fontutil
       xdg_utils
       xorg.xkill
+      xorg.xhost
       sqlite
 
       # Nodejs
@@ -222,6 +240,9 @@ in {
     dnsmasq = {
       enable = true;
       servers = [ "127.0.0.1#43" ];
+      extraConfig =  ''
+        address=/lipa.ms.mff.cuni.cz/146.185.144.154
+      '';
     };
 
     # Enable the X11 windowing system.

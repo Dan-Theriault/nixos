@@ -1,44 +1,52 @@
 { pkgs, config, lib, ... }:
 
-let
-  texOverride = ( pkg: if ( builtins.hasAttr "urls" pkg ) 
-    then lib.overrideDerivation pkg ( oldAttrs: {
-      urls = [ ( builtins.replaceStrings
-        [ "http://lipa.ms.mff.cuni.cz/~cunav5am/nix/texlive-2016/" ]
-        [ "http://146.185.144.154/texlive-2016/" ]
-        ( builtins.elemAt oldAttrs.urls 0 )
-      ) ];
-    } )
-    else pkg
-  );
-in {
+{
+  # services.nginx = { # Hopefully temporary override of the tex mirror
+  #   enable = true;
+  #   virtualHosts."lipa.ms.mff.cuni.cz".locations = let
+  #     path = "/~cunav5am/nix/";
+  #   in {
+  #     ${path}.extraConfig = ''
+  #       rewrite ^${path}(.*)$ http://146.185.144.154/$1 redirect;
+  #     '';
+  #   };
+  # };
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    texlive = lib.mapAttrs ( name: value: 
-      if builtins.typeOf value == "set" 
-        then lib.mapAttrs ( n: v: (
-          if builtins.typeOf v == "list"
-            then map texOverride v else v) 
-        ) value
-        else value
-    ) pkgs.texlive;
-  };
   environment.systemPackages = ( with pkgs; [
-    # ( texlive.combine {
-    #   inherit (texlive) scheme-medium
-    #   xetex latexmk
-    #   beamer
-    #   bibtex biblatex biber biblatex-ieee
+    ( texlive.combine {
+      inherit (texlive) 
+      scheme-medium
 
-    #   moresize
-    #   csquotes
-    #   wrapfig
-    #   fontspec
-    #   microtype
-    #   xcolor
+      # XeTeX Compiler
+      xetex xetex-def
+      fontspec euenc
 
-    #   gfsdidot crimson
-    #   ;
-    # } )
+      # Compilation
+      latexmk pdftex
+      
+      # Presentations
+      beamer
+
+      # Bibliography
+      bibtex biblatex biber biblatex-ieee
+
+      # Misc. Formatting
+      moresize
+      csquotes
+      wrapfig
+      microtype
+      xcolor
+
+      # Fonts - Internal tex fonts aren't working for some reason.
+      # Debug later, use system fonts for now.
+      # gfsdidot 
+      # crimson
+
+      # ???
+      logreq xstring
+      ;
+    } )
+    biber
+    fontconfig
   ] );
 }
