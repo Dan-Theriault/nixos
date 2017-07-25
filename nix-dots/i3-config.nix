@@ -55,46 +55,46 @@ pkgs.writeText "i3Config" ''
     #bindsym $mod+d focus child
 
     # ======== WORKSPACE SETTINGS =======
-    set $ws1 "1:"
+    set $ws1 "1:desk"
     assign [class="google-chrome-beta"] $ws1
     assign [class="Firefox"] $ws1
 
-    set $ws2 "2:"
+    set $ws2 "2:term"
     # assign [class="Gnome-terminal"] $ws2
 
-    set $ws3 "3:"
+    set $ws3 "3:code"
     assign [class="jetbrains-studio"] $ws3
     assign [class="Atom"] $ws3
     assign [class="Gnome-builder"] $ws3
 
-    set $ws4 "4:"
+    set $ws4 "4:note"
     assign [class="Xournal"] $ws4
 
-    set $ws5 "5:"
+    set $ws5 "5:docs"
 
-    set $ws6 "6:"
+    set $ws6 "6:talk"
     assign [class="geary"] $ws6
     assign [class="Gnome-calendar"] $ws6
     assign [class="Gnome-contacts"] $ws6
     assign [class="Gnome-todo"] $ws6
     assign [class="evolution"] $ws6
 
-    set $ws7 "7:"
+    set $ws7 "7:pass"
     assign [class="Enpass-Desktop"] $ws7
     assign [class="Seahorse"] $ws7
 
-    set $ws8 "8:"
+    set $ws8 "8:read"
     assign [class="Liferea"] $ws8
     assign [class="Feedreader"] $ws8
 
-    set $ws9 "9:"
+    set $ws9 "9:game"
     # assign [class="Steam"] $ws9
     assign [class="stellaris"] $ws9
     assign [class="Civ5XP"] $ws9
     assign [class="eu4"] $ws9
     assign [class="Minetest"] $ws9
 
-    set $ws0 "10:"
+    set $ws0 "10:show"
     assign [class="mpv"] $ws0
     assign [class="nuvolaplayer3"] $ws0
     assign [class="netflix-nativefier-48dc18"] $ws0
