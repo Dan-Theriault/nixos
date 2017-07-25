@@ -33,6 +33,11 @@ in {
     };
   };
 
+  # hardware = {
+  #   opengl.driSupport32Bit = true;
+  #   pulseaudio.support32Bit = true;
+  # };
+
   system.activationScripts = { 
     # dots = {
     #   text = pkgs.lib.fileContents /etc/nixos/nix-dots/ln-config.sh ;
@@ -50,15 +55,21 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
 
-    polybar.i3Support = true;
-    polybar.mpdSupport = true;
+    packageOverrides = pkgs: {
+      polybar = pkgs.polybar.override {
+	      i3Support = true;
+        mpdSupport = true;
+      };
 
-    # packageOverrides = pkgs: {
-    #   polybar = pkgs.polybar.override {
-	      # i3Support = true;
-    #     mpdSupport = true;
-    #   };
-    # };
+      keepassx-community = pkgs.keepassx-community.overrideAttrs (oldAttrs: {
+        src = pkgs.fetchFromGitHub {
+          owner = "varjolintu";
+          repo = "keepassxc";
+          rev = "2.2.0-browser-beta5";
+          sha256 = "0s4m5cd1swskkhi5c5jf2fhwxr9026vgn2fxm22nfrv8j6kg5j7a";
+        };
+      } );
+    };
   };
 
   networking = { 
@@ -111,6 +122,10 @@ in {
       arc-theme 
       libsForQt5.qtstyleplugins 
       qt5.qtbase
+      gnome3.gnome-font-viewer
+
+      # Gaming
+      steam
 
       # Misc. GUI Programs
       dolphin 
@@ -124,7 +139,8 @@ in {
       enpass
 
       # Web
-      firefox
+      firefox-beta-bin
+      chromium
 
       # Text editor
       # Imported from vim.nix
@@ -138,9 +154,10 @@ in {
       xlibs.xinput
       xlibs.fontutil
       xdg_utils
-      xorg.xkill
+      xorg.xkill 
       xorg.xhost
       sqlite
+      psmisc
 
       # Nodejs
       nodejs
@@ -156,6 +173,8 @@ in {
       
       # Perl
       perl
+      
+      keepassx-community
 
     ] ) ++ ( with pkgs.python35Packages; [
       ipython
@@ -196,6 +215,8 @@ in {
       serif =     [ "Source Serif Pro" ];
     };
     fonts = with pkgs; [
+      google-fonts
+
       dejavu_fonts
       fira
       fira-code
@@ -245,8 +266,15 @@ in {
       '';
     };
 
+    syncthing = {
+      enable = true;
+      useInotify = true;
+      openDefaultPorts = true;
+    };
+
     # Enable the X11 windowing system.
     xserver = { 
+      resolutions = [ { x=1080; y=1920; } ];
       enable = true;
       layout = "us";
       xkbOptions = "compose:ralt";
