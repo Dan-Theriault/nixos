@@ -13,6 +13,7 @@
   # };
 
   environment.systemPackages = ( with pkgs; [
+    pdfpc
     ( texlive.combine {
       inherit (texlive) 
       scheme-medium
