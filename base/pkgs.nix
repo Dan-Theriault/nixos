@@ -5,14 +5,13 @@
 {
   environment.systemPackages = ( with pkgs; [
     wget curl
-    htop
+    htop ncdu
     git
     ag
-    taskwarrior timewarrior
+    taskwarrior timewarrior # bugwarrior
     tree
     nix-repl
     netsniff-ng
-    light
-    playerctl ncmpcpp cava pamixer
+    wireshark-cli
   ] );
 }
