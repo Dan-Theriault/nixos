@@ -106,7 +106,7 @@ in {
 
         "colorscheme
         let base16colorspace=256
-        source /etc/nixos/colors.vim
+        source /etc/nixos/base/colors.vim
         hi LineNr  ctermbg=None
 
         "swapfiles make me sad

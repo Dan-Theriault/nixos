@@ -5,16 +5,15 @@
 { config,  pkgs, ... }:
 
 let
-  nodeEnv = import "/etc/nixos/extra-envs/node/default.nix" {};
-  local = import "/etc/nixos/extra-envs/local/localpkgs.nix";
+  nodeEnv = import "/etc/nixos/.envs/node/default.nix" {};
+  local = import "/etc/nixos/.envs/local/localpkgs.nix";
 in {
   imports =
     [ 
-	    ./hardware-configuration.nix
-	    ./vim.nix
-      ./tex.nix
-      ./firefox.nix
-      ./fish.nix
+	    /etc/nixos/hardware-configuration.nix
+	    /etc/nixos/base/vim.nix
+      /etc/nixos/tex.nix
+      /etc/nixos/base/fish.nix
     ];
 
   # Startup Settings

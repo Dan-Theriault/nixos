@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PREFIX='/etc/nixos/nix-dots'
+PREFIX='/etc/nixos/dots'
 
 nix-env -f "$PREFIX/i3-config.nix" -i
 ln -fs "$(nix-env -q i3Config --out-path --no-name)" /home/dtheriault3/.i3/config

@@ -34,11 +34,12 @@ pkgs.writeText "PolybarConfig" ''
 
 
   [global/wm]
-  margin-top = 5
-  margin-bottom = 5
+  margin-top = 2
+  margin-bottom = 2
 
 
   [bar/main]
+  bottom = true
   width = 100%
   height = 35
   offset-x = 0
@@ -47,13 +48,16 @@ pkgs.writeText "PolybarConfig" ''
   background = ''${colors.base00}
   foreground = ''${colors.base05}
 
-  border-bottom-size = 0
-  border-bottom-color = ''${colors.base05} 
+  overline-size = 4
+  overline-color = ''${colors.dim} 
+  underline-size = 4
+  underline-color = ''${colors.bg} 
 
-  font-0 = Iosevka:size=11;0
+  font-0 = Overpass:style=Semibold:size=11;0
   font-1 = FontAwesome:size=11;0
 
-  modules-left = time i3 
+  modules-left = time mpd
+  modules-center = i3
   modules-right = volume backlight battery 
 
   tray-position = right
@@ -63,8 +67,8 @@ pkgs.writeText "PolybarConfig" ''
   [module/xwindow]
   type = internal/xwindow
   label = %title:0:20:...%
-  label-foreground = ''${colors.dim}
-  label-background = ''${colors.bg}
+  label-foreground = ''${colors.bg}
+  label-background = ''${colors.base07}
   label-padding = 3
 
   [module/i3]
@@ -76,16 +80,19 @@ pkgs.writeText "PolybarConfig" ''
 
   label = %name%
 
-  label-mode-foreground = ''${colors.base0F}
+  label-mode-foreground = ''${colors.dim}
 
   label-focused-foreground = ''${colors.base0D}
-  label-focused-padding = 1
+  label-focused-padding = 3
+  label-focused-overline-color = ''${colors.base0D}
+  label-focused-overline-size = 2
 
-  label-unfocused-foreground = ''${colors.dim}
-  label-unfocused-padding = 1
+  label-unfocused = %name:0:1%
+  label-unfocused-foreground = ''${colors.fg}
+  label-unfocused-padding = 3
 
   label-urgent-foreground = ''${colors.base0E}
-  label-urgent-padding = 1
+  label-urgent-padding = 3
 
 
   [module/mpd]
@@ -102,7 +109,6 @@ pkgs.writeText "PolybarConfig" ''
   icon-seekf = 
   icon-random = 
   icon-repeat = 
-  toggle-on-foreground = ''${colors.primary}
   toggle-off-foreground = #66
 
 
@@ -110,7 +116,6 @@ pkgs.writeText "PolybarConfig" ''
   type = internal/backlight
   card = intel_backlight
   label =   %percentage%
-  label-foreground = ''${colors.base08}
   label-padding = 2
 
 
@@ -142,13 +147,9 @@ pkgs.writeText "PolybarConfig" ''
   [module/volume]
   type = internal/volume
   format-volume = <label-volume> 
-
   label-volume =   %percentage% 
-  label-volume-foreground = ''${colors.base0C}
   label-volume-padding = 2
-
   label-muted =   %percentage%
-  label-muted-foreground = ''${colors.base0C}
   label-muted-padding = 2
 
 
@@ -160,15 +161,10 @@ pkgs.writeText "PolybarConfig" ''
 
   format-charging = <label-charging>
   label-charging =   %percentage%
-  label-charging-foreground = ''${colors.base0B}
   label-charging-padding = 2
-
   format-discharging = <ramp-capacity>  <label-discharging>
-  format-discharging-foreground = ''${colors.base0B}
   format-discharging-padding = 2
-
   format-full = <ramp-capacity>  <label-full>
-  format-full-foreground = ''${colors.base0B}
   format-full-padding = 2
 
   ramp-capacity-0 = 
@@ -176,32 +172,4 @@ pkgs.writeText "PolybarConfig" ''
   ramp-capacity-2 = 
   ramp-capacity-3 = 
   ramp-capacity-4 = 
-
-
-  [module/powermenu]
-  type = custom/menu
-
-  label-open =  power
-  label-open-foreground = ''${colors.secondary}
-  label-close =  cancel
-  label-close-foreground = ''${colors.secondary}
-  label-separator = |
-  label-separator-foreground = ''${colors.foreground-alt}
-
-  menu-0-0 = reboot
-  menu-0-0-exec = menu-open-1
-  menu-0-1 = power off
-  menu-0-1-exec = menu-open-2
-
-  menu-1-0 = cancel
-  menu-1-0-exec = menu-open-0
-  menu-1-1 = reboot
-  menu-1-1-exec = sudo reboot
-
-  menu-2-0 = power off
-  menu-2-0-exec = sudo poweroff
-  menu-2-1 = cancel
-  menu-2-1-exec = menu-open-0
-
-  ; vim:ft=dosini
 ''
