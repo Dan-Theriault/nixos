@@ -10,7 +10,7 @@
   services.xserver = { 
     enable = true;
     layout = "us";
-    xkbOptions = "compose:ralt";
+    xkbOptions = "compose:ralt, caps:escape"; # may not work as expected in vm
 
     displayManager.sddm = {
       enable = true;
@@ -50,7 +50,6 @@
     #########
     arandr
     gnome3.gnome-font-viewer
-    keepassx-community
     libreoffice-fresh
     python27Packages.syncthing-gtk
     termite
@@ -68,7 +67,7 @@
 
 
     # TODO: Containerize vulnerable applications
-    firefox-beta-bin
+    firefox-beta-bin keepassx-community
     chromium
     steam
   ] ) );
