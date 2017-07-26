@@ -11,9 +11,8 @@ in {
   imports =
     [ 
 	    /etc/nixos/hardware-configuration.nix
-	    /etc/nixos/base/vim.nix
+	    /etc/nixos/base/base.nix
       /etc/nixos/tex.nix
-      /etc/nixos/base/fish.nix
     ];
 
   # Startup Settings
@@ -37,60 +36,26 @@ in {
   #   pulseaudio.support32Bit = true;
   # };
 
-  system.activationScripts = { 
-    # dots = {
-    #   text = pkgs.lib.fileContents /etc/nixos/nix-dots/ln-config.sh ;
-    #   deps = [ pkgs.nix ];
-    # };
-  };
-
-  # Nix settings
-  nix = {
-    gc.automatic = true;
-    useSandbox = true;
-  };
-
-  # nixpkgs.overlays = [ local ];
-  nixpkgs.config = {
-    allowUnfree = true;
-
-    packageOverrides = pkgs: {
-      polybar = pkgs.polybar.override {
-	      i3Support = true;
-        mpdSupport = true;
-      };
-
-      keepassx-community = pkgs.keepassx-community.overrideAttrs (oldAttrs: {
-        src = pkgs.fetchFromGitHub {
-          owner = "varjolintu";
-          repo = "keepassxc";
-          rev = "2.2.0-browser-beta5";
-          sha256 = "0s4m5cd1swskkhi5c5jf2fhwxr9026vgn2fxm22nfrv8j6kg5j7a";
-        };
-      } );
+  nixpkgs.config.packageOverrides = pkgs: {
+    polybar = pkgs.polybar.override {
+      i3Support = true;
+      mpdSupport = true;
     };
+
+    keepassx-community = pkgs.keepassx-community.overrideAttrs (oldAttrs: {
+      src = pkgs.fetchFromGitHub {
+        owner = "varjolintu";
+        repo = "keepassxc";
+        rev = "2.2.0-browser-beta5";
+        sha256 = "0s4m5cd1swskkhi5c5jf2fhwxr9026vgn2fxm22nfrv8j6kg5j7a";
+      };
+    } );
   };
 
   networking = { 
     hostName = "Hadron"; # Define your hostname.
-    networkmanager.enable = true;
     wireless.enable = false;
-
-    # extraHosts = "146.185.144.154 lipa.ms.cuni.cz";
   };
-
-  programs.vim.defaultEditor = true;
-  
-
-  # Select internationalisation properties.
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-  };
-
-  # Set your time zone.
-  time.timeZone = "America/New_York";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -141,12 +106,8 @@ in {
       firefox-beta-bin
       chromium
 
-      # Text editor
-      # Imported from vim.nix
-	
-      # Shell / Term. Emulator
+      # Terminal Emulator
       termite 
-      zsh fish bash
 
       # Utils
       syncthing 
@@ -155,8 +116,12 @@ in {
       xdg_utils
       xorg.xkill 
       xorg.xhost
+      xclip
       sqlite
-      psmisc
+      psmisc # killall and other utilities
+      netsniff-ng
+      wireshark-cli
+      wireshark
 
       # Nodejs
       nodejs
@@ -214,7 +179,7 @@ in {
       serif =     [ "Source Serif Pro" ];
     };
     fonts = with pkgs; [
-      google-fonts
+      google-fonts # ~300mb tarball download. Slow. Lots of junk.
 
       dejavu_fonts
       fira
@@ -244,32 +209,9 @@ in {
     dbus.enable = true;
     upower.enable = true;
     acpid.enable = true;
-    ntp.enable = true;
-
-    # Manual on VT-8
-    nixosManual.showManual = true;
 
     # Enable CUPS to print documents.
     printing.enable = true;
-
-    # Secure & Cached DNS
-    dnscrypt-proxy = {
-      enable =true;
-      localPort = 43;
-    };
-    dnsmasq = {
-      enable = true;
-      servers = [ "127.0.0.1#43" ];
-      extraConfig =  ''
-        address=/lipa.ms.mff.cuni.cz/146.185.144.154
-      '';
-    };
-
-    syncthing = {
-      enable = true;
-      useInotify = true;
-      openDefaultPorts = true;
-    };
 
     # Enable the X11 windowing system.
     xserver = { 
@@ -283,10 +225,6 @@ in {
         autoLogin.user = "dtheriault3";
       };
 
-      desktopManager.plasma5 = {
-	      enable = true;
-      };
-
       windowManager.i3 = {
         enable = true;
         package = pkgs.i3;
@@ -294,17 +232,5 @@ in {
     };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.dtheriault3 = {
-    extraGroups = [ "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" ];
-    shell = pkgs.bash;
-    createHome = true;
-    home = "/home/dtheriault3";
-    group = "users";
-    initialPassword = "hagan lio";
-  };
-   
 
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "17.09";
 }

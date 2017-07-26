@@ -10,6 +10,8 @@ let
     }
   ) );
 in {
+  programs.vim.defaultEditor = true;
+
   environment.systemPackages = [
     pkgs.git pkgs.wget
 
