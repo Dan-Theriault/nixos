@@ -16,6 +16,8 @@ in {
       /etc/nixos/x.nix
 
       /etc/nixos/misc/fonts.nix
+
+      /etc/nixos/devel/devel.nix
     ];
 
   # Startup Settings
@@ -63,11 +65,6 @@ in {
       # Languages
       rustStable.rustc
       rustStable.cargo
-      go
-      perl
-
-    ] ) ++ ( with pkgs.python35Packages; [
-      ipython
     ] );
 
     shellInit = ''
