@@ -52,6 +52,7 @@
     networkmanagerapplet # applets
     light xdotool playerctl # scriptable settings
     feh # background image
+    maim scrot # screenshots
 
     xlibs.xinput
     xlibs.fontutil
@@ -71,6 +72,7 @@
     arandr
     gnome3.gnome-font-viewer
     libreoffice-fresh
+    mpv youtube-dl
     python27Packages.syncthing-gtk
     termite
     wireshark
@@ -88,7 +90,7 @@
 
     # TODO: Containerize vulnerable applications
     firefox-beta-bin keepassx-community
-    chromium
+    # chromium
     steam
   ] ) );
 }
