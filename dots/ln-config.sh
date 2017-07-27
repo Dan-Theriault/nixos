@@ -18,3 +18,4 @@ ln -fs "$(nix-env -q gtkcssConfig --out-path --no-name)" /home/dtheriault3/.conf
 
 nix-env -f "$PREFIX/xresources.nix" -i
 ln -fs "$(nix-env -q XResources --out-path --no-name)" /home/dtheriault3/.Xresources
+xrdb /home/dtheriault3/.Xresources

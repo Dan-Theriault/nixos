@@ -48,10 +48,8 @@ pkgs.writeText "PolybarConfig" ''
   background = ''${colors.base00}
   foreground = ''${colors.base05}
 
-  overline-size = 4
-  overline-color = ''${colors.dim} 
-  underline-size = 4
-  underline-color = ''${colors.bg} 
+  border-top-color = ''${colors.fg}
+  border-top-size = 2
 
   font-0 = Overpass:style=Semibold:size=11;0
   font-1 = FontAwesome:size=11;0

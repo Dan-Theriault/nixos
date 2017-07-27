@@ -224,7 +224,7 @@ pkgs.writeText "i3Config" ''
     set $base0E #C795AE
     set $base0F #C79595
 
-    client.focused $base0D $base0D $base00 $base0D
+    client.focused $base06 $base06 $base00 $base06
     client.focused_inactive $base00 $base00 $base03 $base00
     client.unfocused $base00 $base00 $base03 $base00
     client.urgent $base02 $base08 $base07 $base08
