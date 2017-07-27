@@ -10,5 +10,7 @@
     go
 
     sqlite
+
+    python35Packages.bugwarrior
   ] );
 }
