@@ -193,12 +193,14 @@ pkgs.writeText "i3Config" ''
     exec_always feh --bg-fill /home/dtheriault3/Pictures/Wallpaper &
     # exec ~/Scripts/startup.sh
     # exec ~/Scripts/stylus-rc.sh
-    # exec ~/bin/enpass &
     exec nm-applet &
     exec polybar main &
+    exec syncthing-gtk &
 
     # ======= APPEARANCE =======
     for_window [class="^.*"] border pixel 1
+    gaps inner 4
+    gaps outer 0
 
     # ~/.i3/config
     # i3 config template
@@ -222,9 +224,9 @@ pkgs.writeText "i3Config" ''
     set $base0E #C795AE
     set $base0F #C79595
 
-    client.focused $base0D $base0D $base00 $base01
-    client.focused_inactive $base02 $base02 $base03 $base01
-    client.unfocused $base01 $base01 $base03 $base01
+    client.focused $base0D $base0D $base00 $base0D
+    client.focused_inactive $base00 $base00 $base03 $base00
+    client.unfocused $base00 $base00 $base03 $base00
     client.urgent $base02 $base08 $base07 $base08
   ''
 

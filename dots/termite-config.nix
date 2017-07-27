@@ -6,6 +6,7 @@ pkgs.writeText "TermiteConfig" ''
   allow_bold = true
   search_wrap = true
   scrollback = 20000
+  padding = 5
 
   [colors]
   # Base16 Ashes

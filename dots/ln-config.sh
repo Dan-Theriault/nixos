@@ -13,3 +13,6 @@ ln -fs "$(nix-env -q PolybarConfig --out-path --no-name)" /home/dtheriault3/.con
 
 nix-env -f "$PREFIX/termite-config.nix" -i
 ln -fs "$(nix-env -q TermiteConfig --out-path --no-name)" /home/dtheriault3/.config/termite/config
+nix-env -f "$PREFIX/gtk-css.nix" -i
+ln -fs "$(nix-env -q gtkcssConfig --out-path --no-name)" /home/dtheriault3/.config/gtk-3.0/gtk.css
+

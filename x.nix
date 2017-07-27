@@ -4,7 +4,7 @@
 
 {
   boot.plymouth = {
-    enable = true;
+    themePackages = [ pkgs.plasma5.breeze-plymouth ];
   };
 
   services.xserver = { 
@@ -15,13 +15,33 @@
     displayManager.sddm = {
       enable = true;
       autoLogin.user = "dtheriault3";
+      # package = pkgs.sddmPlasma5;
     };
 
     windowManager.i3 = {
       enable = true;
-      package = pkgs.i3;
+      package = pkgs.i3-gaps;
     };
   };
+
+  services.redshift = {
+    enable = true;
+    latitude = "33";
+    longitude = "-84";
+  };
+
+  # services.compton = { # disable on vm without graphics card emulation
+  #   enable = true;
+  #   backend = "glx";
+  #   vSync = "opengl";
+  #   inactiveOpacity = "0.92";
+  #   shadow = true;
+  #   extraOptions = ''
+  #     paint-on-overlay = true;
+  #     blur-background = true;
+  #     glx-no-stencil = true;
+  #   '';
+  # };
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
     ########
