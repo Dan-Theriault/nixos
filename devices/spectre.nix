@@ -16,8 +16,7 @@ in {
       /etc/nixos/x.nix
 
       /etc/nixos/misc/fonts.nix
-
-      /etc/nixos/devel/devel.nix
+      /etc/nixos/dev.nix
     ];
 
   # Startup Settings
