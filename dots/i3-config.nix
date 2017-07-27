@@ -195,7 +195,7 @@ pkgs.writeText "i3Config" ''
     # exec ~/Scripts/stylus-rc.sh
     exec nm-applet &
     exec polybar main &
-    exec syncthing-gtk &
+    exec syncthing-gtk -m &
 
     # ======= APPEARANCE =======
     for_window [class="^.*"] border pixel 1
