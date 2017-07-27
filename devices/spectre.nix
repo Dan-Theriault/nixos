@@ -32,7 +32,7 @@ in {
 
   nixpkgs.config.packageOverrides = pkgs: {
     polybar = pkgs.polybar.override {
-      i3Support = true;
+      i3GapsSupport = true;
       mpdSupport = true;
     };
 
