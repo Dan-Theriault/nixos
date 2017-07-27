@@ -8,10 +8,13 @@
     htop ncdu
     git
     ag
+    screenfetch
     taskwarrior timewarrior # bugwarrior
     tree
     nix-repl
     netsniff-ng
     wireshark-cli
+    psmisc # killall and friends
+    syncthing
   ] );
 }
