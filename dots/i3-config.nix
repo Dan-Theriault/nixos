@@ -198,9 +198,9 @@ pkgs.writeText "i3Config" ''
     exec syncthing-gtk -m &
 
     # ======= APPEARANCE =======
-    for_window [class="^.*"] border pixel 1
-    gaps inner 4
-    gaps outer 0
+    for_window [class="^.*"] border pixel 2
+    gaps inner 2
+    gaps outer 4
 
     # ~/.i3/config
     # i3 config template
@@ -224,9 +224,9 @@ pkgs.writeText "i3Config" ''
     set $base0E #C795AE
     set $base0F #C79595
 
-    client.focused $base06 $base06 $base00 $base06
-    client.focused_inactive $base00 $base00 $base03 $base00
-    client.unfocused $base00 $base00 $base03 $base00
-    client.urgent $base02 $base08 $base07 $base08
+    client.focused $base0B $base0B $base00 $base0B
+    client.focused_inactive $base01 $base01 $base03 $base01
+    client.unfocused $base01 $base01 $base03 $base01
+    client.urgent $base0E $base0E $base00 $base0E
   ''
 

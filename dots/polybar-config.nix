@@ -31,7 +31,7 @@ pkgs.writeText "PolybarConfig" ''
   bg = ''${self.base00}
   fg = ''${self.base06}
   dim = ''${self.base03}
-
+  hl = ''${self.base0B}
 
   [global/wm]
   margin-top = 2
@@ -48,8 +48,14 @@ pkgs.writeText "PolybarConfig" ''
   background = ''${colors.base00}
   foreground = ''${colors.base05}
 
-  border-top-color = ''${colors.fg}
-  border-top-size = 2
+  border-top-color = ''${colors.hl}
+  border-top-size = 3
+  border-bottom-color = ''${colors.hl}
+  border-bottom-size = 3
+  border-left-color = ''${colors.hl}
+  border-left-size = 3
+  border-right-color = ''${colors.hl}
+  border-right-size = 3
 
   font-0 = Overpass:style=Semibold:size=11;0
   font-1 = FontAwesome:size=11;0
@@ -80,10 +86,8 @@ pkgs.writeText "PolybarConfig" ''
 
   label-mode-foreground = ''${colors.dim}
 
-  label-focused-foreground = ''${colors.base0D}
+  label-focused-foreground = ''${colors.hl}
   label-focused-padding = 3
-  label-focused-overline-color = ''${colors.base0D}
-  label-focused-overline-size = 2
 
   label-unfocused = %name:0:1%
   label-unfocused-foreground = ''${colors.fg}

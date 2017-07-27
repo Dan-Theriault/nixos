@@ -48,29 +48,29 @@ pkgs.writeText "XResources" ''
   ! Base16 Ashes Dark, by Jannik Siebert (https://github.com/janniks)
 
   ! State:           'bg',    'fg',   'bgalt',   'hlbg',  'hlfg'
-  rofi.color-normal: #00000000, base05, #00000000, #00000000, base0D
-  rofi.color-active: #00000000, base05, #00000000, #00000000, base0D
+  rofi.color-normal: #00000000, base05, #00000000, #00000000, base0B
+  rofi.color-active: #00000000, base05, #00000000, #00000000, base0B
   !                  'bg',   'border'     'separator'
-  rofi.color-window: #fa1C2023, base0D, base05
+  rofi.color-window: base00, base0B, base0B
   rofi.opacity: 100
 
-  rofi.bw: 1
-  rofi.lines: 1
-  rofi.columns: 10
+  rofi.bw: 3
+  rofi.lines: 8
+  rofi.columns: 1
 
-  rofi.location: 2
-  rofi.yoffset: 27
+  rofi.location: 7
+  rofi.yoffset: -38
   rofi.xoffset: 0
 
   rofi.eh: 1
   rofi.line-margin: 10
-  rofi.width: 100
+  rofi.width: 18
   rofi.padding: 20
 
   rofi.combi-modi: run,window,drun
   rofi.fuzzy: true
 
-  rofi.font: Iosevka 12
+  rofi.font: Overpass 14
   rofi.hide-scrollbar: true
   rofi.separator-style: none
 
@@ -79,5 +79,5 @@ pkgs.writeText "XResources" ''
 
   ! urxvt configuration
   urxvt.scrollBar: false
-  urxvt.font: xft:SourceCodePro:size=10
+  urxvt.font: xft:Overpass:size=10
 ''
