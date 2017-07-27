@@ -12,11 +12,10 @@ in {
     [ 
 	    /etc/nixos/hardware-configuration.nix
 	    /etc/nixos/base/base.nix
-      /etc/nixos/tex.nix
-      /etc/nixos/x.nix
-
+      /etc/nixos/misc/tex.nix
+      /etc/nixos/graphical/x.nix
       /etc/nixos/misc/fonts.nix
-      /etc/nixos/dev.nix
+      /etc/nixos/misc/dev.nix
     ];
 
   # Startup Settings

@@ -49,13 +49,13 @@ pkgs.writeText "PolybarConfig" ''
   foreground = ''${colors.base05}
 
   border-top-color = ''${colors.hl}
-  border-top-size = 3
+  border-top-size = 2
   border-bottom-color = ''${colors.hl}
-  border-bottom-size = 3
+  border-bottom-size = 2
   border-left-color = ''${colors.hl}
-  border-left-size = 3
+  border-left-size = 2
   border-right-color = ''${colors.hl}
-  border-right-size = 3
+  border-right-size = 2
 
   font-0 = Overpass:style=Semibold:size=11;0
   font-1 = FontAwesome:size=11;0
@@ -86,7 +86,8 @@ pkgs.writeText "PolybarConfig" ''
 
   label-mode-foreground = ''${colors.dim}
 
-  label-focused-foreground = ''${colors.hl}
+  label-focused-foreground = ''${colors.bg}
+  label-focused-background = ''${colors.hl}
   label-focused-padding = 3
 
   label-unfocused = %name:0:1%

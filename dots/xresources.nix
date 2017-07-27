@@ -54,12 +54,12 @@ pkgs.writeText "XResources" ''
   rofi.color-window: base00, base0B, base0B
   rofi.opacity: 100
 
-  rofi.bw: 3
+  rofi.bw: 2
   rofi.lines: 8
   rofi.columns: 1
 
   rofi.location: 7
-  rofi.yoffset: -38
+  rofi.yoffset: -37
   rofi.xoffset: 0
 
   rofi.eh: 1

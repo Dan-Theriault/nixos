@@ -11,7 +11,7 @@
     /etc/nixos/base/pkgs.nix
   ];
 
-  environment.pathsToLink = [ "/etc/nixos/scripts" ];
+  # environment.pathsToLink = [ "/etc/nixos/scripts" ];
   # system.activationScripts = { dots = {
   #   text = builtins.readFile /etc/nixos/dots/ln-config.sh ;
   #   deps = [ pkgs.nix ];

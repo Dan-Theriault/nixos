@@ -198,9 +198,9 @@ pkgs.writeText "i3Config" ''
     exec syncthing-gtk -m &
 
     # ======= APPEARANCE =======
-    for_window [class="^.*"] border pixel 2
-    gaps inner 2
-    gaps outer 4
+    for_window [class="^.*"] border pixel 1
+    gaps inner 4
+    gaps outer 2
 
     # ~/.i3/config
     # i3 config template
