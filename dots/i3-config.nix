@@ -187,12 +187,11 @@ pkgs.writeText "i3Config" ''
     bindsym $mod+d exec rofi -show run
     bindsym $mod+Shift+d exec rofi -show combi
     bindsym $mod+w exec rofi -show window
+    bindsym $mod+x exec /etc/nixos/scripts/rofi-sys.sh
 
 
     # ======= AUTORUNS =======
     exec_always feh --bg-fill /home/dtheriault3/Pictures/Wallpaper &
-    # exec ~/Scripts/startup.sh
-    # exec ~/Scripts/stylus-rc.sh
     exec nm-applet &
     exec polybar main &
     exec syncthing-gtk -m &
