@@ -10,10 +10,16 @@ let
 in {
   imports =
     [ 
+      # System Essentials
 	    /etc/nixos/hardware-configuration.nix
 	    /etc/nixos/base
-      /etc/nixos/misc/tex.nix
+
+      # Desktop Environment
       /etc/nixos/desktop/x.nix
+      /etc/nixos/desktop/pkgs.nix
+
+      # Misc. Other Components
+      /etc/nixos/misc/tex.nix
       /etc/nixos/misc/fonts.nix
       /etc/nixos/misc/dev.nix
     ];

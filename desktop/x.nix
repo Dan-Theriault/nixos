@@ -15,7 +15,6 @@
     displayManager.sddm = {
       enable = true;
       autoLogin.user = "dtheriault3";
-      # package = pkgs.sddmPlasma5;
     };
 
     windowManager.i3 = {
@@ -66,31 +65,5 @@
     libsForQt5.qtstyleplugins 
     qt5.qtbase
 
-    #######
-    ### GUI Programs
-    #########
-    arandr
-    gnome3.gnome-font-viewer
-    libreoffice-fresh
-    mpv youtube-dl
-    python27Packages.syncthing-gtk
-    termite
-    wireshark
-    zathura
-
-    ( with kdeApplications; [
-      okular
-      filelight
-      dolphin
-      gwenview
-      kate
-      kgpg
-    ] )
-
-
-    # TODO: Containerize vulnerable applications
-    firefox-beta-bin keepassx-community
-    # chromium
-    steam
   ] ) );
 }
