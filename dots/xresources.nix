@@ -59,7 +59,7 @@ pkgs.writeText "XResources" ''
   rofi.columns: 1
 
   rofi.location: 7
-  rofi.yoffset: -37
+  rofi.yoffset: -35
   rofi.xoffset: 0
 
   rofi.eh: 1
