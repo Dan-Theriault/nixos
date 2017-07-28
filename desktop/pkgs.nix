@@ -18,7 +18,6 @@
       okular
       filelight
       dolphin
-      gwenview
       kate
       kgpg
     ] )
