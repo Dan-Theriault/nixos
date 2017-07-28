@@ -4,7 +4,7 @@
   hardware.pulseaudio = {
     enable = true;
     package = pkgs.pulseaudioFull;
-    support32bit = true;
+    support32Bit = true;
   };
 
   environment.systemPackages = ( with pkgs; [
@@ -12,5 +12,39 @@
     pasystray
     lxqt.pavucontrol-qt
     cli-visualizer
+
+    ffmpeg
+    gstreamer
+    ncmpcpp
   ] );
+
+  services.mopidy = {
+    enable = true;
+    extensionPackages = ( with pkgs; [
+      mopidy-gmusic
+      mopidy-mopify
+      mopidy-youtube
+    ] );
+    configuration = '' 
+      [core]
+      restore_state = true
+
+      [audio]
+      mixer = none
+      mixer-volume = 100
+      output = pulsesink
+
+      [youtube]
+      enabled = true
+
+      [mopify]
+      enabled = true
+
+      [gmusic]
+      enabled = true
+      all_access = true
+      bitrate = 320
+    '';
+    extraConfigFiles = [ "/home/dtheriault3/.mopidy" ]; # secret login details
+  };
 }
