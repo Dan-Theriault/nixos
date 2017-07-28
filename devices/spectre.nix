@@ -11,9 +11,9 @@ in {
   imports =
     [ 
 	    /etc/nixos/hardware-configuration.nix
-	    /etc/nixos/base/base.nix
+	    /etc/nixos/base
       /etc/nixos/misc/tex.nix
-      /etc/nixos/graphical/x.nix
+      /etc/nixos/desktop/x.nix
       /etc/nixos/misc/fonts.nix
       /etc/nixos/misc/dev.nix
     ];
