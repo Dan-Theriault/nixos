@@ -11,17 +11,18 @@ in {
   imports =
     [ 
       # System Essentials
-	    /etc/nixos/hardware-configuration.nix
 	    /etc/nixos/base
+	    /etc/nixos/hardware-configuration.nix
 
       # Desktop Environment
-      /etc/nixos/desktop/x.nix
+      /etc/nixos/desktop/audio.nix
       /etc/nixos/desktop/pkgs.nix
+      /etc/nixos/desktop/x.nix
 
       # Misc. Other Components
-      /etc/nixos/misc/tex.nix
-      /etc/nixos/misc/fonts.nix
       /etc/nixos/misc/dev.nix
+      /etc/nixos/misc/fonts.nix
+      /etc/nixos/misc/tex.nix
     ];
 
   # Startup Settings
