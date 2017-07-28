@@ -40,10 +40,15 @@ pkgs.writeText "PolybarConfig" ''
 
   [bar/main]
   bottom = true
-  width = 100%
-  height = 35
-  offset-x = 0
-  offset-y = 0
+  # offset-x = 6
+  # offset-y = 6
+  # width = 1908
+  height = 33
+
+
+  fixed-center = false
+  # override-redirect = true
+  # wm-restack = true
 
   background = ''${colors.base00}
   foreground = ''${colors.base05}
