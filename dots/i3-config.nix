@@ -191,7 +191,7 @@ pkgs.writeText "i3Config" ''
 
 
     # ======= AUTORUNS =======
-    exec_always feh --bg-fill /home/dtheriault3/Pictures/Wallpaper &
+    exec_always feh --bg-fill /home/dtheriault3/Photos/Wallpaper &
     exec nm-applet &
     exec polybar main &
     exec syncthing-gtk -m &

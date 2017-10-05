@@ -4,13 +4,14 @@
   fonts = {
     enableFontDir = true;
     enableDefaultFonts = true;
+    fontconfig.penultimate.enable = true;
     fontconfig.defaultFonts = {
       monospace = [ "Source Code Pro" ];
       sansSerif = [ "Source Sans Pro" ];
       serif =     [ "Source Serif Pro" ];
     };
     fonts = with pkgs; [
-      google-fonts # ~300mb tarball download. Slow. Lots of junk.
+      google-fonts # ~300mb tarball download. Slow. Lots of junk. But oh-so-many fonts!
 
       dejavu_fonts
       fira

@@ -3,6 +3,14 @@
 { config, pkgs, ... }:
 
 {
+  
+  nixpkgs.config.packageOverrides = pkgs: {
+    polybar = pkgs.polybar.override {
+      i3GapsSupport = true;
+      mpdSupport = true;
+    };
+  };
+
   boot.plymouth = {
     themePackages = [ pkgs.plasma5.breeze-plymouth ];
   };
