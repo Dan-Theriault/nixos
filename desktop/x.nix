@@ -29,6 +29,16 @@
       enable = true;
       package = pkgs.i3-gaps;
     };
+    windowManager.default = "i3";
+
+    desktopManager.xfce = {
+      enable = true;
+      enableXfwm = false;
+      noDesktop = true;
+      extraSessionCommands = ''
+        xrdb -load /home/dtheriault3/.Xresources
+      '';
+    };
   };
 
   services.redshift = {
@@ -37,18 +47,23 @@
     longitude = "-84";
   };
 
-  # services.compton = { # disable on vm without graphics card emulation
-  #   enable = true;
-  #   backend = "glx";
-  #   vSync = "opengl";
-  #   inactiveOpacity = "0.92";
-  #   shadow = true;
-  #   extraOptions = ''
-  #     paint-on-overlay = true;
-  #     blur-background = true;
-  #     glx-no-stencil = true;
-  #   '';
-  # };
+  services.compton = { # disable on vm without graphics card emulation
+    enable = true;
+    backend = "glx";
+    vSync = "opengl";
+    inactiveOpacity = "0.92";
+    shadow = true;
+    extraOptions = ''
+      paint-on-overlay = true;
+      blur-background = true;
+      glx-no-stencil = true;
+    '';
+  };
+
+  services.gnome3 = {
+    evolution-data-server.enable = true;
+    gnome-keyring.enable = true;
+  };
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
     ########
@@ -68,10 +83,14 @@
     xorg.xhost
     xclip
 
+    xfce.xfce4settings
+    xfce.xfconf
+
     arc-icon-theme arc-theme # themeing
 
-    libsForQt5.qtstyleplugins 
-    qt5.qtbase
+    # libsForQt5.qtstyleplugins 
+    # qt5.qtbase
+    qt5ct
 
   ] ) );
 }
