@@ -23,7 +23,7 @@
     ] )
 
 
-    # TODO: Containerize vulnerable applications
+    # TODO: Containerize applications with large attack surfaces
     firefox-beta-bin keepassx-community
     # chromium
     steam
