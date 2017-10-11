@@ -28,7 +28,7 @@ in {
   # Startup Settings
   boot = {
     initrd = {
-      luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
+      # luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
     };
     loader.grub = {
       enable = true;
@@ -72,7 +72,8 @@ in {
       export GTK_DATA_PREFIX=${config.system.path}
 
       export QT_STYLE_OVERRIDE=gtk
-      xrandr --size 1920x1080
+      xrandr --size 1920x1200
+      xrandr --dpi 96
     '';
   };
 
@@ -88,14 +89,14 @@ in {
     # Enable CUPS to print documents.
     printing.enable = false;
 
-    xserver.xrandrHeads = [
-      { output = "Virtual1";
-        primary = true;
-        monitorConfig = ''
-          DisplaySize 1920 1200
-        '';
-      }
-    ];
+    # xserver.xrandrHeads = [
+    #   { output = "Virtual1";
+    #     primary = true;
+    #     monitorConfig = ''
+    #       DisplaySize 1920 1200
+    #     '';
+    #   }
+    # ];
   };
 
 
