@@ -10,6 +10,11 @@
       mpdSupport = true;
     };
   };
+  environment.sessionVariables = {
+    "QT_QPA_PLATFORMTHEME" = "gtk2"; 
+    "GTK_THEME" = "Arc-Darker";
+    "DESKTOP_SESSION" = "gnome";
+  };
 
   boot.plymouth = {
     themePackages = [ pkgs.plasma5.breeze-plymouth ];
@@ -33,12 +38,6 @@
       '';
     };
     windowManager.default = "i3";
-
-    desktopManager.xfce = {
-      enable = true;
-      enableXfwm = false;
-      noDesktop = true;
-    };
   };
 
   services.redshift = {
@@ -83,8 +82,8 @@
     xorg.xhost
     xclip
 
-    xfce.xfce4settings
-    xfce.xfconf
+    # xfce.xfce4settings
+    # xfce.xfconf
 
     arc-icon-theme arc-theme # themeing
 

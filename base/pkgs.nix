@@ -16,5 +16,6 @@
     wireshark-cli
     psmisc # killall and friends
     syncthing
+    gnupg
   ] );
 }

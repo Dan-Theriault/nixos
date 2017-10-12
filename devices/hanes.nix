@@ -69,9 +69,6 @@ in {
 
     shellInit = ''
       ### SYSTEM WIDE CONFIGURATION SCRIPTING ###
-      export GTK_DATA_PREFIX=${config.system.path}
-
-      export QT_STYLE_OVERRIDE=gtk
       xrandr --size 1920x1200
       xrandr --dpi 96
     '';
