@@ -11,9 +11,9 @@
     };
   };
   environment.sessionVariables = {
-    "QT_QPA_PLATFORMTHEME" = "gtk2"; 
+    "GTK2_RC_FILES" = "/usr/share/themes/Arc-Darker/gtk-2.0";
     "GTK_THEME" = "Arc-Darker";
-    "DESKTOP_SESSION" = "gnome";
+    "QT_QPA_PLATFORMTHEME" = "gtk2"; 
   };
 
   boot.plymouth = {
