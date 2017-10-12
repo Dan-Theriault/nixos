@@ -28,6 +28,9 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
+      extraSessionCommands = ''
+        xrdb -load /home/dtheriault3/.Xresources
+      '';
     };
     windowManager.default = "i3";
 
@@ -35,9 +38,6 @@
       enable = true;
       enableXfwm = false;
       noDesktop = true;
-      extraSessionCommands = ''
-        xrdb -load /home/dtheriault3/.Xresources
-      '';
     };
   };
 
