@@ -4,10 +4,8 @@
 
 {
   imports = [
-    /etc/nixos/base/fish.nix # prompt and aliases
-    /etc/nixos/base/net.nix
+    /etc/nixos/base/base-net.nix
     /etc/nixos/base/users.nix
-    /etc/nixos/base/vim.nix # custom vim with plugins and vimrc
     /etc/nixos/base/pkgs.nix
   ];
 

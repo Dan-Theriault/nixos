@@ -3,66 +3,55 @@
 { config, pkgs, ... }:
 
 {
-  
   nixpkgs.config.packageOverrides = pkgs: {
     polybar = pkgs.polybar.override {
       i3GapsSupport = true;
       mpdSupport = true;
     };
   };
-  environment.sessionVariables = {
-    "GTK2_RC_FILES" = "/usr/share/themes/Arc-Darker/gtk-2.0";
-    "GTK_THEME" = "Arc-Darker";
-    "QT_QPA_PLATFORMTHEME" = "gtk2"; 
-  };
-
-  boot.plymouth = {
-    themePackages = [ pkgs.plasma5.breeze-plymouth ];
-  };
+  # environment.sessionVariables = {
+  #   "GTK2_RC_FILES" = "/usr/share/themes/Arc-Darker/gtk-2.0";
+  #   "GTK_THEME" = "Arc-Darker";
+  #   "QT_QPA_PLATFORMTHEME" = "gtk2"; 
+  # };
 
   services.xserver = { 
     enable = true;
     layout = "us";
     xkbOptions = "compose:ralt, caps:escape"; # may not work as expected in vm
 
-    displayManager.sddm = {
-      enable = true;
-      autoLogin.user = "dtheriault3";
-    };
+    synaptics.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
 
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
+      configFile = /etc/nixos/dots/i3;
       extraSessionCommands = ''
-        xrdb -load /home/dtheriault3/.Xresources
+        xrdb -load /etc/nixos/dots/Xresources
       '';
     };
-    windowManager.default = "i3";
   };
 
-  services.redshift = {
-    enable = true;
-    latitude = "33";
-    longitude = "-84";
-  };
+  # services.redshift = {
+  #   enable = true;
+  #   latitude = "33";
+  #   longitude = "-84";
+  # };
 
-  services.compton = { # disable on vm without graphics card emulation
-    enable = true;
-    backend = "glx";
-    vSync = "opengl";
-    inactiveOpacity = "0.92";
-    shadow = true;
-    extraOptions = ''
-      paint-on-overlay = true;
-      blur-background = true;
-      glx-no-stencil = true;
-    '';
-  };
-
-  services.gnome3 = {
-    evolution-data-server.enable = true;
-    gnome-keyring.enable = true;
-  };
+  # services.compton = { # disable on vm without graphics card emulation
+  #   enable = true;
+  #   backend = "glx";
+  #   vSync = "opengl";
+  #   inactiveOpacity = "0.92";
+  #   shadow = true;
+  #   extraOptions = ''
+  #     paint-on-overlay = true;
+  #     blur-background = true;
+  #     glx-no-stencil = true;
+  #   '';
+  # };
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
     ########

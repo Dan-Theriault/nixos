@@ -5,7 +5,7 @@
 {
   networking = {
     networkmanager.enable = true;
-    # tcpcrypt.enable = true;
+    firewall.allowPing = true;
   };
 
   services = {
@@ -23,14 +23,19 @@
     };
 
     # Secure serverless sync
-    syncthing = {
-      enable = true;
-      useInotify = true;
-      openDefaultPorts = true;
-    };
+    # syncthing = {
+    #   enable = true;
+    #   useInotify = true;
+    #   openDefaultPorts = true;
+    # };
 
     # TODO: Firewall
-    # TODO: openVPN
-    # TODO: ssh
+    # TODO: openVPN or wireguard
+    # TODO: backup / sync solution?
+    # - Rsyncd not really intended for this
+    # - syncthing is non-declarative
+    # - resilio is not FOSS
+    # - lsyncd, unison, etc. not packaged for NixOs <--- surmountable
+    # - tahoe is complicated AF
   };
 }

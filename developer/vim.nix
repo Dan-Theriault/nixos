@@ -22,16 +22,24 @@ in {
       vimrcConfig.vam.pluginDictionaries = [ {
         names = [
           "airline"
+          "ale"
+          "calendar"
           "commentary"
           "ctrlp"
+          "deoplete-jedi"
+          "deoplete-nvim"
+          "deoplete-rust"
+          "elm-vim"
           "goyo"
           "polyglot"
-          "syntastic"
+          "surround"
+          "tagbar"
           "vim-airline-themes"
           "vim-colorschemes"
           "vim-signify"
           "vimtex"
-          "YouCompleteMe"
+          "vimwiki"
+          #TODO:nerdtree,hackernews
         ];
       } ];
 
@@ -108,7 +116,7 @@ in {
 
         "colorscheme
         let base16colorspace=256
-        source /etc/nixos/base/colors.vim
+        source /etc/nixos/developer/colors.vim
         hi LineNr  ctermbg=None
 
         "swapfiles make me sad

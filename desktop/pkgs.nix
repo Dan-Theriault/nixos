@@ -10,9 +10,9 @@
     libreoffice-fresh
     mpv youtube-dl
     python27Packages.syncthing-gtk
-    termite
     wireshark
     zathura
+    xst
 
     ( with kdeApplications; [
       okular

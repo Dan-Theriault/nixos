@@ -18,33 +18,34 @@
     ncmpcpp
   ] );
 
-  services.mopidy = {
-    enable = true;
-    extensionPackages = ( with pkgs; [
-      mopidy-gmusic
-      mopidy-mopify
-      mopidy-youtube
-    ] );
-    configuration = '' 
-      [core]
-      restore_state = true
+  # Here be dragons
+  # services.mopidy = {
+  #   enable = true;
+  #   extensionPackages = ( with pkgs; [
+  #     mopidy-gmusic
+  #     mopidy-mopify
+  #     mopidy-youtube
+  #   ] );
+  #   configuration = '' 
+  #     [core]
+  #     restore_state = true
 
-      [audio]
-      mixer = none
-      mixer-volume = 100
-      output = pulsesink
+  #     [audio]
+  #     mixer = none
+  #     mixer-volume = 100
+  #     output = pulsesink
 
-      [youtube]
-      enabled = true
+  #     [youtube]
+  #     enabled = true
 
-      [mopify]
-      enabled = true
+  #     [mopify]
+  #     enabled = true
 
-      [gmusic]
-      enabled = true
-      all_access = true
-      bitrate = 320
-    '';
-    extraConfigFiles = [ "/home/dtheriault3/.mopidy" ]; # secret login details
-  };
+  #     [gmusic]
+  #     enabled = true
+  #     all_access = true
+  #     bitrate = 320
+  #   '';
+  #   extraConfigFiles = [ "/home/dtheriault3/.mopidy" ]; # secret login details
+  # };
 }
