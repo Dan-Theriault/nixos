@@ -3,7 +3,7 @@
 let 
   unpriveleged_user = {
     isNormalUser = true;
-    extraGroups = [ "disk" "audio" "video" "networkmanager" ];
+    extraGroups = [ "disk" "audio" "video" "networkmanager" "scanner" "lp" "bluetooth" ];
     initialPassword = "123pleasechangeme";
   }; 
 in {
