@@ -18,6 +18,7 @@
 
       /etc/nixos/misc/fonts.nix
       /etc/nixos/misc/home-users.nix
+      /etc/nixos/misc/brother-printing.nix
 
       /etc/nixos/net/ssh-server.nix         # OpenSSH server as a TOR hidden service
       /etc/nixos/net/ssh-client.nix         # client configuration + preset known hosts (WIP)
