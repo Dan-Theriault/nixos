@@ -1,10 +1,14 @@
 { config, pkgs, ... }:
 
-# Remember t
+# Remember to create client keys
+# YubiKey should hopefully obsolete (parts of) this
 {
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+  
   programs.ssh = {
-    startAgent = true;
-    agentTimeout = "1h";
     extraConfig = ''
       # Github needs diffie-hellman-group-exchange-sha1 "some of the time but not always".
       Host github.com
@@ -31,7 +35,6 @@
           HashKnownHosts yes
           # GSSAPIAuthentication yes
     '';
-
     knownHosts = [ 
       {
         hostNames = [ "homestead" ( builtins.readFile /etc/nix-secrets/homestead-onion) ];
