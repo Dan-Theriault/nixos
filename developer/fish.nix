@@ -6,8 +6,6 @@
     promptInit = builtins.readFile ./fish_prompt.fish;   
     
     shellAliases = {
-      vim = "vim --servername vim";
-      vi = "vim";
       o = "xdg-open";
       ipy = "ipython3";
     };

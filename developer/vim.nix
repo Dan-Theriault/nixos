@@ -1,142 +1,115 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let 
-  vim = pkgs.vimUtils.makeCustomizable ( pkgs.vim_configurable.overrideAttrs (
-    oldAttrs: {
-      configureFlags = ( builtins.filter ( x: x != "--disable-perlinterp" ) 
-        oldAttrs.configureFlags ) ++ [ "--enable-perlinterp" ];
-      nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.perl ];
-      perlSupport = true;
-    }
-  ) );
-in {
-  programs.vim.defaultEditor = true;
 
-  environment.systemPackages = [
-    pkgs.git pkgs.wget
+  customPlugins = {
+    # nvim-yarp = pkgs.vimUtils.buildVimPlugin {
+    #   name = "nvim-yarp";
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "roxma";
+    #     repo = "nvim-yarp";
+    #     rev = "b222af8dbbfb35c6d833fd76a940f6ca2fe322fa";
+    #     sha256 = "0rialn5xmyd3n02j81cflvljrx2lld2mhggni66frrjdz5c45xkl";
+    #   };
+    # };
+    # vim-hug-neovim-rpc = pkgs.vimUtils.buildVimPlugin {
+    #   name = "vim-hug-neovim-rpc";
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "roxma";
+    #     repo = "vim-hug-neovim-rpc";
+    #     rev = "60093847f0ba0a57ace54df30bd17a8239a99d6f";
+    #     sha256 = "0rim73si32z1h9rh0i2qs5gy010cpb6mz1zxr197agf85zdq7x0f";
+    #   };
+    # };
+    vim-buftabline = pkgs.vimUtils.buildVimPlugin {
+      name = "vim-buftabline";
+      src = pkgs.fetchFromGitHub {
+        owner = "ap";
+        repo = "vim-buftabline";
+        rev = "12f29d2cb11d79c6ef1140a0af527e9231c98f69";
+        sha256 = "1m2pwjagpbwalrckbyj2w5llqv6nzdkc5nfblwvj5fwkdiy8lmsn";
+      };
+    };
+    nerdtree = pkgs.vimUtils.buildVimPlugin {
+      name = "nerdtree";
+      src = pkgs.fetchFromGitHub {
+        owner = "scrooloose";
+        repo = "nerdtree";
+        rev = "5.0.0";
+        sha256 = "1dpfzbz02a47g84j5nxhb0qahpzg1fwnm4qyabjni2faz73v7ddk";
+      };
+    };
+    vim-lastplace = pkgs.vimUtils.buildVimPlugin {
+      name = "vim-lastplace";
+      src = pkgs.fetchFromGitHub {
+        owner = "farmergreg";
+        repo = "vim-lastplace";
+        rev = "102b68348eff0d639ce88c5094dab0fdbe4f7c55";
+        sha256 = "1d0mjjyissjvl80wgmn7z1gsjs3fhk0vnmx84l9q7g04ql4l9pja";
+      };
+    };
+  };
 
-    ( vim.customize {
-      name = "vim";
+  # inputFilter = builtins.filter ( x: x != pkgs.python2 );
+  # flagsFilter = builtins.filter ( x: x != "--disable-perlinterp" && x != "--enable-pythoninterp" );
 
-      vimrcConfig.vam.knownPlugins = pkgs.vimPlugins;
-      vimrcConfig.vam.pluginDictionaries = [ {
-        names = [
-          "airline"
-          "ale"
-          "calendar"
-          "commentary"
-          "ctrlp"
-          "deoplete-jedi"
-          "deoplete-nvim"
-          "deoplete-rust"
-          "elm-vim"
-          "goyo"
-          "polyglot"
-          "surround"
-          "tagbar"
-          "vim-airline-themes"
-          "vim-colorschemes"
-          "vim-signify"
-          "vimtex"
-          "vimwiki"
-          #TODO:nerdtree,hackernews
-        ];
-      } ];
+  # vim-python = pkgs.python3.buildEnv.override rec {
+  #   extraLibs = (with pkgs.python3Packages; [
+  #     neovim
+  #   ]);
+  # };
 
-      vimrcConfig.customRC = ''
-        set shell=bash
-        filetype plugin indent on    " required
+  vim-configuration = {
+    customRC = builtins.readFile /etc/nixos/dots/vimrc;
+    vam.knownPlugins = pkgs.vimPlugins // customPlugins;
+    vam.pluginDictionaries = [ {
+      names = [
+        "airline"
+        "ale"
+        "calendar"
+        "commentary"
+        "ctrlp"
+        "deoplete-nvim"
+        "deoplete-jedi"
+        "deoplete-rust"
+        "elm-vim"
+        "goyo"
+        "polyglot"
+        "surround"
+        "tagbar"
+        "vim-airline-themes"
+        "vim-colorschemes"
+        "vim-signify"
+        "vimtex"
+        "vimwiki"
 
-        syntax on
-        set background=dark
+        # Custom Packages
+        # "nvim-yarp" "vim-hug-neovim-rpc"
+        "vim-buftabline"
+        "nerdtree"
+        "vim-lastplace"
+      ];
+    } ];
+  };
 
-        " Load commands / settings by filetype
-        if has("autocmd")
-          filetype plugin indent on
-        endif
+in
 
-        " The following are commented out as they cause vim to behave a lot
-        " differently from regular Vi. They are highly recommended though.
-        " set showcmd		" Show (partial) command in status line.
-        set showmatch		" Show matching brackets.
-        set ignorecase		" Do case insensitive matching
-        set smartcase		" Do smart case matching
-        set incsearch		" Incremental search
-        set autowrite		" Automatically save before commands like :next and :make
-        set hidden		" Hide buffers when they are abandoned
-        set mouse=a		" Enable mouse usage (all modes)
+  { 
+    environment.systemPackages = [ 
+      # ( pkgs.vim.customize  { name = "cvim"; vimrcConfig = vim-configuration; } )
+      ( pkgs.neovim.override { configure = vim-configuration; } )
+    ]; 
 
-        " PERSONAL CUSTOMIZATIONS
-        set hlsearch
-        set backspace=indent,start
-        set autoindent
-        set ruler
-        set number
-        set relativenumber
-        set pastetoggle=<F11>
-        set shiftwidth=4
-        set softtabstop=4
-        set expandtab
-        set wildmenu
-        set lazyredraw
-        set backspace=2
-        set noshowmode
-        set spell spelllang=en
-        set nopaste
-
-        " Markdown settings
-        let g:markdown_fenced_languages = ['java', 'c', 'bash=sh', 'python']
-
-        " Visual Line movements
-        noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-        noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-
-        " B goes to the start of the line
-        nnoremap B ^
-        " E goes to the end
-        nnoremap E $
-        " ?
-        nnoremap gV '[v']
-        let mapleader=","
-
-        " Always show statusline
-        set laststatus=2
-
-        " Use 256 colours (Use this setting only if your terminal supports 256
-        " colours)
-        set t_Co=256
-        set term=screen-256color
-        set nomodeline
-
-        "vim-airline
-        let g:airline_powerline_fonts=1
-        let g:airline_left_sep=""
-        let g:airline_right_sep=""
-        let g:airline_theme='base16_shell'
-
-        "colorscheme
-        let base16colorspace=256
-        source /etc/nixos/developer/colors.vim
-        hi LineNr  ctermbg=None
-
-        "swapfiles make me sad
-        set noswapfile
-        set nobackup
-
-        "syntastic is sometimes stupid
-        let g:syntastic_python_checkers=['flake8', 'python']
-        " let g:syntastic_python_flake8_args='--ignore=E501'
-        autocmd CompleteDone * pclose
-
-        "vimtex settings
-        let g:vimtex_view_method='zathura'
-
-        "ack.vim settings
-        " let g:ackprg = 'ag --vimgrep'
-
-        "AUTOCMDS
-        autocmd FileType nix :set softtabstop=2
-      '';
-    } 
-  ) ];
-}
+    programs.fish.shellAliases.vim = "nvim";
+    
+    # nixpkgs.config.packageOverrides = pkgs: {
+    #   vim = pkgs.vimUtils.makeCustomizable ( pkgs.vim_configurable.overrideAttrs (oldAttrs: {
+    #     configureFlags = ( 
+    #       ( builtins.filter ( x: x != "--disable-perlinterp" && x != "--enable-pythoninterp" ) oldAttrs.configureFlags ) 
+    #       ++ [ "--enable-perlinterp" "--enable-python3interp" ]
+    #     );
+    #     nativeBuildInputs = oldAttrs.nativeBuildInputs ++ ( [ pkgs.perl vim-python ]);
+    #     perlSupport = true;
+    #   } ) );
+    # };
+  }
