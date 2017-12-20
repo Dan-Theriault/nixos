@@ -188,10 +188,9 @@ bindsym $mod+x exec /etc/nixos/scripts/rofi-sys.sh
 
 
 # ======= AUTORUNS =======
-exec_always feh --bg-fill /home/dtheriault3/Photos/Wallpaper &
+exec_always feh --bg-fill ~/.wallpaper &
 exec nm-applet &
 exec polybar main &
-exec syncthing-gtk -m &
 
 # ======= APPEARANCE =======
 for_window [class="^.*"] border pixel 1
