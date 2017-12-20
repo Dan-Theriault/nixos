@@ -5,18 +5,18 @@
 {
   environment.systemPackages = ( with pkgs; [
     wget curl
+    vim
     htop ncdu
     git
     ag
-    screenfetch
+    neofetch
     taskwarrior timewarrior # bugwarrior
     tree
     nix-repl
     netsniff-ng
-    wireshark-cli
     psmisc # killall and friends
-    syncthing
     gnupg
     dnsutils
+    nix-prefetch-scripts
   ] );
 }
