@@ -7,21 +7,22 @@
 {
   imports =
     [ 
-      /etc/nixos/hardware-configuration.nix # hardware, detected automatically
       /etc/nixos/base                       # core modules
+      /etc/nixos/hardware-configuration.nix # hardware, detected automatically
 
-      /etc/nixos/desktop/x.nix              # DE / WM configuration
       /etc/nixos/desktop/pkgs.nix
+      /etc/nixos/desktop/x.nix              # DE / WM configuration
 
-      /etc/nixos/developer/vim.nix
       /etc/nixos/developer/fish.nix
+      /etc/nixos/developer/python.nix
+      /etc/nixos/developer/vim.nix
 
+      /etc/nixos/misc/brother-printing.nix
       /etc/nixos/misc/fonts.nix
       /etc/nixos/misc/home-users.nix
-      /etc/nixos/misc/brother-printing.nix
 
-      /etc/nixos/net/ssh-server.nix         # OpenSSH server as a TOR hidden service
       /etc/nixos/net/ssh-client.nix         # client configuration + preset known hosts (WIP)
+      /etc/nixos/net/ssh-server.nix         # OpenSSH server as a TOR hidden service
     ];
   
   # Dual full-disk encryption
@@ -53,10 +54,10 @@
   };
 
   environment.systemPackages = with pkgs; [
-    wget vim git curl # Bootstrapping tools
+    wget git curl # Bootstrapping tools
 
     # Only needed on this host
-    chromium solaar
+    chromium solaar kdenlive
   ];
 
   services.xserver.xrandrHeads = [
