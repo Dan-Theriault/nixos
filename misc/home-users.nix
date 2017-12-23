@@ -1,17 +1,27 @@
 { config, pkgs, ... }:
 
 let 
-  unpriveleged_user = {
+  home_user = {
     isNormalUser = true;
     extraGroups = [ "disk" "audio" "video" "networkmanager" "scanner" "lp" "bluetooth" ];
     initialPassword = "123pleasechangeme";
   }; 
 in {
-  users.users.Marc = unpriveleged_user;
-  users.users.Lisa = unpriveleged_user;
-  users.users.Luke = unpriveleged_user;
-  users.users.Jimmy = unpriveleged_user;
-  users.users.Joey = unpriveleged_user;
-  users.users.Nicki = unpriveleged_user;
+  users.users = {
+    Marc  = home_user;
+    Lisa  = home_user;
+    Luke  = home_user;
+    Jimmy = home_user;
+    Joey  = home_user;
+    Nicki = home_user;
+  };
+  security.pam.services = {
+    Marc.enableKwallet = true;
+    Lisa.enableKwallet = true;
+    Luke.enableKwallet = true;
+    Jimmy.enableKwallet = true;
+    Joey.enableKwallet = true;
+    Nicki.enableKwallet = true;
+  };
 }
 
