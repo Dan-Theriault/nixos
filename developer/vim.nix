@@ -64,6 +64,7 @@ let
     vam.knownPlugins = pkgs.vimPlugins // customPlugins;
     vam.pluginDictionaries = [ {
       names = [
+        "ack-vim"
         "airline"
         "ale"
         "calendar"
@@ -76,6 +77,7 @@ let
         "goyo"
         "polyglot"
         "surround"
+        "Tabular"
         "tagbar"
         "vim-airline-themes"
         "vim-colorschemes"

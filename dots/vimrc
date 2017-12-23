@@ -41,6 +41,10 @@ let g:markdown_fenced_languages = ['java', 'c', 'bash=sh', 'python']
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
+" Keep text selected when fixing indentation
+vnoremap < <gv
+vnoremap > >gv
+
 " B goes to the start of the line
 nnoremap B ^
 " E goes to the end
@@ -99,6 +103,21 @@ let g:deoplete#enable_at_startup = 1
 
 "vimtex settings
 let g:vimtex_view_method='zathura'
+let g:vimtex_latexmk_progname = 'nvr' "wrapper for nvim 
+" let g:vimtex_compiler_latexmk = {
+" \   'backend' : 'nvim',
+" \   'callback' : 1,
+" \   'continuous' : 1,
+" \   'executable' : 'latexmk',
+" \   'options' : [
+" \      '-pdf',
+" \      "-pdflatex='pdflatex --shell-escape %0 %S'",
+" \      '-bibtex',
+" \      '-file-line-error',
+" \      '-synctex=1',
+" \      '-interaction=nonstopmode',
+" \   ],
+" \}
 
 "ack.vim settings
 let g:ackprg = 'ag --vimgrep'
@@ -109,6 +128,7 @@ let g:polyglot_disabled = ['elm', 'latex']
 "Start nerdtree if no files specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 "other nerdtree stuf
 nmap <C-n> :NERDTreeToggle<CR>
 nmap <C-b> :TagbarToggle<CR>
@@ -130,9 +150,9 @@ nmap <leader>9 <Plug>BufTabLine.Go(9)
 nmap <leader>0 <Plug>BufTabLine.Go(10)
 
 "vimwiki settings
-let g:vimwiki_list = [{'path': '~/wiki', 'syntax': 'markdown', 'ext': '.md', 'auto_toc': 1, 
-            \ 'diary_rel_path': '/journal/', 'diary_index': 'journal', 'diary_header': 'Journal'
-            \ }]
+let g:vimwiki_list = [{
+\   'path': '~/wiki', 'syntax': 'markdown', 'ext': '.md', 'auto_toc': 1, 
+\   'diary_rel_path': '/journal/', 'diary_index': 'journal', 'diary_header': 'Journal'
+\}]
 let g:vimwiki_use_mouse=1
 let g:vimiwki_use_calendar=1
-
