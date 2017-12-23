@@ -4,7 +4,7 @@
   services.openssh = {
     enable = true;
     hostKeys = [
-      { bits = 4096; path = "/etc/ssh/ssh_host_rsa_key"; type = "rsa";  }
+      { path = "/etc/ssh/ssh_host_rsa_key"; type = "rsa"; bits = 4096; }
       { path = "/etc/ssh/ssh_host_ed25519_key"; type = "ed25519"; }
     ] ;
     permitRootLogin = "no";
@@ -20,14 +20,11 @@
     '';
   };
 
-  users.users.dtheriault3 = {
-    openssh.authorizedKeys.keyFiles = [
-      /etc/ssh/ssh_host_ed25519_key
-      /etc/ssh/ssh_host_rsa_key
-    ];
-    extraGroups = [ "ssh-user" ];
-  };
-  users.groups = { ssh-user = { }; };
+  # users.users.dtheriault3 = {
+  #   extraGroups = [ "ssh-user" ];
+  # };
+  # users.groups = { ssh-user = { }; };
+  users.groups.ssh-user.members = [ "dtheriault3" ];
 
   services.tor = {
     enable = true;
