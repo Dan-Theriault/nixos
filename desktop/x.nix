@@ -30,17 +30,18 @@
       configFile = /etc/nixos/dots/i3;
       extraSessionCommands = ''
         xrdb -load /etc/nixos/dots/Xresources
+        export QT_QPA_PLATFORMTHEME="qt5ct"
       '';
     };
   };
 
-  # services.redshift = {
-  #   enable = true;
-  #   latitude = "33";
-  #   longitude = "-84";
-  # };
+  services.redshift = {
+    enable = true;
+    latitude = "33";
+    longitude = "-84";
+  };
 
-  # services.compton = { # disable on vm without graphics card emulation
+  # services.compton = { # bad idea with vms or DEs
   #   enable = true;
   #   backend = "glx";
   #   vSync = "opengl";
@@ -71,14 +72,8 @@
     xorg.xhost
     xclip
 
-    # xfce.xfce4settings
-    # xfce.xfconf
-
-    arc-icon-theme arc-theme # themeing
-
-    # libsForQt5.qtstyleplugins 
-    # qt5.qtbase
-    qt5ct
+    arc-icon-theme arc-theme # Themes
+    qt5ct lxappearance       # and programs to set them
 
   ] ) );
 }
