@@ -44,6 +44,8 @@
 ! rofi template
 ! Base16 Ashes Dark, by Jannik Siebert (https://github.com/janniks)
 
+
+! Rofi
 ! State:           'bg',    'fg',   'bgalt',   'hlbg',  'hlfg'
 rofi.color-normal: #00000000, base05, #00000000, #00000000, base0B
 rofi.color-active: #00000000, base05, #00000000, #00000000, base0B
@@ -76,7 +78,7 @@ rofi.run-list-command: 'fish -c functions'
 
 ! xst configuration
 st.font: IBM Plex Mono:pixelsize=12
+st.bold_font: 1
 st.termname: st-256color
 st.borderpx: 30
 st.cursorshape: 1
-st.bold_font: 1
