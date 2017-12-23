@@ -189,13 +189,30 @@ bindsym $mod+x exec /etc/nixos/scripts/rofi-sys.sh
 
 # ======= AUTORUNS =======
 exec_always feh --bg-fill ~/.wallpaper &
-exec nm-applet &
-exec polybar main &
+exec polybar -c /etc/nixos/dots/polybar main &
+exec xrdb -load /etc/nixos/dots/Xresources
+exec export KDEWM=/usr/bin/i3
 
 # ======= APPEARANCE =======
 for_window [class="^.*"] border pixel 1
 gaps inner 4
 gaps outer 2
+
+# ======= Plasma Integration
+# Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everythiing)
+exec --no-startup-id wmctrl -c Plasma
+for_window [title="Desktop — Plasma"] kill; floating enable; border none
+
+## Avoid tiling popups, dropdown windows from plasma
+# for the first time, manually resize them, i3 will remember the setting for floating windows
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Kmix"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="krunner"] floating enable; border none
+for_window [title="win7"] floating enable; border none
 
 # ~/.i3/config
 # i3 config template
@@ -223,4 +240,5 @@ client.focused $base0B $base0B $base00 $base0B
 client.focused_inactive $base01 $base01 $base03 $base01
 client.unfocused $base01 $base01 $base03 $base01
 client.urgent $base0E $base0E $base00 $base0E
+
 
