@@ -67,7 +67,7 @@ rofi.padding: 20
 rofi.combi-modi: run,window,drun
 rofi.fuzzy: true
 
-rofi.font: Overpass 14
+rofi.font: IBM Plex Mono 14
 rofi.hide-scrollbar: true
 rofi.separator-style: none
 
@@ -75,6 +75,7 @@ rofi.run-command: fish -c '{cmd}'
 rofi.run-list-command: 'fish -c functions'
 
 ! xst configuration
+st.font: IBM Plex Mono:pixelsize=12
 st.termname: st-256color
 st.borderpx: 30
 st.cursorshape: 1
