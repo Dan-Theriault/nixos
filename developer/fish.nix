@@ -8,6 +8,7 @@
     shellAliases = {
       o = "xdg-open";
       ipy = "ipython3";
+      sgit = "sudo -E git";
     };
 
     shellInit = ''
