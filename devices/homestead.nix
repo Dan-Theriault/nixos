@@ -10,6 +10,7 @@
       /etc/nixos/base                       # core modules
       /etc/nixos/hardware-configuration.nix # hardware, detected automatically
 
+      /etc/nixos/desktop/audio.nix
       /etc/nixos/desktop/pkgs.nix
       /etc/nixos/desktop/x.nix              # DE / WM configuration
 
@@ -20,12 +21,14 @@
       /etc/nixos/misc/brother-printing.nix
       /etc/nixos/misc/fonts.nix
       /etc/nixos/misc/home-users.nix
+      /etc/nixos/misc/tex.nix
 
       /etc/nixos/net/ssh-client.nix         # client configuration + preset known hosts (WIP)
       /etc/nixos/net/ssh-server.nix         # OpenSSH server as a TOR hidden service
+      /etc/nixos/net/sync.nix               # File sync with unison
     ];
   
-  # Dual full-disk encryption
+  # Handle two encrypted partitions
   boot.initrd.luks.devices.aCrypt = { # large HDD
     device = "/dev/sda1";
     preLVM = true;
@@ -36,8 +39,10 @@
   };
 
   hardware.bluetooth.enable = true;
-  boot.initrd.availableKernelModules = [ "hid-logitech-hidpp" ]; # required to get keyboard / mouse for LUKS unlock
+  boot.initrd.availableKernelModules = [ "hid-logitech-hidpp" "plymouth" "plymouth-encrypt" ]; # logitech required to get keyboard / mouse for LUKS unlock
   boot.loader.systemd-boot.enable = true;
+
+  boot.plymouth.enable = true;
 
   networking.hostName = "homestead"; 
 
