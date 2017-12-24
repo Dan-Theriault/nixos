@@ -4,7 +4,7 @@
 
 {
   networking = {
-    networkmanager.enable = true;
+    # networkmanager.enable = true;
     firewall.allowPing = true;
   };
 
@@ -19,6 +19,8 @@
       servers = [ "127.0.0.1#43" ];
       extraConfig =  ''
         address=/lipa.ms.mff.cuni.cz/146.185.144.154
+        interface=eno1
+        no-resolv
       '';
     };
 
