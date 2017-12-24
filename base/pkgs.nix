@@ -18,5 +18,8 @@
     gnupg
     dnsutils
     nix-prefetch-scripts
+    unzip
+    telnet
+    whois
   ] );
 }
