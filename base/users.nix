@@ -11,4 +11,7 @@
       initialPassword = "hagan lio"; # change immediately after install with passwd
     };
   };
+  security.sudo.extraConfig = ''
+    Defaults env_reset,pwfeedback
+  '';
 }
