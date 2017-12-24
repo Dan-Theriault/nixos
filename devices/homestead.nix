@@ -46,17 +46,17 @@
 
   networking.hostName = "homestead"; 
 
-  # This is mostly useless, since the ISP blocks a lot of ports.
-  # Left in just-in-case (and to test my assumptions on reading secret files).
-  services.ddclient = {
-    enable = true;
-    domain = "homestead.dtheriault.com";
-    server = "dynamicdns.park-your-domain.com";
-    protocol = "namecheap";
-    use = "web, web=dynamicdns.park-your-domain.com/getip";
-    username = "dtheriault.com";
-    password = builtins.readFile /etc/nix-secrets/dyndns;
-  };
+  # # This is mostly useless, since the ISP blocks a lot of ports.
+  # # Left in just-in-case (and to test my assumptions on reading secret files).
+  # services.ddclient = {
+  #   enable = true;
+  #   domain = "homestead.dtheriault.com";
+  #   server = "dynamicdns.park-your-domain.com";
+  #   protocol = "namecheap";
+  #   use = "web, web=dynamicdns.park-your-domain.com/getip";
+  #   username = "dtheriault.com";
+  #   password = builtins.readFile /etc/nix-secrets/dyndns;
+  # };
 
   environment.systemPackages = with pkgs; [
     wget git curl # Bootstrapping tools
