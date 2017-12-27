@@ -41,8 +41,6 @@ in
     xst
 
     steam
-
-    firefox-devedition-bin
   ] ++ ( with pkgs.kdeApplications; [
       okular
       filelight
