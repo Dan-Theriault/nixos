@@ -9,11 +9,6 @@
       mpdSupport = true;
     };
   };
-  # environment.sessionVariables = {
-  #   "GTK2_RC_FILES" = "/usr/share/themes/Arc-Darker/gtk-2.0";
-  #   "GTK_THEME" = "Arc-Darker";
-  #   "QT_QPA_PLATFORMTHEME" = "gtk2"; 
-  # };
 
   services.xserver = { 
     enable = true;
@@ -55,15 +50,12 @@
   # };
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
-    ########
-    ### Accessories / Utilities
-    ##########
-    rofi dmenu # program launchers
-    polybar i3lock-fancy # additional interface components
-    networkmanagerapplet # applets
+    rofi dmenu              # program launchers
+    polybar i3lock-fancy    # additional interface components
+    networkmanagerapplet    # applets
     light xdotool playerctl # scriptable settings
-    feh # background image
-    maim scrot # screenshots
+    feh                     # background image
+    maim scrot              # screenshots
 
     xlibs.xinput
     xlibs.fontutil
@@ -71,6 +63,7 @@
     xorg.xkill
     xorg.xhost
     xclip
+    xbindkeys
 
     arc-icon-theme arc-theme # Themes
     qt5ct lxappearance       # and programs to set them

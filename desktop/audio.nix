@@ -16,6 +16,8 @@
     ffmpeg
     gstreamer
     ncmpcpp
+
+    google-play-music-desktop-player
   ] );
 
   # Here be dragons
