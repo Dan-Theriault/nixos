@@ -77,7 +77,7 @@ rofi.run-command: fish -c '{cmd}'
 rofi.run-list-command: 'fish -c functions'
 
 ! xst configuration
-st.font: IBM Plex Mono:pixelsize=12
+st.font: IBM Plex Mono:pixelsize=14
 st.bold_font: 1
 st.termname: st-256color
 st.borderpx: 30

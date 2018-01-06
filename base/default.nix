@@ -4,16 +4,10 @@
 
 {
   imports = [
-    /etc/nixos/base/base-net.nix
-    /etc/nixos/base/users.nix
-    /etc/nixos/base/pkgs.nix
+    ../base/base-net.nix
+    ../base/users.nix
+    ../base/pkgs.nix
   ];
-
-  # environment.pathsToLink = [ "/etc/nixos/scripts" ];
-  # system.activationScripts = { dots = {
-  #   text = builtins.readFile /etc/nixos/dots/ln-config.sh ;
-  #   deps = [ pkgs.nix ];
-  # }; };
 
   # Nix settings
   nix = {
@@ -31,7 +25,7 @@
 
   # Set your time zone.
   time.timeZone = "America/New_York";
-  services.ntp.enable = true;
+  services.openntpd.enable = true;
 
   # Manual on VT-8
  services.nixosManual.showManual = true;

@@ -1,0 +1,1 @@
+devices/specere.nix

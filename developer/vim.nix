@@ -60,7 +60,7 @@ let
   # };
 
   vim-configuration = {
-    customRC = builtins.readFile /etc/nixos/dots/vimrc;
+    customRC = builtins.readFile ../dots/vimrc;
     vam.knownPlugins = pkgs.vimPlugins // customPlugins;
     vam.pluginDictionaries = [ {
       names = [

@@ -5,7 +5,7 @@
     pdfpc
     ( texlive.combine {
       inherit (texlive) 
-      scheme-medium
+      scheme-full
 
       # XeTeX Compiler
       xetex xetex-def
@@ -29,8 +29,9 @@
 
       # Fonts - Internal tex fonts aren't working for some reason.
       # Debug later, use system fonts for now.
-      # gfsdidot 
-      # crimson
+      gfsdidot 
+      crimson
+      roboto
 
       # ???
       logreq xstring

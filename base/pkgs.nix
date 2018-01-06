@@ -10,7 +10,7 @@
     git
     ag
     neofetch
-    taskwarrior timewarrior # bugwarrior
+    taskwarrior timewarrior python36Packages.bugwarrior
     tree
     nix-repl
     netsniff-ng
@@ -21,5 +21,6 @@
     unzip
     telnet
     whois
+    syncthing
   ] );
 }

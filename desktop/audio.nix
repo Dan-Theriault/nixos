@@ -11,7 +11,8 @@
     pamixer
     pasystray
     lxqt.pavucontrol-qt
-    cli-visualizer
+    cava
+    glyr
 
     ffmpeg
     gstreamer
@@ -19,6 +20,10 @@
 
     google-play-music-desktop-player
   ] );
+
+  programs.fish.shellAliases = {
+    lyrics = "glyrc lyrics -a (playerctl metadata artist 2>/dev/null) -t (playerctl metadata title 2>/dev/null) -v 0 -w /tmp/lyrics; and cat /tmp/lyrics";
+  };
 
   # Here be dragons
   # services.mopidy = {

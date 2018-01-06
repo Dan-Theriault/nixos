@@ -38,10 +38,10 @@
           HashKnownHosts yes
           # GSSAPIAuthentication yes
     '';
-    knownHosts = [ {
-      hostNames = [ "homestead" ( builtins.readFile /etc/nix-secrets/homestead-onion) ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE90pn7PDUD40oL4wPGANNh4TsPuJPJE59Ss5r5+aOly";
-    } ];
+#   knownHosts = [ {
+#     hostNames = [ "homestead" ( builtins.readFile /etc/nix-secrets/homestead-onion) ];
+#     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE90pn7PDUD40oL4wPGANNh4TsPuJPJE59Ss5r5+aOly";
+#   } ];
   };
 
 }

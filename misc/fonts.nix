@@ -60,6 +60,7 @@ in
     fonts = [ ibm-plex ] ++ ( with pkgs; [
       google-fonts # ~300mb tarball download. Slow. Lots of junk. But oh-so-many fonts!
 
+      siji
       dejavu_fonts
       fira
       fira-code

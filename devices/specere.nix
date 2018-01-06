@@ -5,64 +5,93 @@
   imports =
     [ 
       # System Essentials
-	    /etc/nixos/base
-	    /etc/nixos/hardware-configuration.nix
+      ../base
+      ../hardware-configuration.nix
 
       # Desktop Environment
-      /etc/nixos/desktop/audio.nix
-      /etc/nixos/desktop/pkgs.nix
-      /etc/nixos/desktop/x.nix
+      ../desktop/audio.nix
+      ../desktop/pkgs.nix
+      ../desktop/x.nix
+      ../desktop/gaming.nix
 
       # Developer Tooling
-      /etc/nixos/developer
+      ../developer
 
       # Network Services
-      /etc/nixos/net/ssh-client.nix
-      /etc/nixos/net/ssh-server.nix
+      ../net/ssh-client.nix
+      ../net/ssh-server.nix
 
       # Misc. Other Components
-      /etc/nixos/misc/fonts.nix
-      /etc/nixos/misc/tex.nix
+      ../misc/fonts.nix
+      ../misc/tex.nix
     ];
 
   # Startup Settings
-  # boot = {
-  #   initrd = {
-  #     luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
-  #   };
-  #   loader.grub = {
-  #     enable = true;
-  #     version = 2;
-  #     device = "/dev/sda";
-  #   };
-  # };
+  boot = {
+    initrd = {
+      luks.devices = [ { device = "/dev/sda2"; preLVM = true; } ];
+    };
+    loader.systemd-boot = {
+      enable = true;
+      editor = false;
+    };
+    loader.efi.canTouchEfiVariables = true;
+  };
 
   networking = { 
     hostName = "specere"; 
     wireless.enable = true;
   };
 
+  powerManagement = {
+    enable = true;
+    powerDownCommands = ''
+      /run/current-system/sw/bin/i3lock-fancy -f Overpass-Black -t "TYPE TO UNLOCK" -- maim -u
+    '';
+    resumeCommands = ''
+      systemctl restart dnscrypt-proxy.service
+      /run/current-system/sw/bin/i3lock
+    '';
+  };
+
   environment = {
     systemPackages = ( with pkgs; [
       wpa_supplicant_gui
       solaar
+      chromium # just for youtube tv 
+      fortune
     ] );
   };
 
+  # nixpkgs.config = {
+  #   chromium = {
+  #     enablePepperFlash = true;
+  #     enablePepperPDF = true;
+  #     enableWideVine = true;
+  #   };
+  # };
+
   services = { 
-    xserver.xrandrHeads = [
-      {
-        output = "eDP-1";
-        primary = "true";
-        monitorConfig = ''
-          Option "mode" "1920x1080"
-          Option "pos" "0x0"
-          Option "rotate" "normal"
-        '';
-      }
-    ];
+    xserver = {
+      xrandrHeads = [
+        {
+          output = "eDP-1";
+          primary = true;
+          monitorConfig = ''
+            Option "mode" "1920x1080"
+            Option "pos" "0x0"
+            Option "rotate" "normal"
+          '';
+        }
+      ];
+      libinput = {
+        enable = true;
+        naturalScrolling = true;
+      };
+    };
     upower.enable = true;
     acpid.enable = true;
     printing.enable = true;
+    compton.enable = true;
   };
 }

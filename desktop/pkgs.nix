@@ -2,7 +2,7 @@
 
 let
   unstable = import <unstable> { config = config.nixpkgs.config; };
-  unwrapped = unstable.firefox-devedition-bin;
+  unwrapped = unstable.firefox-beta-bin;
   name = unwrapped.name;
 
   # firefox-custom = unstable.wrapFirefox unwrapped {
@@ -13,7 +13,7 @@ let
   # };
   firefox-custom = pkgs.buildEnv {
     name = "firefox-custom";
-    paths = [ pkgs.firefox-devedition-bin pkgs.keepassx-community ];
+    paths = [ pkgs.firefox-beta-bin pkgs.keepassx-community ];
   };
 in
 {
@@ -39,8 +39,11 @@ in
     wireshark
     zathura
     xst
+    sc-im
+    inkscape
 
     steam
+    steam-run
   ] ++ ( with pkgs.kdeApplications; [
       okular
       filelight

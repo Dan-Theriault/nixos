@@ -2,11 +2,9 @@
 
 {
   imports = [
-    fish.nix
-    haskell.nix
-    pkgs.nix
-    python.nix
-    rust.nix
-    vim.nix
+    ../developer/fish.nix
+    ../developer/pkgs.nix
+    ../developer/python.nix
+    ../developer/vim.nix
   ];
 }

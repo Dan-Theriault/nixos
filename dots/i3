@@ -5,7 +5,7 @@
 set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Source Code Pro Light, FontAwesome 10
+font pango:IBMPlexMono 12, FontAwesome 10
 
 # start a terminal
 bindsym $mod+Return exec st -e fish
@@ -52,49 +52,16 @@ bindsym $mod+space focus mode_toggle
 #bindsym $mod+d focus child
 
 # ======== WORKSPACE SETTINGS =======
-set $ws1 "1: Desktop"
-assign [class="google-chrome-beta"] $ws1
-assign [class="Firefox"] $ws1
-
-set $ws2 "2: Term"
-# assign [class="Gnome-terminal"] $ws2
-
-set $ws3 "3: Dev"
-assign [class="jetbrains-studio"] $ws3
-assign [class="Atom"] $ws3
-assign [class="Gnome-builder"] $ws3
-
-set $ws4 "4: Notes"
-assign [class="Xournal"] $ws4
-
-set $ws5 "5: Documents"
-
-set $ws6 "6: Chat"
-assign [class="geary"] $ws6
-assign [class="Gnome-calendar"] $ws6
-assign [class="Gnome-contacts"] $ws6
-assign [class="Gnome-todo"] $ws6
-assign [class="evolution"] $ws6
-
-set $ws7 "7: Security"
-assign [class="Enpass-Desktop"] $ws7
-assign [class="Seahorse"] $ws7
-
-set $ws8 "8: Reading"
-assign [class="Liferea"] $ws8
-assign [class="Feedreader"] $ws8
-
-set $ws9 "9: Games"
-# assign [class="Steam"] $ws9
-assign [class="stellaris"] $ws9
-assign [class="Civ5XP"] $ws9
-assign [class="eu4"] $ws9
-assign [class="Minetest"] $ws9
-
-set $ws0 "10: Watch"
-assign [class="mpv"] $ws0
-assign [class="nuvolaplayer3"] $ws0
-assign [class="netflix-nativefier-48dc18"] $ws0
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws0 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -140,12 +107,6 @@ mode "resize" {
         bindsym j resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        #bindsym Left resize shrink width 10 px or 10 ppt
-        #bindsym Down resize grow height 10 px or 10 ppt
-        #bindsym Up resize shrink height 10 px or 10 ppt
-        #bindsym Right resize grow width 10 px or 10 ppt
-
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -165,8 +126,8 @@ bindsym Alt+XF86AudioLowerVolume exec pactl set-sink-volume 2 +5%
 bindsym Alt+XF86AudioMute exec pactl set-sink-mute 2 toggle
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 1 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 1 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 1 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 1 # decrease screen brightness
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -182,21 +143,21 @@ bindsym $mod+COntrol+Right workspace next
 
 # ====== ROFI ======
 bindsym $mod+d exec rofi -show run
-bindsym $mod+Shift+d exec rofi -show combi
+bindsym $mod+Shift+d exec rofi -show drun
 bindsym $mod+w exec rofi -show window
 bindsym $mod+x exec /etc/nixos/scripts/rofi-sys.sh
 
-
 # ======= AUTORUNS =======
 exec_always feh --bg-fill ~/.wallpaper &
-exec polybar -c /etc/nixos/dots/polybar main &
+exec polybar -c /etc/nixos/dots/polybar base &
 exec xrdb -load /etc/nixos/dots/Xresources
 exec export KDEWM=/usr/bin/i3
+exec xss-lock /etc/nixos/scripts/lock.fish
 
 # ======= APPEARANCE =======
-for_window [class="^.*"] border pixel 1
-gaps inner 4
-gaps outer 2
+for_window [class="^.*"] border pixel 3
+gaps inner 3
+gaps outer 3
 
 # ======= Plasma Integration
 # Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everythiing)
@@ -236,7 +197,7 @@ set $base0D #AE95C7
 set $base0E #C795AE
 set $base0F #C79595
 
-client.focused $base0B $base0B $base00 $base0B
+client.focused $base0D $base0D $base00 $base0D
 client.focused_inactive $base01 $base01 $base03 $base01
 client.unfocused $base01 $base01 $base03 $base01
 client.urgent $base0E $base0E $base00 $base0E
