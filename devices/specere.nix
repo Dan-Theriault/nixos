@@ -60,6 +60,7 @@
       solaar
       chromium # just for youtube tv 
       fortune
+      powertop
     ] );
   };
 
@@ -93,5 +94,6 @@
     acpid.enable = true;
     printing.enable = true;
     compton.enable = true;
+    tlp.enable = true;
   };
 }
