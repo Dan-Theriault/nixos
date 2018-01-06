@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 let
-  unstable = import <unstable> { config = config.nixpkgs.config; };
-  unwrapped = unstable.firefox-beta-bin;
-  name = unwrapped.name;
+  # unstable = import <unstable> { config = config.nixpkgs.config; };
+  # unwrapped = unstable.firefox-devedition-bin-unwrapped;
+  # name = unwrapped.name;
 
   # firefox-custom = unstable.wrapFirefox unwrapped {
   #   browserName = "firefox-devedition";
@@ -13,21 +13,21 @@ let
   # };
   firefox-custom = pkgs.buildEnv {
     name = "firefox-custom";
-    paths = [ pkgs.firefox-beta-bin pkgs.keepassx-community ];
+    paths = [ pkgs.firefox-devedition-bin pkgs.keepassx-community ];
   };
 in
 {
   nixpkgs.config = {
-    packageOverrides = pkgs: {
-      keepassx-community = pkgs.keepassx-community.overrideAttrs (oldAttrs: {
-        src = pkgs.fetchFromGitHub {
-          owner = "varjolintu";
-          repo = "keepassxc";
-          rev = "2.2.4-browser-rc7";
-          sha256 = "0ng0mnxipmxzhf2bbf5ddbb50npkx230pk0l3xll3jv60m3kcx24";
-        };
-      } );
-    };
+    # packageOverrides = pkgs: {
+    #   keepassx-community = pkgs.keepassx-community.overrideAttrs (oldAttrs: {
+    #     src = pkgs.fetchFromGitHub {
+    #       owner = "varjolintu";
+    #       repo = "keepassxc";
+    #       rev = "2.2.4-browser-rc7";
+    #       sha256 = "0ng0mnxipmxzhf2bbf5ddbb50npkx230pk0l3xll3jv60m3kcx24";
+    #     };
+    #   } );
+    # };
     allowUnfree = true;
   };
 
