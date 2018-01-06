@@ -45,13 +45,6 @@
 
   powerManagement = {
     enable = true;
-    powerDownCommands = ''
-      /run/current-system/sw/bin/i3lock-fancy -f Overpass-Black -t "TYPE TO UNLOCK" -- maim -u
-    '';
-    resumeCommands = ''
-      systemctl restart dnscrypt-proxy.service
-      /run/current-system/sw/bin/i3lock
-    '';
   };
 
   environment = {
