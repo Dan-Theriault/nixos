@@ -102,7 +102,10 @@ in
       ( pkgs.neovim.override { configure = vim-configuration; } )
     ]; 
 
-    programs.fish.shellAliases.vim = "nvim";
+    programs.fish.shellAliases = {
+      vim = "nvim";
+      svim = "sudo nvim";
+    };
     
     # nixpkgs.config.packageOverrides = pkgs: {
     #   vim = pkgs.vimUtils.makeCustomizable ( pkgs.vim_configurable.overrideAttrs (oldAttrs: {
