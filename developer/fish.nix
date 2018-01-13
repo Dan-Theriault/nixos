@@ -11,7 +11,7 @@
       sgit = "sudo -E git";
     };
 
-    shellInit = ''
+    interactiveShellInit = ''
       function bind_bang
         switch (commandline -t)[-1]
           case "!"
@@ -34,10 +34,16 @@
     function fish_user_key_bindings
       bind ! bind_bang
       bind '$' bind_dollar
+      set -g fish_key_bindings fish_vi_key_bindings
+      bind -M insert \ck kill-line
+      bind -M insert \ca beginning-of-line
+      bind -M insert \ce end-of-line
     end
 
     function fish_greeting
     end
+
+
   '';
   };
 }
