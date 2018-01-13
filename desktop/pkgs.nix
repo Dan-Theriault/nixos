@@ -13,37 +13,36 @@ let
   # };
   firefox-custom = pkgs.buildEnv {
     name = "firefox-custom";
-    paths = [ pkgs.firefox-devedition-bin pkgs.keepassx-community ];
+    paths = [ 
+      pkgs.firefox
+      pkgs.keepassx-community 
+      pkgs.ffmpeg pkgs.libav
+    ];
   };
 in
 {
   nixpkgs.config = {
-    # packageOverrides = pkgs: {
-    #   keepassx-community = pkgs.keepassx-community.overrideAttrs (oldAttrs: {
-    #     src = pkgs.fetchFromGitHub {
-    #       owner = "varjolintu";
-    #       repo = "keepassxc";
-    #       rev = "2.2.4-browser-rc7";
-    #       sha256 = "0ng0mnxipmxzhf2bbf5ddbb50npkx230pk0l3xll3jv60m3kcx24";
-    #     };
-    #   } );
-    # };
     allowUnfree = true;
+    firefox = {
+      # enableMPlayer = true;
+      ffmpegSupport = true;
+      gtk3Support = true;
+    };
   };
 
   environment.systemPackages =  with pkgs; [
     arandr
-    gnome3.gnome-font-viewer
+    chromium
+    inkscape
+    libav
     libreoffice-fresh
     mpv youtube-dl
-    wireshark
-    zathura
-    xst
     sc-im
-    inkscape
-
     steam
     steam-run
+    wireshark
+    xst
+    zathura
   ] ++ ( with pkgs.kdeApplications; [
       okular
       filelight
