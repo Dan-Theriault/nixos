@@ -8,4 +8,8 @@
     ../developer/python.nix
     ../developer/vim.nix
   ];
+
+  environment.systemPackages = with pkgs; [
+    nixops
+  ];
 }
