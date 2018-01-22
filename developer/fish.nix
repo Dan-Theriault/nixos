@@ -9,6 +9,7 @@
       o = "xdg-open";
       ipy = "ipython3";
       sgit = "sudo -E git";
+      lopdf = "libreoffice --writer --headless --convert-to pdf";
     };
 
     interactiveShellInit = ''
@@ -43,7 +44,11 @@
     function fish_greeting
     end
 
-
+    function fish_right_prompt
+      if [ $IN_NIX_SHELL ]
+        echo "[ $NIX_SHELL ]"
+      end
+    end
   '';
   };
 }
