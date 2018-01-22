@@ -96,7 +96,17 @@ set nobackup
 let g:ale_fixers = {
 \   'python': ['yapf'],
 \}
+let g:ale_linters = {
+\   'python': ['flake8', 'mypy']
+\}
 let g:ale_fix_on_save = 1
+
+let usepython2=$USE_PYTHON2
+if usepython2 == '1'
+    let g:ale_python_flake8_executable = 'python2'
+    let g:ale_python_flake8_options = '-m flake8'
+    let g:ale_python_mypy_options = '--py2'
+endif
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
