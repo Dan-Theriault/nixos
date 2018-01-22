@@ -35,7 +35,7 @@ in
     chromium
     inkscape
     libav
-    libreoffice-fresh
+    libreoffice-fresh detox
     mpv youtube-dl
     sc-im
     steam
