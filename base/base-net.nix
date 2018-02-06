@@ -29,6 +29,7 @@
     syncthing = {
       enable = true;
       openDefaultPorts = true;
+      user = "dtheriault3";
     };
 
     # TODO: Firewall
