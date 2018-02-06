@@ -14,10 +14,18 @@
     pgmanage
     pgcli
     pg_top
+    arduino
   ];
 
   virtualisation.libvirtd.enable = true;
-  users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" ];
+  virtualisation.docker.enable = true;
+  users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" "docker" "dialout" ];
   networking.firewall.checkReversePath = false;
   services.postgresql.enable = true;
+
+  environment.etc."deploy/ssh".text = ''
+    Host github.com
+      IdentityFile /etc/deploy/id_rsa
+      StrictHostKeyChecking=no
+  '';
 }
