@@ -3,6 +3,7 @@
 {
   imports = [
     ../security/kernel.nix
+    ../security/keybase.nix
   ];
 
   services.haveged.enable = true; # better entropy generation
