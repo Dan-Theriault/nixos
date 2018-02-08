@@ -24,6 +24,9 @@
       # Misc. Other Components
       ../misc/fonts.nix
       ../misc/tex.nix
+
+      # Hardening
+      ../security
     ];
 
   # Startup Settings
@@ -54,6 +57,7 @@
       chromium # just for youtube tv 
       fortune
       powertop
+      glxinfo
     ] );
   };
 
@@ -89,4 +93,15 @@
     compton.enable = true;
     tlp.enable = true;
   };
+
+  # Tweaks from nixos-hardware
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 1;
+  };
+  hardware.cpu.intel.updateMicrocode = true;
+  services.xserver.videoDrivers = [ "intel" ];
+
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiIntel
+  ];
 }

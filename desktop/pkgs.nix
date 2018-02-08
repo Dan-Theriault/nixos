@@ -32,11 +32,11 @@ in
 
   environment.systemPackages =  with pkgs; [
     arandr
-    chromium
     inkscape
     libav
     libreoffice-fresh detox
     mpv youtube-dl
+    meld # graphical diffs
     sc-im
     steam
     steam-run

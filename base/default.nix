@@ -26,7 +26,7 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
   services.openntpd.enable = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.lib.mkDefault pkgs.linuxPackages_latest;
 
   # Manual on VT-8
  services.nixosManual.showManual = true;
