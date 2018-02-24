@@ -54,7 +54,7 @@
     systemPackages = ( with pkgs; [
       wpa_supplicant_gui
       solaar
-      chromium # just for youtube tv 
+      google-chrome-beta
       fortune
       powertop
       glxinfo
@@ -96,7 +96,8 @@
 
   # Tweaks from nixos-hardware
   boot.kernel.sysctl = {
-    "vm.swappiness" = 1;
+    "vm.swappiness" = 10; # swap less aggressively
+    "vm.dirty_writeback_centisecs" = 1500; # reduce window for data loss 
   };
   hardware.cpu.intel.updateMicrocode = true;
   services.xserver.videoDrivers = [ "intel" ];
