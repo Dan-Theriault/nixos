@@ -2,7 +2,7 @@
 
 {
   nixpkgs.config.packageOverrides = pkgs: {
-    linux_hardened = pkgs.linux_hardened.override {
+    linux_hardened_copperhead = pkgs.linux_hardened.override {
       # IA32_EMULATION is required by steam,
       # and is disabled by default in the hardened kernel
       extraConfig = ''
@@ -11,7 +11,7 @@
     };
   };
   boot = {
-    kernelPackages = pkgs.linuxPackages_hardened;
+    kernelPackages = pkgs.linuxPackages_hardened_copperhead;
     kernel.sysctl = {
       "kernel.dmesg_restrict" = true;
       # "kernel.kptr_restrict" = 2;
