@@ -13,6 +13,7 @@
   nix = {
     gc.automatic = true;
     useSandbox = true;
+    buildCores = 0;
   };
   nixpkgs.config.allowUnfree = true;
 
