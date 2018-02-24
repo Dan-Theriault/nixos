@@ -9,5 +9,8 @@
   environment.systemPackages = with pkgs; [
     keybase keybase-gui
   ];
+  environment.variables = {
+    NIX_SKIP_KEYBASE_CHECKS = "1";
+  };
 }
 
