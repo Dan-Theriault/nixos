@@ -10,14 +10,17 @@
 
   services = {
     # Secure & Cached DNS
-    dnscrypt-proxy = {
-      enable = true;
-      localPort = 43;
-      # resolverName = "dnscrypt.ca-1";
-    };
+    # dnscrypt-proxy = {
+    #   enable = true;
+    #   localPort = 43;
+    #   # resolverName = "dnscrypt.ca-1";
+    # };
     dnsmasq = {
       enable = true;
-      servers = [ "127.0.0.1#43" ];
+      # servers = [ "127.0.0.1#43" ];
+      # servers = [ "193.138.219.228" ];
+      # servers = [ "9.9.9.9" ];
+      servers = [ "193.138.219.228" "9.9.9.9" ];
       extraConfig =  ''
         address=/lipa.ms.mff.cuni.cz/146.185.144.154
         interface=lo
@@ -30,6 +33,8 @@
       enable = true;
       openDefaultPorts = true;
       user = "dtheriault3";
+      group = "users";
+      dataDir = "/home/dtheriault3/.syncthing";
     };
 
     # TODO: Firewall
