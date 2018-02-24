@@ -21,7 +21,7 @@
     google-play-music-desktop-player
   ] );
 
-  boot.kernelModules = [ "snd_usb_aduio" ]; # external DAC/AMP support
+  boot.kernelModules = [ "snd_usb_audio" ]; # external DAC/AMP support
 
   programs.fish.shellAliases = {
     lyrics = "glyrc lyrics -a (playerctl metadata artist 2>/dev/null) -t (playerctl metadata title 2>/dev/null) -v 0 -w /tmp/lyrics; and cat /tmp/lyrics";
