@@ -1,22 +1,35 @@
 { config, pkgs, ... }:
 
 let
-  # unstable = import <unstable> { config = config.nixpkgs.config; };
-  # unwrapped = unstable.firefox-devedition-bin-unwrapped;
-  # name = unwrapped.name;
-
-  # firefox-custom = unstable.wrapFirefox unwrapped {
-  #   browserName = "firefox-devedition";
-  #   desktopName = "Firefox Developer Edition";
-  #   extraNativeMessagingHosts = [ pkgs.keepassx-community ];
-  #   inherit name;
-  # };
+  keepassxc = pkgs.keepassx-community.overrideDerivation (attrs: rec {
+    version = "2.3.0";
+    buildInputs = attrs.buildInputs ++ [ 
+      pkgs.libargon2 
+      pkgs.curlFull.dev 
+      pkgs.libsodium.dev
+    ];
+    patches = [];
+    cmakeFlags = attrs.cmakeFlags ++ [ 
+      "-DWITH_XC_NETWORKING=ON"
+      "-DWITH_XC_BROWSER=ON"
+      "-DWITH_XC_SSHAGENT=ON"
+      "-DKEEPASSXC_BUILD_TYPE=Release"
+      "-DWITH_XC_HTTP=OFF"
+    ];
+    src = pkgs.fetchFromGitHub {
+      owner = "keepassxreboot";
+      repo = "keepassxc";
+      rev = "2.3.0";
+      sha256 = "1zch1qbqgphhp2p2kvjlah8s337162m69yf4y00kcnfb3539ii5f";
+    };
+  });
   firefox-custom = pkgs.buildEnv {
     name = "firefox-custom";
     paths = [ 
-      pkgs.firefox
-      pkgs.keepassx-community 
+      pkgs.firefox-beta-bin
+      # pkgs.keepassx-community 
       pkgs.ffmpeg pkgs.libav
+      keepassxc
     ];
   };
 in
@@ -24,7 +37,6 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     firefox = {
-      # enableMPlayer = true;
       ffmpegSupport = true;
       gtk3Support = true;
     };
@@ -51,5 +63,6 @@ in
       kgpg
   ] ) ++ [
     firefox-custom 
+    firefoxPackages.tor-browser
   ];
 }
