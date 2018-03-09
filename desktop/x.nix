@@ -29,6 +29,8 @@
     };
   };
 
+  services.gnome3.at-spi2-core.enable = true;
+
   services.redshift = {
     enable = true;
     latitude = "33";
@@ -48,6 +50,7 @@
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
     rofi dmenu              # program launchers
     polybar i3lock-fancy    # additional interface components
+    dunst                   # Notifications
     xss-lock
     networkmanagerapplet    # applets
     xorg.xbacklight xdotool playerctl # scriptable settings
@@ -62,7 +65,7 @@
     xclip
     xbindkeys
 
-    arc-icon-theme arc-theme # Themes
+    arc-icon-theme arc-theme moka-icon-theme # Themes
     qt5ct lxappearance       # and programs to set them
 
   ] ) );
