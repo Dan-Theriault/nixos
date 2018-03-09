@@ -9,18 +9,16 @@
   };
 
   services = {
-    # Secure & Cached DNS
-    # dnscrypt-proxy = {
-    #   enable = true;
-    #   localPort = 43;
-    #   # resolverName = "dnscrypt.ca-1";
-    # };
+    nscd.enable = false;
+    dnscrypt-proxy = {
+      enable = true;
+      localPort = 43;
+    };
     dnsmasq = {
       enable = true;
-      # servers = [ "127.0.0.1#43" ];
+      servers = [ "127.0.0.1#43" ];
       # servers = [ "193.138.219.228" ];
       # servers = [ "9.9.9.9" ];
-      servers = [ "193.138.219.228" "9.9.9.9" ];
       extraConfig =  ''
         address=/lipa.ms.mff.cuni.cz/146.185.144.154
         interface=lo
@@ -38,7 +36,6 @@
     };
 
     # TODO: Firewall
-    # TODO: wireguard
     # TODO: better backup / sync solution?
     # - Rsyncd not really intended for this
     # - syncthing is non-declarative
