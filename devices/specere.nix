@@ -100,6 +100,7 @@
     "vm.dirty_writeback_centisecs" = 1500; # reduce window for data loss 
   };
   hardware.cpu.intel.updateMicrocode = true;
+  hardware.bluetooth.enable = true;
   services.xserver.videoDrivers = [ "intel" ];
 
   hardware.opengl.extraPackages = with pkgs; [
