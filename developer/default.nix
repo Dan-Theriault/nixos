@@ -11,10 +11,8 @@
 
   environment.systemPackages = with pkgs; [
     nixops
-    pgmanage
-    pgcli
-    pg_top
-    arduino
+    pgmanage pgcli pg_top
+    arduino platformio
   ];
 
   virtualisation.libvirtd.enable = true;
