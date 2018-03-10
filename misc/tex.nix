@@ -33,11 +33,16 @@
       crimson
       roboto
 
+      # Syntax Checking
+      lacheck
+      chktex
+
       # ???
       logreq xstring
       ;
     } )
     biber
     fontconfig
+    proselint
   ] );
 }

@@ -97,7 +97,10 @@ let g:ale_fixers = {
 \   'python': ['yapf'],
 \}
 let g:ale_linters = {
-\   'python': ['flake8', 'mypy']
+\   'python': ['flake8', 'mypy'],
+\   'vimwiki': ['proselint'],
+\   'markdown': ['proselint'],
+\   'latex': ['proselint','chktex','lacheck']
 \}
 let g:ale_fix_on_save = 1
 
@@ -133,7 +136,7 @@ let g:vimtex_latexmk_progname = 'nvr' "wrapper for nvim
 let g:ackprg = 'ag --vimgrep'
 
 "Use elm-vim and vimtex instead of polyglot
-let g:polyglot_disabled = ['elm', 'latex']
+let g:polyglot_disabled = ['elm', 'latex', 'markdown']
 
 "Start nerdtree if no files specified
 autocmd StdinReadPre * let s:std_in=1
@@ -166,3 +169,8 @@ let g:vimwiki_list = [{
 \}]
 let g:vimwiki_use_mouse=1
 let g:vimiwki_use_calendar=1
+let g:vimwiki_global_ext=0
+"Override vimwiki filetype setting to enable ALE, standard markdown
+"highlighting, etc.
+autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown.pandoc
+let g:pandoc#syntax#conceal#urls=1
