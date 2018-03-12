@@ -49,6 +49,15 @@ let
       };
       python3Dependencies = [ tasklib ];
     };
+    latex-unicoder = pkgs.vimUtils.buildVimPlugin {
+      name = "latex-unicoder";
+      src = pkgs.fetchFromGitHub {
+        owner = "joom";
+        repo = "latex-unicoder.vim";
+        rev = "46c1ccaec312e4d556c45c71b4de8025ff288f48";
+        sha256 = "03a16ysy7fy8if6kwkgf2w4ja97bqmg3yk7h1jlssz37b385hl2d";
+      };
+    };
   };
 
   vim-configuration = {
@@ -86,6 +95,7 @@ let
         "vim-buftabline"
         "vim-lastplace"
         "vim-taskwiki"
+        "latex-unicoder"
       ];
     } ];
   };
