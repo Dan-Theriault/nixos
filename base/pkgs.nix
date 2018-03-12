@@ -3,24 +3,20 @@
 { config, pkgs, ... }:
 
 {
-  environment.systemPackages = ( with pkgs; [
-    wget curl
-    vim
-    htop ncdu
+  environment.systemPackages = ( with pkgs; [ 
+    dnsutils
     git
-    ag
+    gnupg
+    htop ncdu
     neofetch
+    netsniff-ng
+    nix-prefetch-scripts
+    psmisc # killall and friends
     taskwarrior timewarrior python36Packages.bugwarrior
     tree
-    nix-repl
-    netsniff-ng
-    psmisc # killall and friends
-    gnupg
-    dnsutils
-    nix-prefetch-scripts
     unzip
-    telnet
+    vim
+    wget curl
     whois
-    syncthing
   ] );
 }
