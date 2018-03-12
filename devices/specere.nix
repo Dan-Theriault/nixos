@@ -19,7 +19,7 @@
 
       # Network Services
       ../net/ssh-client.nix
-      ../net/ssh-server.nix
+      # ../net/ssh-server.nix
 
       # Misc. Other Components
       ../misc/fonts.nix
