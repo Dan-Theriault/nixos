@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+# At present, this module should NOT be used without also including developer/default.nix
+# Several programs installed in that module (rg, fd, etc) are required.
+# TODO: Identify all dependencies for this configuration, and move them here
 
 let 
 

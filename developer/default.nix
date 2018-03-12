@@ -13,6 +13,9 @@
     nixops
     pgmanage pgcli pg_top
     arduino platformio
+    fd ripgrep 
+    # tokei #currently broken
+    telnet netcat
   ];
 
   virtualisation.libvirtd.enable = true;
@@ -23,15 +26,6 @@
 
   nix = { 
     package = pkgs.nixUnstable;
-
-    # nixPath = [ 
-    #   "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs" 
-    #   "nixos-config=/etc/nixos/configuration.nix" 
-    #   "/nix/var/nix/profiles/per-user/root/channels" 
-    # ];
-    # ++ [ 
-    #   "ssh-config-file=/etc/static/deploy/ssh" "ssh-auth-sock=$SSH_AUTH_SOCK"
-    # ];
   };
 
   environment.etc."deploy/ssh".text = ''

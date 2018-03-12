@@ -133,7 +133,10 @@ let g:vimtex_latexmk_progname = 'nvr' "wrapper for nvim
 " \}
 
 "ack.vim settings
-let g:ackprg = 'ag --vimgrep'
+let g:ackprg = 'rg --vimgrep'
+
+"ctrlp settings
+let g:ctrlp_user_command ='fd --type file --no-color "" %s'
 
 "Use elm-vim and vimtex instead of polyglot
 let g:polyglot_disabled = ['elm', 'latex', 'markdown']
