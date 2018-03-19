@@ -14,15 +14,13 @@
     pgmanage pgcli pg_top
     arduino platformio
     fd ripgrep 
-    # tokei #currently broken
+    # tokei # currently broken in nixpkgs
     telnet netcat
   ];
 
-  virtualisation.libvirtd.enable = true;
-  virtualisation.docker.enable = true;
+  # virtualisation.libvirtd.enable = true;
   users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" "docker" "dialout" ];
-  networking.firewall.checkReversePath = false;
-  services.postgresql.enable = true;
+  # networking.firewall.checkReversePath = "loose";
 
   nix = { 
     package = pkgs.nixUnstable;
