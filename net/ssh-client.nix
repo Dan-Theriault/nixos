@@ -7,6 +7,10 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  environment.systemPackages = with pkgs; [ 
+    mosh
+  ];
   
   programs.ssh = {
     startAgent = true;

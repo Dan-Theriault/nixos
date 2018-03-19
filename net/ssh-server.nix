@@ -1,6 +1,10 @@
 {config, pkgs, ...}:
 
 {
+  environment.systemPackages = with pkgs; [ 
+    mosh
+  ];
+
   services.openssh = {
     enable = true;
     hostKeys = [
@@ -20,10 +24,6 @@
     '';
   };
 
-  # users.users.dtheriault3 = {
-  #   extraGroups = [ "ssh-user" ];
-  # };
-  # users.groups = { ssh-user = { }; };
   users.groups.ssh-user.members = [ "dtheriault3" ];
 
   services.tor = {
