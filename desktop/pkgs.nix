@@ -43,6 +43,7 @@ in
   };
 
   environment.systemPackages =  with pkgs; [
+    antimony gmsh # weird CAD and a STL viewer.
     arandr
     inkscape
     libav
