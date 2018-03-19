@@ -3,14 +3,15 @@
 { config, pkgs, ... }:
 
 {
-  environment.systemPackages = ( with pkgs; [ 
+  environment.systemPackages = with pkgs; [ 
+    abduco # detached sessions
     dnsutils
     git
     gnupg
     htop ncdu
     neofetch
-    netsniff-ng
-    nix-prefetch-scripts
+    netsniff-ng # flowtop, others
+    nix-prefetch-scripts # is this necessary with 2.0?
     psmisc # killall and friends
     taskwarrior timewarrior python36Packages.bugwarrior
     tree
@@ -18,5 +19,5 @@
     vim
     wget curl
     whois
-  ] );
+  ];
 }
