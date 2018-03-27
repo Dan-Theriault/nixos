@@ -23,9 +23,12 @@ let
       sha256 = "1zch1qbqgphhp2p2kvjlah8s337162m69yf4y00kcnfb3539ii5f";
     };
   });
+
+  mozilla = builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
   firefox-custom = pkgs.buildEnv {
     name = "firefox-custom";
     paths = [ 
+      # pkgs.latest.firefox-beta-bin
       pkgs.firefox-beta-bin
       # pkgs.keepassx-community 
       pkgs.ffmpeg pkgs.libav
@@ -34,19 +37,12 @@ let
   };
 in
 {
-  nixpkgs.config = {
-    allowUnfree = true;
-    firefox = {
-      ffmpegSupport = true;
-      gtk3Support = true;
-    };
-  };
-
   environment.systemPackages =  with pkgs; [
     antimony gmsh # weird CAD and a STL viewer.
     arandr
     inkscape
     libav
+    libqalculate
     libreoffice-fresh detox
     mpv youtube-dl
     meld # graphical diffs

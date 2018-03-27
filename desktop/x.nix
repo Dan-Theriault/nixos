@@ -38,12 +38,24 @@
   };
 
   services.compton = { # bad idea with vms or DEs
-    backend = "glx";
     vSync = "opengl";
-    inactiveOpacity = "1.00";
+    # inactiveOpacity = "1.00";
     extraOptions = ''
       paint-on-overlay = true;
       glx-no-stencil = true;
+
+      opacity-rule = [ "85:class_g = 'st-256color'" ];
+
+      blur-background = true;
+      blur-background-fixed = true;
+      blur-kern = "7x7box";
+
+      shadow = true;
+      no-dock-shadow = true;
+      no-dnd-shadow = true;
+      shadow-radius = 7;
+      shadow-offset-x = -7;
+      shadow-offset-y = -7;
     '';
   };
 

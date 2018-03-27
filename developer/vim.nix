@@ -68,37 +68,37 @@ let
     vam.knownPlugins = pkgs.vimPlugins // customPlugins;
     vam.pluginDictionaries = [ {
       names = [
+        "Tabular"
         "ack-vim"
         "airline"
         "ale"
         "calendar"
         "commentary"
         "ctrlp"
-        "deoplete-nvim"
         "deoplete-jedi"
+        "deoplete-nvim"
         "deoplete-rust"
         "elm-vim"
         "goyo"
         "nerdtree"
         "polyglot"
         "surround"
-        "Tabular"
         "tagbar"
         "vim-airline-themes"
         "vim-colorschemes"
-        # "vim-markdown"
         "vim-nix"
         "vim-pandoc"
         "vim-pandoc-syntax"
         "vim-signify"
         "vimtex"
         "vimwiki"
+        # "vim-markdown"
 
         # Custom Packages
+        "latex-unicoder"
         "vim-buftabline"
         "vim-lastplace"
         "vim-taskwiki"
-        "latex-unicoder"
       ];
     } ];
   };

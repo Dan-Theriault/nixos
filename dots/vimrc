@@ -67,18 +67,28 @@ let g:airline_left_sep=''
 let g:airline_left_alt_sep = '|'
 let g:airline_right_sep=''
 let g:airline_righ_alt_sep = '|'
-let g:airline_theme='base16_shell'
 let g:airline#extensions#ale#enabled = 1
 let g:airline_section_x=''
 let g:airline_section_y='%{strftime("%c")}'
 let g:airline_section_a = airline#section#create_left(['mode', 'crypt', 'paste', 'keymap', 'capslock', 'xkblayout', 'iminsert'])
 
 "colorscheme
-let base16colorspace=16
-source /etc/nixos/dots/colors.vim
-let g:airline_theme='base16_ashes'
+let base16colorspace=256
+let g:airline_theme='base16_ocean'
+
 hi LineNr ctermbg=None
 hi Normal ctermbg=None
+hi SignColumn ctermbg=None
+
+hi BufTabLineCurrent cterm=italic ctermfg=15 ctermbg=242
+hi BufTabLineActive cterm=italic ctermfg=15 ctermbg=242
+hi BufTabLineHidden cterm=italic ctermfg=15 ctermbg=None
+hi TabLineFill ctermbg=None cterm=None
+
+hi SpellBad ctermbg=None
+
+hi FoldColumn ctermbg=None
+set foldcolumn=0
 
 "Italics support
 hi Comment cterm=italic
@@ -175,5 +185,5 @@ let g:vimiwki_use_calendar=1
 let g:vimwiki_global_ext=0
 "Override vimwiki filetype setting to enable ALE, standard markdown
 "highlighting, etc.
-autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown.pandoc
+autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown.vimwiki
 let g:pandoc#syntax#conceal#urls=1
