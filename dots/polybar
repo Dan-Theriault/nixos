@@ -261,10 +261,10 @@ label =  %output%
 
 [module/music]
 type = custom/script
-interval = 1
+interval = 2
 
 label = %output:0:60:...%
-exec = /etc/nixos/scripts/polybar/mpris.sh 2>/dev/null | tr '[:lower:]' '[:upper:]'
+exec = /etc/nixos/scripts/polybar/music.sh 2>/dev/null | tr '[:lower:]' '[:upper:]'
 label-background = ${colors.bg}
 label-foreground = ${colors.music}
 label-padding = 3
