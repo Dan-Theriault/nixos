@@ -2,6 +2,9 @@
 
 { config, pkgs, ... }:
 
+let
+  mozilla = builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
+in
 {
   imports = [
     ../base/base-net.nix
@@ -15,7 +18,16 @@
     useSandbox = true;
     buildCores = 0;
   };
-  nixpkgs.config.allowUnfree = true;
+
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    overlays = [ (import "${mozilla}/firefox-overlay.nix") ];
+    # firefox = {
+    #   ffmpegSupport = true;
+    #   gtk3Support = true;
+    # };
+  };
 
   # Select internationalisation properties.
   i18n = {
@@ -26,7 +38,7 @@
 
   # Set your time zone.
   time.timeZone = "America/New_York";
-  services.openntpd.enable = true;
+  # services.openntpd.enable = true;
   boot.kernelPackages = pkgs.lib.mkDefault pkgs.linuxPackages_latest;
 
   # Manual on VT-8
