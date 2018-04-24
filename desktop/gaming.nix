@@ -8,7 +8,8 @@
     ];
     pulseaudio.support32Bit = true;
   };
-  environment.systemPackages = [
-    pkgs.steam
+  environment.systemPackages = with pkgs; [
+    steam
+    steam-run
   ];
 }
