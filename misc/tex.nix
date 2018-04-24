@@ -8,8 +8,8 @@
       scheme-full
 
       # XeTeX Compiler
-      xetex xetex-def
-      fontspec euenc
+      # xetex xetex-def
+      # fontspec euenc
 
       # Compilation
       latexmk pdftex
