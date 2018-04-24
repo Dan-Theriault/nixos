@@ -4,7 +4,9 @@
   hardware.pulseaudio = {
     enable = true;
     package = pkgs.pulseaudioFull;
-    support32Bit = true;
+    extraConfig = ''
+      load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+    '';
   };
 
   environment.systemPackages = ( with pkgs; [
@@ -17,8 +19,11 @@
     ffmpeg
     gstreamer
     ncmpcpp
+    mpc_cli
+    sonata
+    clerk
 
-    google-play-music-desktop-player
+    spotify
   ] );
 
   boot.kernelModules = [ "snd_usb_audio" ]; # external DAC/AMP support
@@ -28,33 +33,30 @@
   };
 
   # Here be dragons
-  # services.mopidy = {
-  #   enable = true;
-  #   extensionPackages = ( with pkgs; [
-  #     mopidy-gmusic
-  #     mopidy-mopify
-  #     mopidy-youtube
-  #   ] );
-  #   configuration = '' 
-  #     [core]
-  #     restore_state = true
+  services.mopidy = {
+    enable = true;
+    extensionPackages = ( with pkgs; [
+      mopidy-iris
+      mopidy-mopify
+      mopidy-spotify
+      mopidy-spotify-tunigo
+      mopidy-youtube
+    ] );
+    configuration = '' 
+      [core]
+      restore_state = true
 
-  #     [audio]
-  #     mixer = none
-  #     mixer-volume = 100
-  #     output = pulsesink
+      [audio]
+      mixer = none
+      output = pulsesink server=127.0.0.1
+      mixer_volume = 100
 
-  #     [youtube]
-  #     enabled = true
+      [youtube]
+      enabled = true
 
-  #     [mopify]
-  #     enabled = true
-
-  #     [gmusic]
-  #     enabled = true
-  #     all_access = true
-  #     bitrate = 320
-  #   '';
-  #   extraConfigFiles = [ "/home/dtheriault3/.mopidy" ]; # secret login details
-  # };
+      [mopify]
+      enabled = true
+    '';
+    extraConfigFiles = [ "/etc/secrets/mopidy-spotify" ]; # secret login details
+  };
 }
