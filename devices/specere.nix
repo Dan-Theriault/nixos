@@ -39,6 +39,7 @@
       editor = false;
     };
     loader.efi.canTouchEfiVariables = true;
+    plymouth.enable = true;
   };
 
   networking = { 
@@ -50,16 +51,14 @@
     enable = true;
   };
 
-  environment = {
-    systemPackages = ( with pkgs; [
+  environment.systemPackages = with pkgs; [
       wpa_supplicant_gui
       solaar
-      google-chrome-beta
       fortune
       powertop
       glxinfo
-    ] );
-  };
+      blueman
+    ];
 
   # nixpkgs.config = {
   #   chromium = {
@@ -85,6 +84,7 @@
       libinput = {
         enable = true;
         naturalScrolling = true;
+        horizontalScrolling = false; # unintuitively, enables horizontal scrolling
       };
     };
     upower.enable = true;
