@@ -45,10 +45,10 @@ in
           <edit name="rgba" mode="assign">
             <const>rgb</const>
           </edit>
-          <edit name=lcdfilter" mode="assign">
+          <edit name="lcdfilter" mode="assign">
             <const>lcddefault</const>
           </edit>
-          <test name="weight" compare="more>
+          <test name="weight" compare="more">
             <const>medium</const>
           </test>
           <edit name="autohint" mode="assign">
