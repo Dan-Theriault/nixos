@@ -15,7 +15,14 @@
     layout = "us";
     xkbOptions = "compose:ralt, caps:escape"; # may not work as expected in vm
 
-    displayManager.sddm.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      extraConfig = ''
+         [General]
+         type=image
+         background=/etc/wallpapers/sddm
+      '';
+    };
     desktopManager.plasma5.enable = true;
 
     windowManager.i3 = {
@@ -30,6 +37,7 @@
   };
 
   services.gnome3.at-spi2-core.enable = true;
+  sound.enable = true;
 
   services.redshift = {
     enable = true;
@@ -38,25 +46,28 @@
   };
 
   services.compton = { # bad idea with vms or DEs
+    enable = pkgs.lib.mkDefault true;
     vSync = "opengl";
-    # inactiveOpacity = "1.00";
+    backend = "glx";
+    # inactiveOpacity = "0.8";
+    opacityRules = [
+      "85:class_g = 'st-256color'"
+    ];
+    shadow = true;
+    shadowOffsets = [ (-7) (-7) ];
     extraOptions = ''
       paint-on-overlay = true;
       glx-no-stencil = true;
-
-      opacity-rule = [ "85:class_g = 'st-256color'" ];
 
       blur-background = true;
       blur-background-fixed = true;
       blur-kern = "7x7box";
 
-      shadow = true;
       no-dock-shadow = true;
       no-dnd-shadow = true;
       shadow-radius = 7;
-      shadow-offset-x = -7;
-      shadow-offset-y = -7;
     '';
+
   };
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
@@ -64,7 +75,6 @@
     polybar i3lock-fancy    # additional interface components
     dunst                   # Notifications
     xss-lock
-    networkmanagerapplet    # applets
     xorg.xbacklight xdotool playerctl # scriptable settings
     feh                     # background image
     maim scrot              # screenshots
@@ -81,4 +91,6 @@
     qt5ct lxappearance       # and programs to set them
 
   ] ) );
+
+  programs.light.enable = true; # backlight control pkg + setuid wrapper
 }
