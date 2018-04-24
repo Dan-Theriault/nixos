@@ -10,12 +10,14 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    nixops
-    pgmanage pgcli pg_top
+    nixops # nixos-shell
+    pgmanage pgcli pg_top postgis timescaledb
     arduino platformio
     fd ripgrep 
     # tokei # currently broken in nixpkgs
+
     telnet netcat
+    jq postman
   ];
 
   # virtualisation.libvirtd.enable = true;
