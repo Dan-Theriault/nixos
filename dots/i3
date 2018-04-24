@@ -1,10 +1,8 @@
 # i3 config file (v4)
-#
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
+# Font for window titles. 
 font pango:IBMPlexMono 12, FontAwesome 10
 
 # start a terminal
@@ -44,12 +42,6 @@ bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-# bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 # ======== WORKSPACE SETTINGS =======
 set $ws1 "1"
@@ -126,20 +118,14 @@ bindsym Alt+XF86AudioLowerVolume exec pactl set-sink-volume 2 +5%
 bindsym Alt+XF86AudioMute exec pactl set-sink-mute 2 toggle
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 1 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 1 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 2 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 2 # decrease screen brightness
 
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec playerctl play-pause 2> /dev/null || mpc toggle
+bindsym XF86AudioNext exec playerctl next 2> /dev/null || mpc next
+bindsym XF86AudioPrev exec playerctl previous 2> /dev/null || mpc prev
 
-# Fullscreen
-bindsym XF86Display fullscreen
-
-# Workspace sequencing
-bindsym $mod+Control+Left workspace prev
-bindsym $mod+COntrol+Right workspace next
 
 # ====== ROFI ======
 bindsym $mod+d exec rofi -show run
@@ -150,10 +136,9 @@ bindsym $mod+c exec rofi -show calc -modi "calc:qalc +u8 -nocurrencies"
 
 # ======= AUTORUNS =======
 exec_always feh --bg-fill ~/.wallpaper &
-exec polybar -c /etc/nixos/dots/polybar base &
 exec xrdb -load /etc/nixos/dots/Xresources
 exec export KDEWM=/usr/bin/i3
-exec xss-lock /etc/nixos/scripts/lock.fish
+exec_always xss-lock /etc/nixos/scripts/lock.fish
 
 # ======= APPEARANCE =======
 for_window [class="^.*"] border pixel 6
@@ -200,5 +185,3 @@ client.focused $baseD $baseD $base0 $baseD
 client.focused_inactive $base1 $base1 $base3 $base1
 client.unfocused $base1 $base1 $base3 $base1
 client.urgent $baseE $baseE $base0 $baseE
-
-
