@@ -14,9 +14,14 @@ in
 
   # Nix settings
   nix = {
-    gc.automatic = true;
-    useSandbox = true;
-    buildCores = 0;
+    gc = {
+      automatic = true;
+      options = "-d";
+    };
+    buildCores = 1;
+    maxJobs = 4;
+    allowedUsers = [ "@wheel" ];
+    autoOptimiseStore = true;
   };
 
 

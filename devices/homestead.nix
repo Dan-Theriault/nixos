@@ -7,25 +7,25 @@
 {
   imports =
     [ 
-      /etc/nixos/base                       # core modules
-      /etc/nixos/hardware-configuration.nix # hardware, detected automatically
+      ../base                       # core modules
+      ../hardware-configuration.nix # hardware, detected automatically
 
-      /etc/nixos/desktop/audio.nix
-      /etc/nixos/desktop/pkgs.nix
-      /etc/nixos/desktop/x.nix              # DE / WM configuration
+      ../desktop/audio.nix
+      ../desktop/pkgs.nix
+      ../desktop/x.nix              # DE / WM configuration
+      ../desktop/gaming.nix
 
-      /etc/nixos/developer/fish.nix
-      /etc/nixos/developer/python.nix
-      /etc/nixos/developer/vim.nix
+      ../developer
 
-      /etc/nixos/misc/brother-printing.nix
-      /etc/nixos/misc/fonts.nix
-      /etc/nixos/misc/home-users.nix
-      /etc/nixos/misc/tex.nix
+      ../misc/brother-printing.nix
+      ../misc/fonts.nix
+      ../misc/home-users.nix
+      ../misc/tex.nix
 
-      /etc/nixos/net/ssh-client.nix         # client configuration + preset known hosts (WIP)
-      /etc/nixos/net/ssh-server.nix         # OpenSSH server as a TOR hidden service
-      /etc/nixos/net/sync.nix               # File sync with unison
+      ../net/ssh-client.nix         # client configuration + preset known hosts (WIP)
+      ../net/ssh-server.nix         # OpenSSH server as a TOR hidden service
+
+      ../security
     ];
   
   # Handle two encrypted partitions
@@ -38,13 +38,20 @@
     preLVM = true;
   };
 
-  hardware.bluetooth.enable = true;
   boot.initrd.availableKernelModules = [ "hid-logitech-hidpp" "plymouth" "plymouth-encrypt" ]; # logitech required to get keyboard / mouse for LUKS unlock
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    editor = false;
+  };
 
   boot.plymouth.enable = true;
 
   networking.hostName = "homestead"; 
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "02:30";
+  };
 
   # # This is mostly useless, since the ISP blocks a lot of ports.
   # # Left in just-in-case (and to test my assumptions on reading secret files).
@@ -59,29 +66,47 @@
   # };
 
   environment.systemPackages = with pkgs; [
-    wget git curl # Bootstrapping tools
-
     # Only needed on this host
-    chromium solaar kdenlive
+    chromium solaar 
+    google-chrome-beta
+    blueman
+    compton
   ];
+
+  services.udev.packages = with pkgs; [ solaar ];
 
   services.xserver.xrandrHeads = [
     {
       output = "HDMI1";
-      primary = true;
       monitorConfig = ''
         Option "mode" "1920x1080"
         Option "pos" "0x0"
-        Option "rotate" "normal"
+        Option "rotate" "right"
       '';
     }
     {
       output = "VGA1";
+      primary = true;
       monitorConfig = ''
         Option "mode" "1920x1080"
-        Option "pos" "1920x0"
+        Option "pos" "1080x465"
         Option "rotate" "normal"
       '';
     }
+  ];
+
+  hardware.cpu.intel.updateMicrocode = true;
+  services.compton.enable = false;
+
+  # Tweaks from nixos-hardware
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10; # swap less aggressively
+    "vm.dirty_writeback_centisecs" = 1500; # reduce window for data loss 
+  };
+  hardware.bluetooth.enable = true;
+  services.xserver.videoDrivers = [ "intel" ];
+
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiIntel
   ];
 }

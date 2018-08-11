@@ -41,7 +41,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+# bindsym $mod+space focus mode_toggle
 
 # ======== WORKSPACE SETTINGS =======
 set $ws1 "1"
@@ -128,7 +128,7 @@ bindsym XF86AudioPrev exec playerctl previous 2> /dev/null || mpc prev
 
 
 # ====== ROFI ======
-bindsym $mod+d exec rofi -show run
+bindsym $mod+space exec rofi -show run
 bindsym $mod+Shift+d exec rofi -show drun
 bindsym $mod+w exec rofi -show window
 bindsym $mod+x exec /etc/nixos/scripts/rofi-sys.sh

@@ -30,53 +30,54 @@ in
     firewall.allowPing = true;
   };
 
-  environment.systemPackages = [ dnscrypt-proxy-2 ];
-  systemd.sockets.dnscrypt-proxy = {
-    before = [ "nss-lookup.target" ];
-    wants = [ "nss-lookup.target" ];
-    socketConfig = {
-      ListenStream = "127.0.0.1:43";
-      ListenDatagram = "127.0.0.1:43";
-      NoDelay = true;
-      DeferAcceptSec = 1;
-    };
-    wantedBy = [ "sockets.target" ];
-  };
+  # environment.systemPackages = [ dnscrypt-proxy-2 ];
+  # systemd.sockets.dnscrypt-proxy = {
+  #   before = [ "nss-lookup.target" ];
+  #   wants = [ "nss-lookup.target" ];
+  #   socketConfig = {
+  #     ListenStream = "127.0.0.1:43";
+  #     ListenDatagram = "127.0.0.1:43";
+  #     NoDelay = true;
+  #     DeferAcceptSec = 1;
+  #   };
+  #   wantedBy = [ "sockets.target" ];
+  # };
 
-  systemd.services.dnscrypt-proxy = {
-    after = [ "network.target" ];
-    before = [ "nss-lookup.target" ];
-    wants = [ "nss-lookup.target" ];
-    serviceConfig = {
-      NonBlocking = true;
-      ExecStart = "${dnscrypt-proxy-2}/bin/dnscrypt-proxy --config /etc/dnscrypt-proxy/dnscrypt-proxy.toml";
-      ProtectHome="yes";
-      ProtectControlGroups="yes";
-      ProtectKernelModules="yes";
-      DynamicUser="yes";
-    };
-    bindsTo = [ "dnscrypt-proxy.socket" ];
-    wantedBy = [ "dnscrypt-proxy.socket" ];
-  };
+  # systemd.services.dnscrypt-proxy = {
+  #   after = [ "network.target" ];
+  #   before = [ "nss-lookup.target" ];
+  #   wants = [ "nss-lookup.target" ];
+  #   serviceConfig = {
+  #     NonBlocking = true;
+  #     ExecStart = "${dnscrypt-proxy-2}/bin/dnscrypt-proxy --config /etc/dnscrypt-proxy/dnscrypt-proxy.toml";
+  #     ProtectHome="yes";
+  #     ProtectControlGroups="yes";
+  #     ProtectKernelModules="yes";
+  #     DynamicUser="yes";
+  #   };
+  #   bindsTo = [ "dnscrypt-proxy.socket" ];
+  #   wantedBy = [ "dnscrypt-proxy.socket" ];
+  # };
 
   services = {
-    nscd.enable = false;
+    resolved.enable = true;
+    # nscd.enable = false;
     # dnscrypt-proxy = {
     #   enable = true;
     #   localPort = 43;
     # };
-    dnsmasq = {
-      enable = true;
-      # servers = [ "127.0.0.1#43" "1.1.1.1" ];
-      servers = [ "127.0.0.1#43" ];
-      # servers = [ "193.138.219.228" ];
-      # servers = [ "1.1.1.1" ];
-      extraConfig =  ''
-        address=/lipa.ms.mff.cuni.cz/146.185.144.154
-        interface=lo
-        no-resolv
-      '';
-    };
+    # dnsmasq = {
+    #   enable = true;
+    #   servers = [ "127.0.0.1#43" "1.1.1.1" ];
+    #   # servers = [ "127.0.0.1#43" ];
+    #   # servers = [ "193.138.219.228" ];
+    #   # servers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
+    #   # extraConfig =  ''
+    #   #   address=/lipa.ms.mff.cuni.cz/146.185.144.154
+    #   #   interface=lo
+    #   #   no-resolv
+    #   # '';
+    # };
 
     # Secure serverless sync
     syncthing = {
