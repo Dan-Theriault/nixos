@@ -7,6 +7,7 @@
     ../developer/pkgs.nix
     ../developer/python.nix
     ../developer/vim.nix
+    ../developer/emacs.nix
   ];
 
   environment.systemPackages = with pkgs; [

@@ -131,7 +131,7 @@ bindsym XF86AudioPrev exec playerctl previous 2> /dev/null || mpc prev
 bindsym $mod+space exec rofi -show run
 bindsym $mod+Shift+d exec rofi -show drun
 bindsym $mod+w exec rofi -show window
-bindsym $mod+x exec /etc/nixos/scripts/rofi-sys.sh
+bindsym $mod+Shift+x exec /etc/nixos/scripts/rofi-sys.sh
 bindsym $mod+c exec rofi -show calc -modi "calc:qalc +u8 -nocurrencies"
 
 # ======= AUTORUNS =======

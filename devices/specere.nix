@@ -39,7 +39,7 @@
       editor = false;
     };
     loader.efi.canTouchEfiVariables = true;
-    plymouth.enable = true;
+    # plymouth.enable = true;
   };
 
   networking = { 
