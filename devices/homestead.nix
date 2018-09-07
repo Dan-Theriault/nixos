@@ -21,6 +21,7 @@
       ../misc/fonts.nix
       ../misc/home-users.nix
       ../misc/tex.nix
+      ../misc/bluej.nix
 
       ../net/ssh-client.nix         # client configuration + preset known hosts (WIP)
       ../net/ssh-server.nix         # OpenSSH server as a TOR hidden service
@@ -68,7 +69,7 @@
   environment.systemPackages = with pkgs; [
     # Only needed on this host
     chromium solaar 
-    google-chrome-beta
+    # google-chrome-beta
     blueman
     compton
   ];

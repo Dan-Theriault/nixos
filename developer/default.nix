@@ -19,6 +19,7 @@
 
     telnet netcat
     jq postman
+    jdk8
   ];
 
   # virtualisation.libvirtd.enable = true;

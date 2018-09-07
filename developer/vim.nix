@@ -105,7 +105,8 @@ let
 in
   { 
     environment.systemPackages = [ 
-      ( pkgs.neovim.override { configure = vim-configuration; } )
+      # ( pkgs.neovim.override { configure = vim-configuration; } )
+      pkgs.neovim
     ]; 
     programs.fish.shellAliases = {
       vim = "nvim";
