@@ -1,0 +1,174 @@
+(require 'package)
+(add-to-list 'package-archives 
+           '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+	   '("org" . "https://orgmode.org/elpa/") t)
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+
+(setq user-full-name "Daniel Theriault"
+      user-mail-address "daniel.theriault@stresearch.com")
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration nil)
+  :bind
+  (:map evil-visual-state-map
+	("<" . (lambda ()
+		 (interactive)
+		 (evil-shift-left (region-beginning) (region-end))
+		 (evil-normal-state)
+		 (evil-visual-restore)))
+	(">" . (lambda ()
+		 (interactive)
+		 (evil-shift-right (region-beginning) (region-end))
+		 (evil-normal-state)
+		 (evil-visual-restore))))
+  (:map evil-motion-state-map
+	("E" . 'evil-end-of-line)
+	("B" . 'evil-beginning-of-line)
+	("j" . 'evil-next-visual-line)
+	("k" . 'evil-previous-visual-line))
+  :config
+
+  (use-package evil-collection
+    :ensure t
+    :config
+    (evil-collection-init))
+
+  (evil-mode 1)
+
+  (use-package evil-leader
+    :ensure t
+    :config
+    ;; mapleader ,
+    (global-evil-leader-mode))
+
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode))
+
+  (use-package evil-indent-textobject
+    :ensure t)
+
+  (use-package evil-commentary
+    :ensure t
+    :config
+    (evil-commentary-mode))
+
+  (use-package evil-cleverparens
+    :ensure t
+    :config
+    (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
+    (add-hook 'geiser-mode-hook #'evil-cleverparens-mode)))
+
+(use-package org
+  :ensure t)
+
+(use-package evil-org
+    :ensure t
+    :after org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+		(lambda ()
+		(evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
+
+
+(use-package find-file-in-project
+  :ensure t
+  :config
+  (setq ffip-use-rust-fd t))
+
+(use-package helm
+  :ensure t)
+  
+(use-package magit
+  :ensure t
+  :config
+  (use-package evil-magit
+    :ensure t))
+
+(use-package powerline
+  :ensure t
+  :config
+  (powerline-center-evil-theme))
+
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\.md\\'" . gfm-mode)))
+
+(use-package apropospriate-theme
+  :ensure t
+  :config
+  (load-theme 'apropospriate-light t))
+
+(use-package geiser
+  :ensure t
+  :config
+  (setq geiser-guile-binary "/run/current-system/sw/bin/guile"))
+
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package deft
+  :ensure t
+  :config
+  (setq deft-directory "~/Notes")
+  (setq deft-default-extension "md")
+  (setq deft-text-mode 'markdown-mode)
+  (setq deft-use-filename-as-title t)
+  (setq deft-use-filter-string-for-filename t)
+  (setq deft-markdown-mode-title-level 1)
+  (setq deft-auto-save-interval 0))
+
+(use-package linum-relative
+  :ensure t
+  :config
+  (linum-relative-global-mode))
+
+(set-face-attribute 'default nil
+  :family "IBM Plex Mono"
+  :height 110
+  :weight 'medium)
+
+(savehist-mode 1)
+(tool-bar-mode -1)
+(show-paren-mode t)
+(scroll-bar-mode -1)
+
+
+(set-face-attribute 'linum nil :height 80 :weight 'normal)
+(set-face-attribute 'linum-relative-current-face nil :height 80 :weight 'normal)
+(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+(setq save-interprogram-paste-before-kill t)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("c3e6b52caa77cb09c049d3c973798bc64b5c43cc437d449eacf35b3e776bf85c" "5a0eee1070a4fc64268f008a4c7abfda32d912118e080e18c3c865ef864d1bea" "70f5a47eb08fe7a4ccb88e2550d377ce085fedce81cf30c56e3077f95a2909f2" default)))
+ '(package-selected-packages
+   (quote
+    (deft company evil-cleverparens lispyville lispy paredit geiser apropospriate-theme evil-org evil-org-mode evil-collection intellij-theme markdown-mode powerline linum-relative evil-magit org-mode evil-commentary find-file-in-project base16-theme ripgrep helm magit evil))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
