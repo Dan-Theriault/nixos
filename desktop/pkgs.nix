@@ -39,6 +39,7 @@ in
       dolphin
       kate
       kgpg
+      spectacle
   ] ) ++ [
     firefox-custom 
     firefoxPackages.tor-browser
