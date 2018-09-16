@@ -9,6 +9,7 @@
     git
     gnupg
     htop ncdu
+    mailutils
     neofetch
     netsniff-ng # flowtop, others
     nix-prefetch-scripts # is this necessary with 2.0?
