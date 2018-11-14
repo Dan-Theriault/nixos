@@ -24,6 +24,8 @@
       # Misc. Other Components
       ../misc/fonts.nix
       ../misc/tex.nix
+      ../misc/home-users.nix
+      ../misc/bluej.nix
 
       # Hardening
       ../security
@@ -90,7 +92,7 @@
     upower.enable = true;
     acpid.enable = true;
     printing.enable = true;
-    compton.enable = true;
+    compton.enable = false;
     tlp.enable = true;
   };
 
