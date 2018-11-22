@@ -10,25 +10,26 @@
 
       # Desktop Environment
       ../desktop/audio.nix
-      ../desktop/pkgs.nix
-      ../desktop/x.nix
       ../desktop/gaming.nix
+      ../desktop/pkgs.nix
+      ../desktop/tex.nix
+      ../desktop/x.nix
+      ../desktop/fonts.nix
+      ../desktop/tex.nix
+      ../desktop/home-users.nix
+      ../desktop/bluej.nix
 
       # Developer Tooling
       ../developer
 
       # Network Services
+      ../net
       ../net/ssh-client.nix
       # ../net/ssh-server.nix
 
-      # Misc. Other Components
-      ../misc/fonts.nix
-      ../misc/tex.nix
-      ../misc/home-users.nix
-      ../misc/bluej.nix
-
       # Hardening
       ../security
+      ../security/keybase.nix
     ];
 
   # Startup Settings
@@ -61,14 +62,6 @@
       glxinfo
       blueman
     ];
-
-  # nixpkgs.config = {
-  #   chromium = {
-  #     enablePepperFlash = true;
-  #     enablePepperPDF = true;
-  #     enableWideVine = true;
-  #   };
-  # };
 
   services = { 
     xserver = {

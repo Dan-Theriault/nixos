@@ -6,19 +6,13 @@ let
   mozilla = builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
 in
 {
-  imports = [
-    ../base/base-net.nix
-    ../base/users.nix
-    ../base/pkgs.nix
-  ];
-
   # Nix settings
   nix = {
     gc = {
       automatic = true;
       options = "-d";
     };
-    buildCores = 1;
+    buildCores = 4;
     maxJobs = 4;
     allowedUsers = [ "@wheel" ];
     autoOptimiseStore = true;
@@ -28,10 +22,6 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     overlays = [ (import "${mozilla}/firefox-overlay.nix") ];
-    # firefox = {
-    #   ffmpegSupport = true;
-    #   gtk3Support = true;
-    # };
   };
 
   # Select internationalisation properties.
@@ -51,4 +41,44 @@ in
 
   # Version
   system.stateVersion = "17.09";
+
+  # CLI utilities, services, and other packages that should always be installed.
+  environment.systemPackages = with pkgs; [ 
+    abduco # detached sessions
+    dnsutils
+    git
+    gnupg
+    htop 
+    ncdu
+    mailutils
+    neofetch
+    netsniff-ng # flowtop, others
+    psmisc # killall and friends
+    tree
+    unzip
+    vim
+    wget curl
+    whois
+  ];
+
+  # Setup user account(s)
+  users = {
+    defaultUserShell = pkgs.bash;
+    users.dtheriault3 = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+	"disk"
+	"audio" "video" 
+	"networkmanager" 
+	"systemd-journal" 
+	"scanner" "lpadmin" 
+	"bluetooth" 
+      ];
+      initialPassword = "hagan lio"; # change immediately after install with passwd
+    };
+  };
+  security.sudo.extraConfig = ''
+    Defaults env_reset,pwfeedback
+  '';
 }

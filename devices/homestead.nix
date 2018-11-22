@@ -1,33 +1,31 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
+# Home Desktop Configuration
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ 
-      ../base                       # core modules
-      ../hardware-configuration.nix # hardware, detected automatically
+  imports = [ 
+    ../base                       # core modules
+    ../hardware-configuration.nix # hardware, detected automatically
 
-      ../desktop/audio.nix
-      ../desktop/pkgs.nix
-      ../desktop/x.nix              # DE / WM configuration
-      ../desktop/gaming.nix
+    ../desktop/audio.nix
+    ../desktop/gaming.nix
+    ../desktop/pkgs.nix
+    ../desktop/tex.nix
+    ../desktop/x.nix              # DE / WM configuration
 
-      ../developer
+    ../developer
 
-      ../misc/brother-printing.nix
-      ../misc/fonts.nix
-      ../misc/home-users.nix
-      ../misc/tex.nix
-      ../misc/bluej.nix
+    ../misc/brother-printing.nix
+    ../misc/fonts.nix
+    ../misc/home-users.nix
 
-      ../net/ssh-client.nix         # client configuration + preset known hosts (WIP)
-      ../net/ssh-server.nix         # OpenSSH server as a TOR hidden service
+    ../net
+    ../net/ssh-client.nix         # client configuration + preset known hosts (WIP)
+    ../net/ssh-server.nix         # OpenSSH server as a TOR hidden service
+    # ../net/wireguard.nix
 
-      ../security
-    ];
+    ../security
+    ../security/keybase.nix
+  ];
   
   # Handle two encrypted partitions
   boot.initrd.luks.devices.aCrypt = { # large HDD
@@ -39,7 +37,7 @@
     preLVM = true;
   };
 
-  boot.initrd.availableKernelModules = [ "hid-logitech-hidpp" "plymouth" "plymouth-encrypt" ]; # logitech required to get keyboard / mouse for LUKS unlock
+  boot.initrd.availableKernelModules = [ "plymouth" "plymouth-encrypt" ]; 
   boot.loader.systemd-boot = {
     enable = true;
     editor = false;
@@ -76,6 +74,7 @@
 
   services.udev.packages = with pkgs; [ solaar ];
 
+  services.xserver.resolutions = [ { x = 1920; y = 1080; } ];
   services.xserver.xrandrHeads = [
     {
       output = "HDMI1";
@@ -105,7 +104,7 @@
     "vm.dirty_writeback_centisecs" = 1500; # reduce window for data loss 
   };
   hardware.bluetooth.enable = true;
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "intel" "nvidia" ];
 
   hardware.opengl.extraPackages = with pkgs; [
     vaapiIntel

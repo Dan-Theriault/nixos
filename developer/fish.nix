@@ -3,13 +3,14 @@
 {
   programs.fish = {
     enable = true;
-    promptInit = builtins.readFile ./fish_prompt.fish;   
+    promptInit = builtins.readFile ../scripts/fish-prompt.fish;   
     
     shellAliases = {
       o = "xdg-open";
       ipy = "ipython3";
       sgit = "sudo -E git";
       lopdf = "libreoffice --writer --headless --convert-to pdf";
+      emacs = "emacsclient -cn";
     };
 
     interactiveShellInit = ''

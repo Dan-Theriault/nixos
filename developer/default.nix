@@ -4,10 +4,8 @@
   imports = [
     ../developer/android.nix
     ../developer/fish.nix
-    ../developer/pkgs.nix
     ../developer/python.nix
     ../developer/vim.nix
-    ../developer/emacs.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -18,9 +16,22 @@
     # tokei # currently broken in nixpkgs
 
     telnet netcat
-    jq postman
+    jq # postman
     jdk8
+
+    shellcheck
+    go
+    sqlite
+
+    emacs
+    guile sbcl
   ];
+
+  # emacs service
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+  };
 
   # virtualisation.libvirtd.enable = true;
   users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" "docker" "dialout" ];

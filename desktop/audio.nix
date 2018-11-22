@@ -6,6 +6,7 @@
     package = pkgs.pulseaudioFull;
     extraConfig = ''
       load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+      load-module module-switch-on-connect
     '';
   };
 

@@ -1,19 +1,15 @@
 { config, pkgs, ... }:
 
 # Remember to create client keys
-# YubiKey should hopefully obsolete (parts of) this
 {
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
-  environment.systemPackages = with pkgs; [ 
-    mosh
-  ];
+  environment.systemPackages = with pkgs; [ mosh ];
   
   programs.ssh = {
-    startAgent = true;
     agentTimeout = "1h";
 
     extraConfig = ''

@@ -15,14 +15,6 @@
     layout = "us";
     xkbOptions = "compose:ralt, caps:escape"; # may not work as expected in vm
 
-    displayManager.sddm = {
-      enable = true;
-      extraConfig = ''
-         [General]
-         type=image
-         background=/etc/wallpapers/sddm
-      '';
-    };
     desktopManager.plasma5.enable = true;
 
     windowManager.i3 = {
@@ -72,7 +64,8 @@
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
     rofi dmenu              # program launchers
-    polybar i3lock-fancy    # additional interface components
+    i3lock-fancy    # additional interface components
+    # polybar
     dunst                   # Notifications
     xss-lock
     xorg.xbacklight xdotool playerctl # scriptable settings
@@ -88,7 +81,7 @@
     xbindkeys
 
     arc-icon-theme arc-theme moka-icon-theme # Themes
-    qt5ct lxappearance       # and programs to set them
+    qt5ct libsForQt5.qtstyleplugins lxappearance       # and programs to set them
 
   ] ) );
 

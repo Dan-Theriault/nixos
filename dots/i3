@@ -7,6 +7,7 @@ font pango:IBMPlexMono 12, FontAwesome 10
 
 # start a terminal
 bindsym $mod+Return exec st -e fish
+bindsym $mod+Shift+Return exec emacsclient -cne '(switch-to-buffer nil)'
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -131,7 +132,7 @@ bindsym XF86AudioPrev exec playerctl previous 2> /dev/null || mpc prev
 bindsym $mod+space exec rofi -show run
 bindsym $mod+Shift+d exec rofi -show drun
 bindsym $mod+w exec rofi -show window
-bindsym $mod+Shift+x exec /etc/nixos/scripts/rofi-sys.sh
+bindsym $mod+Shift+x exec loginctl lock-session
 bindsym $mod+c exec rofi -show calc -modi "calc:qalc +u8 -nocurrencies"
 
 # ======= AUTORUNS =======

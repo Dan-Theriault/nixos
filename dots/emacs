@@ -1,24 +1,28 @@
 (require 'package)
-(add-to-list 'package-archives 
-           '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives
-	   '("org" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-(eval-when-compile
-  (require 'use-package))
+(eval-when-compile (require 'use-package))
 
 (setq user-full-name "Daniel Theriault"
       user-mail-address "daniel.theriault@stresearch.com")
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 (use-package evil
   :ensure t
   :init
   (setq evil-want-integration nil)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-integration t)
   :bind
   (:map evil-visual-state-map
 	("<" . (lambda ()
@@ -30,12 +34,17 @@
 		 (interactive)
 		 (evil-shift-right (region-beginning) (region-end))
 		 (evil-normal-state)
-		 (evil-visual-restore))))
+		 (evil-visual-restore)))
+	("C-p" . 'find-file-in-project-by-selected))
   (:map evil-motion-state-map
 	("E" . 'evil-end-of-line)
 	("B" . 'evil-beginning-of-line)
 	("j" . 'evil-next-visual-line)
 	("k" . 'evil-previous-visual-line))
+  (:map evil-normal-state-map
+	("C-p" . 'find-file-in-project-by-selected))
+  (:map evil-insert-state-map
+	("C-p" . 'find-file-in-project-by-selected))
   :config
 
   (use-package evil-collection
@@ -68,7 +77,19 @@
     :ensure t
     :config
     (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
-    (add-hook 'geiser-mode-hook #'evil-cleverparens-mode)))
+    (add-hook 'geiser-mode-hook #'evil-cleverparens-mode)
+    (add-hook 'slime-mode-hook #'evil-cleverparens-mode))
+  (evil-define-command custom-save-and-close (file &optional bang)
+    "saves the current buffer and closes the buffer"
+    :repeat nil
+    (interactive "<f><!>")
+    (evil-write nil nil nil file bang)
+    (kill-this-buffer))
+
+  (evil-ex-define-cmd "q" 'kill-this-buffer)
+  (evil-ex-define-cmd "quit" 'evil-quit)
+  (evil-ex-define-cmd "x" 'custom-save-and-close)
+  (evil-ex-define-cmd "wq" 'custom-save-and-close))
 
 (use-package org
   :ensure t)
@@ -79,7 +100,7 @@
     :config
     (add-hook 'org-mode-hook 'evil-org-mode)
     (add-hook 'evil-org-mode-hook
-		(lambda ()
+	      (lambda ()
 		(evil-org-set-key-theme)))
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys))
@@ -90,6 +111,11 @@
   :config
   (setq ffip-use-rust-fd t))
 
+(use-package frames-only-mode
+  :demand t
+  :config
+  (frames-only-mode))
+
 (use-package helm
   :ensure t)
   
@@ -99,24 +125,37 @@
   (use-package evil-magit
     :ensure t))
 
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-center-evil-theme))
+;; (use-package powerline
+;;   :ensure t
+;;   :config
+;;   (powerline-center-evil-theme))
 
 (use-package markdown-mode
   :ensure t
-  :mode (("\\.md\\'" . gfm-mode)))
-
-(use-package apropospriate-theme
-  :ensure t
+  :mode (("\\.md\\'" . gfm-mode))
   :config
-  (load-theme 'apropospriate-light t))
+  (add-hook
+   'markdown-mode-hook
+   (lambda () (flyspell-mode 1))))
+
+(use-package nix-mode
+  :ensure t)
+(use-package company-nixos-options
+  :ensure t)
+(use-package nix-sandbox
+  :ensure t)
+(use-package nixos-options
+  :ensure t)
 
 (use-package geiser
   :ensure t
   :config
-  (setq geiser-guile-binary "/run/current-system/sw/bin/guile"))
+  (setq geiser-guile-binary "/usr/local/bin/guile"))
+
+(use-package slime
+  :ensure t
+  :config
+  (setq inferior-lisp-program "/run/current-system/sw/bin/sbcl"))
 
 (use-package company
   :ensure t
@@ -134,27 +173,59 @@
   (setq deft-markdown-mode-title-level 1)
   (setq deft-auto-save-interval 0))
 
-(use-package linum-relative
+(use-package flycheck
   :ensure t
   :config
-  (linum-relative-global-mode))
+  (flycheck-define-checker proselint
+    "A linter for prose."
+    :command ("proselint" source-inplace)
+    :error-patterns
+    ((warning line-start (file-name) ":" line ":" column ": "
+	      (id (one-or-more (not (any " "))))
+	      (message) line-end))
+    :modes (text-mode markdown-mode gfm-mode org-mode)))
 
 (set-face-attribute 'default nil
   :family "IBM Plex Mono"
   :height 110
   :weight 'medium)
 
+; poet settings
+(set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono")
+(set-face-attribute 'variable-pitch nil :family "IBM Plex Serif")
+
+(use-package poet-theme
+  :ensure t
+  :config
+  (use-package olivetti :ensure t)
+  (use-package typo :ensure t)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . light))
+  (add-hook 'text-mode-hook
+	    (lambda ()
+	      (variable-pitch-mode 1)
+	      (olivetti-mode 1)
+	      (olivetti-set-width 120)
+	      (typo-mode))))
+  
 (savehist-mode 1)
 (tool-bar-mode -1)
 (show-paren-mode t)
 (scroll-bar-mode -1)
+(menu-bar-mode -1)
 
+(setq-default display-line-numbers 'visual
+              display-line-numbers-widen t
+              ;; this is the default
+              display-line-numbers-current-absolute t)
 
-(set-face-attribute 'linum nil :height 80 :weight 'normal)
-(set-face-attribute 'linum-relative-current-face nil :height 80 :weight 'normal)
+(set-face-attribute 'line-number-current-line nil :height 90)
+(set-face-attribute 'line-number nil :height 90)
+(fringe-mode 0)
+
 (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
-(setq save-interprogram-paste-before-kill t)
 
+(setq save-interprogram-paste-before-kill t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -162,10 +233,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("c3e6b52caa77cb09c049d3c973798bc64b5c43cc437d449eacf35b3e776bf85c" "5a0eee1070a4fc64268f008a4c7abfda32d912118e080e18c3c865ef864d1bea" "70f5a47eb08fe7a4ccb88e2550d377ce085fedce81cf30c56e3077f95a2909f2" default)))
+    ("d88c43fe03ac912e35963695caf0ae54bc6ce6365c3a42da434ef639f7a37399" "89f545ddc104836b27167696db89b371f23893d5b2f038d43383d877ee678d3d" "eacee5f1c2f46185d6f089d97b7953bd9fc5d5b773f72cc76c9fcb556eeba174" "c3e6b52caa77cb09c049d3c973798bc64b5c43cc437d449eacf35b3e776bf85c" "5a0eee1070a4fc64268f008a4c7abfda32d912118e080e18c3c865ef864d1bea" "70f5a47eb08fe7a4ccb88e2550d377ce085fedce81cf30c56e3077f95a2909f2" default)))
  '(package-selected-packages
    (quote
-    (deft company evil-cleverparens lispyville lispy paredit geiser apropospriate-theme evil-org evil-org-mode evil-collection intellij-theme markdown-mode powerline linum-relative evil-magit org-mode evil-commentary find-file-in-project base16-theme ripgrep helm magit evil))))
+    (nix-sandbox company-nixos-options frames-mode frames--mode nix-mode frame-mode deadgrep creamsody-theme yaml-mode csv-mode slime typo poet-theme proselint flycheck deft company evil-cleverparens lispyville lispy paredit geiser apropospriate-theme evil-org evil-org-mode evil-collection intellij-theme markdown-mode powerline linum-relative evil-magit org-mode evil-commentary find-file-in-project base16-theme ripgrep helm magit evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
