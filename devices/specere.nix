@@ -101,4 +101,6 @@
   hardware.opengl.extraPackages = with pkgs; [
     vaapiIntel
   ];
+
+  system.stateVersion = "17.09";
 }

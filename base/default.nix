@@ -39,9 +39,6 @@ in
   # Manual on VT-8
  services.nixosManual.showManual = true;
 
-  # Version
-  system.stateVersion = "17.09";
-
   # CLI utilities, services, and other packages that should always be installed.
   environment.systemPackages = with pkgs; [ 
     abduco # detached sessions
