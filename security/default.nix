@@ -50,6 +50,7 @@
 
         USB_EHCI_TT_NEWSCHED y
       '';
+      features.ia32Emulation = true;
       
         
       autoModules = false;

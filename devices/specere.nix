@@ -8,6 +8,7 @@
     ../hardware-configuration.nix
 
     # Desktop Environment
+    ../desktop
     ../desktop/audio.nix
     ../desktop/bluej.nix
     ../desktop/fonts.nix

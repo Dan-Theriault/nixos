@@ -24,7 +24,7 @@
     sqlite
 
     emacs
-    guile sbcl
+    guile sbcl lispPackages.quicklisp
   ];
 
   # emacs service
@@ -36,10 +36,6 @@
   # virtualisation.libvirtd.enable = true;
   users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" "docker" "dialout" ];
   # networking.firewall.checkReversePath = "loose";
-
-  nix = { 
-    package = pkgs.nixUnstable;
-  };
 
   environment.etc."deploy/ssh".text = ''
     Host github.com

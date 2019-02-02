@@ -12,8 +12,8 @@ in
       automatic = true;
       options = "-d";
     };
-    buildCores = 4;
-    maxJobs = 4;
+    buildCores = 8;
+    maxJobs = 8;
     allowedUsers = [ "@wheel" ];
     autoOptimiseStore = true;
   };
@@ -43,6 +43,7 @@ in
   environment.systemPackages = with pkgs; [ 
     abduco # detached sessions
     dnsutils
+    file
     git
     gnupg
     htop 
@@ -65,12 +66,12 @@ in
       isNormalUser = true;
       extraGroups = [
         "wheel"
-	"disk"
-	"audio" "video" 
-	"networkmanager" 
-	"systemd-journal" 
-	"scanner" "lpadmin" 
-	"bluetooth" 
+        "disk"
+        "audio" "video" 
+        "networkmanager" 
+        "systemd-journal" 
+        "scanner" "lpadmin" 
+        "bluetooth" 
       ];
       initialPassword = "hagan lio"; # change immediately after install with passwd
     };
