@@ -26,10 +26,10 @@
     ../security/keybase.nix
   ];
 
-  environment.systemPackages = import ../desktop/pkgs.nix {
+  environment.systemPackages = (import ../desktop/pkgs.nix {
     inherit config pkgs;
     tex = true;
-  };
+  }) ++ (with pkgs; [chromium solaar]);
   
   # Handle two encrypted partitions
   boot.initrd.luks.devices.aCrypt = { # large HDD
@@ -55,11 +55,6 @@
     enable = true;
     dates = "02:30";
   };
-
-  environment.systemPackages = with pkgs; [
-    # Only needed on this host
-    chromium solaar 
-  ];
 
   services.udev.packages = with pkgs; [ solaar ];
 

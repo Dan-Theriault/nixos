@@ -29,11 +29,18 @@
     ../security/keybase.nix
   ];
 
-  environment.systemPackages = import ../desktop/pkgs.nix {
+  environment.systemPackages = (import ../desktop/pkgs.nix {
     inherit config pkgs;
     tex = true;
     BlueJ = true;
-  };
+  }) ++ (with pkgs; [
+      wpa_supplicant_gui
+      solaar
+      fortune
+      powertop
+      glxinfo
+      blueman
+  ]);
 
   # Startup Settings
   boot = {
@@ -56,15 +63,6 @@
   powerManagement = {
     enable = true;
   };
-
-  environment.systemPackages = with pkgs; [
-      wpa_supplicant_gui
-      solaar
-      fortune
-      powertop
-      glxinfo
-      blueman
-    ];
 
   services = { 
     xserver = {
