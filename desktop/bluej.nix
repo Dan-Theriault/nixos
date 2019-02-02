@@ -25,8 +25,5 @@ let
     '';
   };
 in
-
-{
-  environment.systemPackages = [ BlueJ ];
-}
+[ BlueJ ]
 

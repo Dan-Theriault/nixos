@@ -1,14 +1,14 @@
 { config, pkgs, ... }:
 
 let
-    loadedPython = pkgs.python3Full.buildEnv.override rec {
-      extraLibs = with pkgs.python3Packages; [
+    loadedPython = pkgs.python36Full.buildEnv.override rec {
+      extraLibs = with pkgs.python36Packages; [
         black
         flake8
         ipython
         jedi
         matplotlib
-        neovim
+        # neovim
         numpy
         pandas
         scipy

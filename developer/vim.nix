@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
-# At present, this module should NOT be used without also including developer/default.nix
-# Several programs installed in that module (rg, fd, etc) are required.
-# TODO: Identify all dependencies for this configuration, and move them here
 
 let 
-
   customPlugins = {
     vim-buftabline = pkgs.vimUtils.buildVimPlugin {
       name = "vim-buftabline";
@@ -27,11 +23,10 @@ let
   };
 
   vim-configuration = {
-    customRC = builtins.readFile ../dots/vimrc;
+    customRC = import ../developer/vimrc.nix {inherit config pkgs;};
     vam.knownPlugins = pkgs.vimPlugins // customPlugins;
     vam.pluginDictionaries = [ {
       names = [
-        "Tabular"
         "ack-vim"
         "airline"
         "ale"
@@ -43,7 +38,7 @@ let
         "vim-colorschemes"
         "vim-nix"
         "vim-signify"
-        # "vim-markdown"
+        "vim-markdown"
 
         # Custom Packages
         "vim-buftabline"

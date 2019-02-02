@@ -2,15 +2,15 @@
 
 {
   imports = [
-    ../developer/android.nix
     ../developer/fish.nix
-    ../developer/python.nix
     ../developer/vim.nix
+    # ../developer/android.nix
+    ../developer/python.nix
   ];
 
   environment.systemPackages = with pkgs; [
     nixops # nixos-shell
-    pgmanage pgcli pg_top postgis timescaledb
+    pgmanage pgcli pg_top 
     arduino platformio
     fd ripgrep 
     # tokei # currently broken in nixpkgs

@@ -1,3 +1,12 @@
+{ config, pkgs,
+  terminal ? "${pkgs.xst}/bin/st",
+  shell ? "${pkgs.fish}/bin/fish",
+  wallpaper ? "~/.wallpaper",
+  isVm ? false,
+  lockMessage ? "DO NOT DISTURB"
+}:
+
+''
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
@@ -6,11 +15,11 @@ set $mod Mod4
 font pango:IBMPlexMono 12, FontAwesome 10
 
 # start a terminal
-bindsym $mod+Return exec st -e fish
+bindsym $mod+Return exec ${terminal} -e ${shell}
 bindsym $mod+Shift+Return exec emacsclient -cne '(switch-to-buffer nil)'
 
 # kill focused window
-bindsym $mod+Shift+q kill
+${if isVm then "bindsym $mod+Shift+c kill" else "bindsym $mod+Shift+q kill"}
 
 # change focus
 bindsym $mod+h focus left
@@ -83,7 +92,7 @@ bindsym $mod+Shift+0 move container to workspace $ws0
 # ===================================
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
@@ -119,13 +128,13 @@ bindsym Alt+XF86AudioLowerVolume exec pactl set-sink-volume 2 +5%
 bindsym Alt+XF86AudioMute exec pactl set-sink-mute 2 toggle
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 2 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 2 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec ${pkgs.light}/bin/light -A 2 # increase screen brightness
+bindsym XF86MonBrightnessDown exec ${pkgs.light}/bin/light -U 2 # decrease screen brightness
 
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play-pause 2> /dev/null || mpc toggle
-bindsym XF86AudioNext exec playerctl next 2> /dev/null || mpc next
-bindsym XF86AudioPrev exec playerctl previous 2> /dev/null || mpc prev
+bindsym XF86AudioPlay exec ${pkgs.playerctl}/bin/playerctl play-pause 2> /dev/null || mpc toggle
+bindsym XF86AudioNext exec ${pkgs.playerctl}/bin/playerctl next 2> /dev/null || mpc next
+bindsym XF86AudioPrev exec ${pkgs.playerctl}/bin/playerctl previous 2> /dev/null || mpc prev
 
 
 # ====== ROFI ======
@@ -136,10 +145,18 @@ bindsym $mod+Shift+x exec loginctl lock-session
 bindsym $mod+c exec rofi -show calc -modi "calc:qalc +u8 -nocurrencies"
 
 # ======= AUTORUNS =======
-exec_always feh --bg-fill ~/.wallpaper &
-exec xrdb -load /etc/nixos/dots/Xresources
-exec export KDEWM=/usr/bin/i3
-exec_always xss-lock /etc/nixos/scripts/lock.fish
+exec_always ${pkgs.feh}/bin/feh --bg-fill ${wallpaper} &
+exec_always ${pkgs.dunst}/bin/dunst -config /etc/nixos/dots/dunstrc
+exec ${pkgs.xorg.xrdb}/bin/xrdb -load /etc/nixos/dots/Xresources
+exec export KDEWM=${pkgs.i3-gaps}/bin/i3
+exec export QT_QPA_PLATFORMTHEME="qt5ct"
+${if isVm then "" else ''
+  exec_always ${pkgs.xss-lock}/bin/xss-lock ${pkgs.writeScript "lock.fish" ''
+    #!${pkgs.fish}/bin/fish
+    ${pkgs.playerctl}/bin/playerctl pause
+    ${pkgs.i3lock-fancy}/bin/i3lock-fancy -f Overpass-Black -t ${lockMessage} -- ${pkgs.maim}/bin/maim;
+  '' }
+'' }
 
 # ======= APPEARANCE =======
 for_window [class="^.*"] border pixel 6
@@ -186,3 +203,4 @@ client.focused $baseD $baseD $base0 $baseD
 client.focused_inactive $base1 $base1 $base3 $base1
 client.unfocused $base1 $base1 $base3 $base1
 client.urgent $baseE $baseE $base0 $baseE
+''

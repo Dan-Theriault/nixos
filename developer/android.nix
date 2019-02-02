@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    android-studio-preview
+    androidStudioPackages.dev
   ];
   programs.adb.enable = true;
   users.extraUsers.dtheriault3.extraGroups = ["adbusers"];

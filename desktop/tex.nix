@@ -1,7 +1,6 @@
-{ pkgs, config, lib, ... }:
+{ config, pkgs }:
 
-{
-  environment.systemPackages = ( with pkgs; [
+with pkgs; [
     pdfpc
     ( texlive.combine {
       inherit (texlive) 
@@ -44,5 +43,4 @@
     biber
     fontconfig
     proselint
-  ] );
-}
+]

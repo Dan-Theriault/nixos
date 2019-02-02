@@ -3,13 +3,6 @@
 { config, pkgs, ... }:
 
 {
-  nixpkgs.config.packageOverrides = pkgs: {
-    polybar = pkgs.polybar.override {
-      i3GapsSupport = true;
-      mpdSupport = true;
-    };
-  };
-
   services.xserver = { 
     enable = true;
     layout = "us";
@@ -20,11 +13,10 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      configFile = ../dots/i3;
-      extraSessionCommands = ''
-        xrdb -load /etc/nixos/dots/Xresources
-        export QT_QPA_PLATFORMTHEME="qt5ct"
-      '';
+      configFile = pkgs.lib.mkDefault (pkgs.writeTextFile {
+        name = "i3.conf";
+        text = import ../desktop/i3.nix { inherit config pkgs; };
+      });
     };
   };
 
@@ -64,11 +56,8 @@
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
     rofi dmenu              # program launchers
-    i3lock-fancy    # additional interface components
-    # polybar
-    dunst                   # Notifications
-    xss-lock
-    xorg.xbacklight xdotool playerctl # scriptable settings
+    xorg.xbacklight 
+    xdotool 
     feh                     # background image
     maim scrot              # screenshots
 

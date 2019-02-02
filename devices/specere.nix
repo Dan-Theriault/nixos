@@ -2,35 +2,37 @@
 { config,  pkgs, ... }:
 
 {
-  imports =
-    [ 
-      # System Essentials
-      ../base
-      ../hardware-configuration.nix
+  imports = [ 
+    # System Essentials
+    ../base.nix
+    ../hardware-configuration.nix
 
-      # Desktop Environment
-      ../desktop/audio.nix
-      ../desktop/gaming.nix
-      ../desktop/pkgs.nix
-      ../desktop/tex.nix
-      ../desktop/x.nix
-      ../desktop/fonts.nix
-      ../desktop/tex.nix
-      ../desktop/home-users.nix
-      ../desktop/bluej.nix
+    # Desktop Environment
+    ../desktop/audio.nix
+    ../desktop/bluej.nix
+    ../desktop/fonts.nix
+    ../desktop/gaming.nix
+    ../desktop/home-users.nix
+    ../desktop/x.nix
 
-      # Developer Tooling
-      ../developer
+    # Developer Tooling
+    ../developer
 
-      # Network Services
-      ../net
-      ../net/ssh-client.nix
-      # ../net/ssh-server.nix
+    # Network Services
+    ../net
+    ../net/ssh-client.nix
+    # ../net/ssh-server.nix
 
-      # Hardening
-      ../security
-      ../security/keybase.nix
-    ];
+    # Hardening
+    ../security
+    ../security/keybase.nix
+  ];
+
+  environment.systemPackages = import ../desktop/pkgs.nix {
+    inherit config pkgs;
+    tex = true;
+    BlueJ = true;
+  };
 
   # Startup Settings
   boot = {

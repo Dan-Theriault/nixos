@@ -1,30 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  ibm-plex = pkgs.fetchzip rec {
-    name = "ibm-plex-0.5.3";
-
-    url = "https://github.com/IBM/type/archive/v0.5.3.zip";
-
-    postFetch = ''
-      mkdir -p $out/share/{doc,fonts}
-      unzip -j $downloadedFile \*.otf      -d $out/share/fonts/opentype
-      unzip -j $downloadedFile \*README.md -d "$out/share/doc/${name}"
-    '';
-
-    sha256 = "1ghj2lqc5m33qa55h8ag6xwdqbwc9gdxncf66jr5fd5fadjhrfr8";
-
-    meta = with pkgs.stdenv.lib; {
-      description = "IBM's new corporate typeface. Mono, Sans, and Serif with eight weights.";
-      homepage = https://ibm.github.io/type/;
-      license = licenses.ofl;
-      platforms = platforms.all;
-      # maintainers = with maintainers; [ dan-theriault ];
-    };
-  };
-
-in
-
 {
   fonts = {
     fontconfig = {
@@ -57,8 +32,10 @@ in
         </match>
       '';
     };
-    fonts = [ ibm-plex ] ++ ( with pkgs; [
+    fonts = with pkgs; [
       google-fonts # ~300mb tarball download. Slow. Lots of junk. But oh-so-many fonts!
+
+      ibm-plex
 
       siji
       dejavu_fonts
@@ -77,6 +54,6 @@ in
       source-code-pro
       source-sans-pro
       source-serif-pro
-    ] );
+    ];
   };
 }

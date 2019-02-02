@@ -53,7 +53,7 @@
 
     # Secure serverless sync
     syncthing = {
-      enable = true;
+      enable = pkgs.lib.mkDefault true;
       openDefaultPorts = true;
       user = "dtheriault3";
       group = "users";

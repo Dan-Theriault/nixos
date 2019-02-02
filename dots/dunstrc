@@ -1,11 +1,11 @@
 [global]
     alignment = left
-    allow_markup = yes
+    markup = yes
     bounce_freq = 0
     browser = /usr/bin/firefox -new-tab
-    dmenu = /usr/bin/dmenu -p dunst:
+    dmenu = /usr/bin/dmenu -p dunst
     follow = none
-    font = Input Serif Condensed (TTF) 10
+    font = IBM Plex Sans 14
     format = "<b>%s</b>\n%b"
     # geometry [{width}]x{height}][+/-{x}+/-{y}]
     geometry = "300x5-10+10"
@@ -27,6 +27,8 @@
     sticky_history = yes
     transparency = 0
     word_wrap = yes
+    frame_width = 2
+    frame_color = "#AE95C7"
 
 # vim: filetype=yaml
 # dunst template
@@ -43,8 +45,5 @@
 [urgency_critical]
     background = "#1C2023"
     foreground = "#C7AE95"
-
-[frame]
-    width = 2
-    color = #AE95C7
+    
 

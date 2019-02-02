@@ -1,4 +1,7 @@
-set shell=/usr/bin/env\ bash
+{config, pkgs}:
+
+''
+set shell=${pkgs.bash}/bin/bash
 filetype plugin indent on    " required
 
 syntax on
@@ -60,15 +63,14 @@ set nomodeline
 " colours)
 set t_Co=256
 
-
 "vim-airline
 let g:airline_powerline_fonts=1
-let g:airline_left_sep=''
+let g:airline_left_sep=""
 let g:airline_left_alt_sep = '|'
-let g:airline_right_sep=''
+let g:airline_right_sep=""
 let g:airline_righ_alt_sep = '|'
 let g:airline#extensions#ale#enabled = 1
-let g:airline_section_x=''
+let g:airline_section_x=""
 let g:airline_section_y='%{strftime("%c")}'
 let g:airline_section_a = airline#section#create_left(['mode', 'crypt', 'paste', 'keymap', 'capslock', 'xkblayout', 'iminsert'])
 
@@ -100,23 +102,20 @@ set noswapfile
 set nobackup
 
 "ALE brews
-" let g:ale_lints= {
-"             \ 'python': ['lsort', 'mypy' ]
-"             \ }
 let g:ale_fixers = {
-\   'python': ['yapf'],
+\   'python': ['${pkgs.python3Packages.yapf}/bin/yapf'],
 \}
 let g:ale_linters = {
-\   'python': ['flake8', 'mypy'],
-\   'vimwiki': ['proselint'],
-\   'markdown': ['proselint'],
-\   'latex': ['proselint','chktex','lacheck']
+\   'python': ['flake8', '${pkgs.mypy}/bin/mypy'],
+\   'vimwiki': ['${pkgs.proselint}/bin/proselint'],
+\   'markdown': ['${pkgs.proselint}/bin/proselint'],
+\   'latex': ['${pkgs.proselint}/bin/proselint','chktex','lacheck']
 \}
 let g:ale_fix_on_save = 1
 let g:ale_python_flake8_options = '-m flake8 --max-line-length 100'
 let usepython2=$USE_PYTHON2
 if usepython2 == '1'
-    let g:ale_python_flake8_executable = 'python2'
+    let g:ale_python_flake8_executable = '${pkgs.python2}/bin/python2'
     let g:ale_python_flake8_options = '-m flake8 --max-line-length 100'
     let g:ale_python_mypy_options = '--py2'
 endif
@@ -125,28 +124,14 @@ endif
 let g:deoplete#enable_at_startup = 1
 
 "vimtex settings
-let g:vimtex_view_method='zathura'
+let g:vimtex_view_method='${pkgs.zathura}/bin/zathura'
 let g:vimtex_latexmk_progname = 'nvr' "wrapper for nvim 
-" let g:vimtex_compiler_latexmk = {
-" \   'backend' : 'nvim',
-" \   'callback' : 1,
-" \   'continuous' : 1,
-" \   'executable' : 'latexmk',
-" \   'options' : [
-" \      '-pdf',
-" \      "-pdflatex='pdflatex --shell-escape %0 %S'",
-" \      '-bibtex',
-" \      '-file-line-error',
-" \      '-synctex=1',
-" \      '-interaction=nonstopmode',
-" \   ],
-" \}
 
 "ack.vim settings
-let g:ackprg = 'rg --vimgrep'
+let g:ackprg = '${pkgs.ripgrep}/bin/rg --vimgrep'
 
 "ctrlp settings
-let g:ctrlp_user_command ='fd --type file --color never "" %s'
+let g:ctrlp_user_command ='${pkgs.fd}/bin/fd --type file --color never "" %s'
 
 "Use elm-vim and vimtex instead of polyglot
 let g:polyglot_disabled = ['elm', 'latex', 'markdown']
@@ -175,15 +160,5 @@ nmap <leader>8 <Plug>BufTabLine.Go(8)
 nmap <leader>9 <Plug>BufTabLine.Go(9)
 nmap <leader>0 <Plug>BufTabLine.Go(10)
 
-"vimwiki settings
-let g:vimwiki_list = [{
-\   'path': '~/wiki', 'syntax': 'markdown', 'ext': '.md', 'auto_toc': 1, 
-\   'diary_rel_path': '/journal/', 'diary_index': 'journal', 'diary_header': 'Journal'
-\}]
-let g:vimwiki_use_mouse=1
-let g:vimiwki_use_calendar=1
-let g:vimwiki_global_ext=0
-"Override vimwiki filetype setting to enable ALE, standard markdown
-"highlighting, etc.
-autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown.vimwiki
 let g:pandoc#syntax#conceal#urls=1
+''
