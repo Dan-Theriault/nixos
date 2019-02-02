@@ -3,7 +3,7 @@
   shell ? "${pkgs.fish}/bin/fish",
   wallpaper ? "~/.wallpaper",
   isVm ? false,
-  lockMessage ? "DO NOT DISTURB"
+  lockMessage ? "\"DO NOT DISTURB\""
 }:
 
 ''
