@@ -8,7 +8,7 @@ let
         ipython
         jedi
         matplotlib
-        neovim
+        # neovim
         numpy
         pandas
         scipy

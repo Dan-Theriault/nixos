@@ -1,20 +1,20 @@
 { config, pkgs, ... }:
 
 {
-  nixpkgs.config.overridePackges = {
-    kdenlive = pkgs.kdenlive.override {
-      buildInputs = [ pkgs.frei0r ];
-    };
-  };
+  # nixpkgs.config.overridePackges = {
+  #   kdenlive = pkgs.kdenlive.override {
+  #     buildInputs = [ pkgs.frei0r ];
+  #   };
+  # };
 
   environment.systemPackages =  with pkgs; [
-    antimony gmsh # weird CAD and a STL viewer.
+    # antimony gmsh # weird CAD and a STL viewer.
     arandr
     inkscape
     libav
     libqalculate
     libreoffice-fresh detox
-    kdenlive
+    # kdenlive
     mpv youtube-dl
     meld # graphical diffs
     sc-im

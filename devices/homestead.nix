@@ -6,17 +6,18 @@
     ../base                       # core modules
     ../hardware-configuration.nix # hardware, detected automatically
 
+    ../desktop
     ../desktop/audio.nix
     ../desktop/gaming.nix
     ../desktop/pkgs.nix
     ../desktop/tex.nix
     ../desktop/x.nix              # DE / WM configuration
+    ../desktop/brother-printing.nix
+    ../desktop/fonts.nix
+    ../desktop/home-users.nix
+    ../desktop/wayland.nix
 
     ../developer
-
-    ../misc/brother-printing.nix
-    ../misc/fonts.nix
-    ../misc/home-users.nix
 
     ../net
     ../net/ssh-client.nix         # client configuration + preset known hosts (WIP)
@@ -37,13 +38,13 @@
     preLVM = true;
   };
 
-  boot.initrd.availableKernelModules = [ "plymouth" "plymouth-encrypt" ]; 
+  # boot.initrd.availableKernelModules = [ "plymouth" "plymouth-encrypt" ]; 
   boot.loader.systemd-boot = {
     enable = true;
     editor = false;
   };
 
-  boot.plymouth.enable = true;
+  # boot.plymouth.enable = true;
 
   networking.hostName = "homestead"; 
 
@@ -74,24 +75,15 @@
 
   services.udev.packages = with pkgs; [ solaar ];
 
-  services.xserver.resolutions = [ { x = 1920; y = 1080; } ];
+  services.xserver.resolutions = [ { x = 3840; y = 2160; } ];
   services.xserver.xrandrHeads = [
     {
-      output = "HDMI1";
-      monitorConfig = ''
-        Option "mode" "1920x1080"
-        Option "pos" "0x0"
-        Option "rotate" "right"
-      '';
-    }
-    {
-      output = "VGA1";
+      output = "DisplayPort-2";
       primary = true;
-      monitorConfig = ''
-        Option "mode" "1920x1080"
-        Option "pos" "1080x465"
-        Option "rotate" "normal"
-      '';
+      # monitorConfig = ''
+      #   Option "mode" "3840x2160"
+      #   Option "rotate" "normal"
+      # '';
     }
   ];
 
@@ -103,8 +95,20 @@
     "vm.swappiness" = 10; # swap less aggressively
     "vm.dirty_writeback_centisecs" = 1500; # reduce window for data loss 
   };
+
   hardware.bluetooth.enable = true;
-  services.xserver.videoDrivers = [ "intel" "nvidia" ];
+  services.xserver.videoDrivers = [ "amdgpu" "intel" ];
+  boot.kernelPatches = [
+    {
+      name = "amdgpu-config";
+      patch = null;
+      extraConfig = ''
+        DRM_AMDGPU m
+        DRM_AMDGPU_SI y
+        DRM_AMDGPU_CIK y
+      '';
+    }
+  ];
 
   hardware.opengl.extraPackages = with pkgs; [
     vaapiIntel

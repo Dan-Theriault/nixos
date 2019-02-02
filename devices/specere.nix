@@ -9,6 +9,7 @@
       ../hardware-configuration.nix
 
       # Desktop Environment
+      ../desktop
       ../desktop/audio.nix
       ../desktop/gaming.nix
       ../desktop/pkgs.nix

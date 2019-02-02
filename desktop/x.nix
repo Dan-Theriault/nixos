@@ -16,6 +16,7 @@
     xkbOptions = "compose:ralt, caps:escape"; # may not work as expected in vm
 
     desktopManager.plasma5.enable = true;
+    desktopManager.mate.enable = true;
 
     windowManager.i3 = {
       enable = true;
@@ -27,9 +28,6 @@
       '';
     };
   };
-
-  services.gnome3.at-spi2-core.enable = true;
-  sound.enable = true;
 
   services.redshift = {
     enable = true;
@@ -79,11 +77,5 @@
     xorg.xhost
     xclip
     xbindkeys
-
-    arc-icon-theme arc-theme moka-icon-theme # Themes
-    qt5ct libsForQt5.qtstyleplugins lxappearance       # and programs to set them
-
   ] ) );
-
-  programs.light.enable = true; # backlight control pkg + setuid wrapper
 }

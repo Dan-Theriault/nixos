@@ -24,7 +24,7 @@
     sqlite
 
     emacs
-    guile sbcl
+    guile sbcl lispPackages.quicklisp
   ];
 
   # emacs service
