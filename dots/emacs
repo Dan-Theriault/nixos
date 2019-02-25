@@ -10,19 +10,32 @@
 (eval-when-compile (require 'use-package))
 
 (setq user-full-name "Daniel Theriault"
-      user-mail-address "daniel.theriault@stresearch.com")
+      user-mail-address "dan@theriault.codes")
 
-(use-package exec-path-from-shell
+;;utils
+(use-package s :ensure t) ;;strings
+(use-package dash :ensure t) ;;lists
+(use-package f :ensure t) ;;files
+(use-package ht :ensure t) ;;hash tables
+(use-package alert :ensure t :config (setq alert-default-style 'libnotify))
+
+(use-package elpy
   :ensure t
   :config
-  (exec-path-from-shell-initialize))
+  (setq python-shell-interpreter "ipython"
+	python-shell-interpreter-args "--simple-prompt -i")
+  (elpy-enable))
+
+(use-package exec-path-from-shell :ensure t
+  :config (exec-path-from-shell-initialize))
 
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-integration nil)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-integration t)
+  (setq evil-want-integration nil
+	evil-want-keybinding nil
+	evil-want-C-u-scroll t)
+
   :bind
   (:map evil-visual-state-map
 	("<" . (lambda ()
@@ -45,40 +58,8 @@
 	("C-p" . 'find-file-in-project-by-selected))
   (:map evil-insert-state-map
 	("C-p" . 'find-file-in-project-by-selected))
+
   :config
-
-  (use-package evil-collection
-    :ensure t
-    :config
-    (evil-collection-init))
-
-  (evil-mode 1)
-
-  (use-package evil-leader
-    :ensure t
-    :config
-    ;; mapleader ,
-    (global-evil-leader-mode))
-
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode))
-
-  (use-package evil-indent-textobject
-    :ensure t)
-
-  (use-package evil-commentary
-    :ensure t
-    :config
-    (evil-commentary-mode))
-
-  (use-package evil-cleverparens
-    :ensure t
-    :config
-    (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
-    (add-hook 'geiser-mode-hook #'evil-cleverparens-mode)
-    (add-hook 'slime-mode-hook #'evil-cleverparens-mode))
   (evil-define-command custom-save-and-close (file &optional bang)
     "saves the current buffer and closes the buffer"
     :repeat nil
@@ -89,68 +70,112 @@
   (evil-ex-define-cmd "q" 'kill-this-buffer)
   (evil-ex-define-cmd "quit" 'evil-quit)
   (evil-ex-define-cmd "x" 'custom-save-and-close)
-  (evil-ex-define-cmd "wq" 'custom-save-and-close))
+  (evil-ex-define-cmd "wq" 'custom-save-and-close)
+
+  (use-package evil-collection
+    :ensure t
+    :custom (evil-collection-setup-minibuffer t)
+    :config (evil-collection-init))
+
+  (evil-mode 1)
+
+  (use-package evil-leader
+    :ensure t
+    :config (global-evil-leader-mode))
+
+  (use-package evil-surround :ensure t
+    :config (global-evil-surround-mode))
+
+  (use-package evil-indent-textobject :ensure t)
+
+  (use-package evil-commentary :ensure t
+    :config (evil-commentary-mode))
+
+  (use-package evil-cleverparens
+    :ensure t
+    :hook (emacs-lisp-mode geiser-mode slime-mode)
+    :config
+    (require 'evil-cleverparens-text-objects)))
 
 (use-package org
-  :ensure t)
+  :ensure t
+  :config
+  (use-package org-journal :ensure t))
 
 (use-package evil-org
-    :ensure t
-    :after org
-    :config
-    (add-hook 'org-mode-hook 'evil-org-mode)
-    (add-hook 'evil-org-mode-hook
-	      (lambda ()
-		(evil-org-set-key-theme)))
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys))
-
+  :ensure t
+  :after org evil
+  :hook org-mode 
+  :config
+  (add-hook 'evil-org-mode-hook (lambda () (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package find-file-in-project
   :ensure t
-  :config
-  (setq ffip-use-rust-fd t))
+  :config (setq ffip-use-rust-fd t))
 
 (use-package frames-only-mode
-  :demand t
-  :config
-  (frames-only-mode))
+  :ensure t
+  :config (frames-only-mode))
 
-(use-package helm
-  :ensure t)
-  
+(use-package counsel
+  :ensure t
+  :bind*
+  (([remap execute-extended-command] . counsel-M-x)
+   ([remap find-library] . counsel-find-library)
+   ([remap find-file] . counsel-find-file)
+   ([remap apropos] . counsel-apropos)
+   ([remap describe-bindings] . counsel-descbinds)
+   ([remap describe-face] . counsel-describe-faces)
+   ([remap list-faces-display] . counsel-faces)
+   ([remap imenu] . counsel-imenu)
+   ([remap load-library] . counsel-load-library)
+   ([remap load-theme] . counsel-load-theme)
+   ([remap yank-pop] . counsel-yank-pop)
+   ([remap info-lookup-symbol] . counsel-info-lookup-symbol)
+   ([remap pop-to-mark-command] . counsel-mark-ring)
+   ([remap bookmark-jump] . counsel-bookmark)))
+
+(use-package srefactor
+  :ensure t
+  :config (require 'srefactor-lisp))
+
+(use-package ivy
+  :bind
+  (([remap list-buffers] . ivy-switch-buffer)
+   ([remap switch-to-buffer] . ivy-switch-buffer)
+   ([remap switch-to-buffer-other-window] . ivy-switch-buffer-other-window)
+   :package ivy
+   :map) ivy-minibuffer-map
+  ("<escape>" . abort-recursive-edit)
+  :init
+  (defvar projectile-completion-system)
+  (defvar magit-completing-read-function)
+  (defvar projector-completion-system)
+  (setq projectile-completion-system 'ivy
+        magit-completing-read-function 'ivy-completing-read))
+
 (use-package magit
   :ensure t
   :config
-  (use-package evil-magit
-    :ensure t))
-
-;; (use-package powerline
-;;   :ensure t
-;;   :config
-;;   (powerline-center-evil-theme))
+  (use-package evil-magit :ensure t))
 
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'" . gfm-mode))
-  :config
-  (add-hook
-   'markdown-mode-hook
-   (lambda () (flyspell-mode 1))))
+  :hook (markdown-mode . flyspell-mode))
 
-(use-package nix-mode
-  :ensure t)
-(use-package company-nixos-options
-  :ensure t)
-(use-package nix-sandbox
-  :ensure t)
-(use-package nixos-options
-  :ensure t)
+;; Nix Stuff
+(use-package nix-mode :ensure t)
+(use-package company-nixos-options :ensure t)
+(use-package nix-sandbox :ensure t)
+(use-package nixos-options :ensure t)
 
 (use-package geiser
   :ensure t
   :config
-  (setq geiser-guile-binary "/usr/local/bin/guile"))
+  (setq geiser-guile-binary "/run/current-system/sw/bin/guile"))
 
 (use-package slime
   :ensure t
@@ -159,8 +184,7 @@
 
 (use-package company
   :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  :config (global-company-mode))
 
 (use-package deft
   :ensure t
@@ -175,6 +199,7 @@
 
 (use-package flycheck
   :ensure t
+  :hook (prog-mode . flycheck-mode)
   :config
   (flycheck-define-checker proselint
     "A linter for prose."
@@ -185,15 +210,18 @@
 	      (message) line-end))
     :modes (text-mode markdown-mode gfm-mode org-mode)))
 
+;;appearance
+(use-package hl-todo :ensure t :config (global-hl-todo-mode))
+(use-package highlight-parentheses :ensure t)
+
 (set-face-attribute 'default nil
   :family "IBM Plex Mono"
   :height 110
   :weight 'medium)
-
-; poet settings
 (set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono")
 (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif")
 
+; poet settings
 (use-package poet-theme
   :ensure t
   :config
@@ -207,36 +235,43 @@
 	      (olivetti-mode 1)
 	      (olivetti-set-width 120)
 	      (typo-mode))))
-  
+
 (savehist-mode 1)
 (tool-bar-mode -1)
 (show-paren-mode t)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
-
-(setq-default display-line-numbers 'visual
-              display-line-numbers-widen t
-              ;; this is the default
-              display-line-numbers-current-absolute t)
-
-(set-face-attribute 'line-number-current-line nil :height 90)
-(set-face-attribute 'line-number nil :height 90)
 (fringe-mode 0)
 
-(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+(setq-default display-line-numbers 'relative
+	      display-line-numbers-widen t
+	      ;; this is the default
+	      display-line-numbers-current-absolute t)
 
+(set-face-attribute 'line-number-current-line nil :height 110)
+(set-face-attribute 'line-number nil :height 110 :family "IBM Plex Mono")
+
+(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
 (setq save-interprogram-paste-before-kill t)
+(load-theme 'poet t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(custom-safe-themes
    (quote
-    ("d88c43fe03ac912e35963695caf0ae54bc6ce6365c3a42da434ef639f7a37399" "89f545ddc104836b27167696db89b371f23893d5b2f038d43383d877ee678d3d" "eacee5f1c2f46185d6f089d97b7953bd9fc5d5b773f72cc76c9fcb556eeba174" "c3e6b52caa77cb09c049d3c973798bc64b5c43cc437d449eacf35b3e776bf85c" "5a0eee1070a4fc64268f008a4c7abfda32d912118e080e18c3c865ef864d1bea" "70f5a47eb08fe7a4ccb88e2550d377ce085fedce81cf30c56e3077f95a2909f2" default)))
+    ("9129c2759b8ba8e8396fe92535449de3e7ba61fd34569a488dd64e80f5041c9f" "d88c43fe03ac912e35963695caf0ae54bc6ce6365c3a42da434ef639f7a37399" "89f545ddc104836b27167696db89b371f23893d5b2f038d43383d877ee678d3d" "eacee5f1c2f46185d6f089d97b7953bd9fc5d5b773f72cc76c9fcb556eeba174" "c3e6b52caa77cb09c049d3c973798bc64b5c43cc437d449eacf35b3e776bf85c" "5a0eee1070a4fc64268f008a4c7abfda32d912118e080e18c3c865ef864d1bea" "70f5a47eb08fe7a4ccb88e2550d377ce085fedce81cf30c56e3077f95a2909f2" default)))
+ '(evil-collection-setup-minibuffer t)
+ '(global-hl-todo-mode t)
  '(package-selected-packages
    (quote
-    (nix-sandbox company-nixos-options frames-mode frames--mode nix-mode frame-mode deadgrep creamsody-theme yaml-mode csv-mode slime typo poet-theme proselint flycheck deft company evil-cleverparens lispyville lispy paredit geiser apropospriate-theme evil-org evil-org-mode evil-collection intellij-theme markdown-mode powerline linum-relative evil-magit org-mode evil-commentary find-file-in-project base16-theme ripgrep helm magit evil))))
+    (olivetti counsel evil-indent-textobject evil-surround evil-leader exec-path-from-shell use-package srefactor-lisp srefactor semantic-refactor alert highlight-parentheses org-present ht hl-todo helm-descbinds indent-guide f org-journal elpy frames-only-mode nix-sandbox company-nixos-options frames-mode frames--mode nix-mode frame-mode deadgrep creamsody-theme yaml-mode csv-mode slime typo poet-theme proselint flycheck deft company evil-cleverparens lispyville lispy paredit geiser apropospriate-theme evil-org evil-org-mode evil-collection intellij-theme markdown-mode powerline linum-relative evil-magit org-mode evil-commentary find-file-in-project base16-theme ripgrep helm magit evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
