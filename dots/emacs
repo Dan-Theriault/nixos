@@ -146,9 +146,7 @@
   (([remap list-buffers] . ivy-switch-buffer)
    ([remap switch-to-buffer] . ivy-switch-buffer)
    ([remap switch-to-buffer-other-window] . ivy-switch-buffer-other-window)
-   :package ivy
-   :map) ivy-minibuffer-map
-  ("<escape>" . abort-recursive-edit)
+   :package ivy :map ivy-minibuffer-map ("<escape>" . abort-recursive-edit))
   :init
   (defvar projectile-completion-system)
   (defvar magit-completing-read-function)
