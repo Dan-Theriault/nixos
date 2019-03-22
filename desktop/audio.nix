@@ -34,30 +34,30 @@
   };
 
   # Here be dragons
-  services.mopidy = {
-    enable = true;
-    extensionPackages = ( with pkgs; [
-      mopidy-iris
-      mopidy-mopify
-      mopidy-spotify
-      mopidy-spotify-tunigo
-      mopidy-youtube
-    ] );
-    configuration = '' 
-      [core]
-      restore_state = true
+  # services.mopidy = {
+  #   enable = true;
+  #   extensionPackages = ( with pkgs; [
+  #     mopidy-iris
+  #     mopidy-mopify
+  #     mopidy-spotify
+  #     mopidy-spotify-tunigo
+  #     mopidy-youtube
+  #   ] );
+  #   configuration = '' 
+  #     [core]
+  #     restore_state = true
 
-      [audio]
-      mixer = none
-      output = pulsesink server=127.0.0.1
-      mixer_volume = 100
+  #     [audio]
+  #     mixer = none
+  #     output = pulsesink server=127.0.0.1
+  #     mixer_volume = 100
 
-      [youtube]
-      enabled = true
+  #     [youtube]
+  #     enabled = true
 
-      [mopify]
-      enabled = true
-    '';
-    extraConfigFiles = [ "/etc/secrets/mopidy-spotify" ]; # secret login details
-  };
+  #     [mopify]
+  #     enabled = true
+  #   '';
+  #   extraConfigFiles = [ "/etc/secrets/mopidy-spotify" ]; # secret login details
+  # };
 }

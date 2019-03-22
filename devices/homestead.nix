@@ -19,7 +19,7 @@
 
     ../net
     ../net/ssh-client.nix 
-    ../net/ssh-server.nix
+    # ../net/ssh-server.nix
     # ../net/wireguard.nix
 
     ../security

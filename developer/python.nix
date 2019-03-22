@@ -10,7 +10,7 @@ let
         matplotlib
         # neovim
         numpy
-        pandas
+        # pandas
         scipy
         yapf
       ];

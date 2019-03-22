@@ -23,7 +23,7 @@ let
   };
 
   vim-configuration = {
-    customRC = import ../developer/vimrc.nix {inherit config pkgs;};
+    customRC = import ../dots/vimrc.nix {inherit config pkgs;};
     vam.knownPlugins = pkgs.vimPlugins // customPlugins;
     vam.pluginDictionaries = [ {
       names = [

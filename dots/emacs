@@ -29,13 +29,11 @@
 (use-package exec-path-from-shell :ensure t
   :config (exec-path-from-shell-initialize))
 
+(setq evil-want-integration t
+    evil-want-keybinding nil
+    evil-want-C-u-scroll t)
 (use-package evil
   :ensure t
-  :init
-  (setq evil-want-integration nil
-	evil-want-keybinding nil
-	evil-want-C-u-scroll t)
-
   :bind
   (:map evil-visual-state-map
 	("<" . (lambda ()
@@ -48,16 +46,16 @@
 		 (evil-shift-right (region-beginning) (region-end))
 		 (evil-normal-state)
 		 (evil-visual-restore)))
-	("C-p" . 'find-file-in-project-by-selected))
+	("C-p" . 'counsel-find-file))
   (:map evil-motion-state-map
 	("E" . 'evil-end-of-line)
 	("B" . 'evil-beginning-of-line)
 	("j" . 'evil-next-visual-line)
 	("k" . 'evil-previous-visual-line))
   (:map evil-normal-state-map
-	("C-p" . 'find-file-in-project-by-selected))
+	("C-p" . 'counsel-find-file))
   (:map evil-insert-state-map
-	("C-p" . 'find-file-in-project-by-selected))
+	("C-p" . 'counsel-find-file))
 
   :config
   (evil-define-command custom-save-and-close (file &optional bang)
@@ -77,8 +75,6 @@
     :custom (evil-collection-setup-minibuffer t)
     :config (evil-collection-init))
 
-  (evil-mode 1)
-
   (use-package evil-leader
     :ensure t
     :config (global-evil-leader-mode))
@@ -91,11 +87,14 @@
   (use-package evil-commentary :ensure t
     :config (evil-commentary-mode))
 
-  (use-package evil-cleverparens
-    :ensure t
-    :hook (emacs-lisp-mode geiser-mode slime-mode)
-    :config
-    (require 'evil-cleverparens-text-objects)))
+  ;; (use-package evil-cleverparens
+  ;;   :ensure t
+  ;;   :functions evil-cleverparens-mode
+  ;;   :hook (emacs-lisp-mode slime-mode geiser-mode)
+  ;;   :config
+  ;;   (require 'evil-cleverparens-text-objects))
+
+  (evil-mode 1))
 
 (use-package org
   :ensure t
@@ -105,7 +104,7 @@
 (use-package evil-org
   :ensure t
   :after org evil
-  :hook org-mode 
+  :hook org-mode
   :config
   (add-hook 'evil-org-mode-hook (lambda () (evil-org-set-key-theme)))
   (require 'evil-org-agenda)
@@ -214,7 +213,7 @@
 
 (set-face-attribute 'default nil
   :family "IBM Plex Mono"
-  :height 110
+  :height 85
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono")
 (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif")
@@ -246,33 +245,9 @@
 	      ;; this is the default
 	      display-line-numbers-current-absolute t)
 
-(set-face-attribute 'line-number-current-line nil :height 110)
-(set-face-attribute 'line-number nil :height 110 :family "IBM Plex Mono")
+(set-face-attribute 'line-number-current-line nil :height 80)
+(set-face-attribute 'line-number nil :height 80 :family "IBM Plex Mono")
 
 (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
 (setq save-interprogram-paste-before-kill t)
 (load-theme 'poet t)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
- '(custom-safe-themes
-   (quote
-    ("9129c2759b8ba8e8396fe92535449de3e7ba61fd34569a488dd64e80f5041c9f" "d88c43fe03ac912e35963695caf0ae54bc6ce6365c3a42da434ef639f7a37399" "89f545ddc104836b27167696db89b371f23893d5b2f038d43383d877ee678d3d" "eacee5f1c2f46185d6f089d97b7953bd9fc5d5b773f72cc76c9fcb556eeba174" "c3e6b52caa77cb09c049d3c973798bc64b5c43cc437d449eacf35b3e776bf85c" "5a0eee1070a4fc64268f008a4c7abfda32d912118e080e18c3c865ef864d1bea" "70f5a47eb08fe7a4ccb88e2550d377ce085fedce81cf30c56e3077f95a2909f2" default)))
- '(evil-collection-setup-minibuffer t)
- '(global-hl-todo-mode t)
- '(package-selected-packages
-   (quote
-    (olivetti counsel evil-indent-textobject evil-surround evil-leader exec-path-from-shell use-package srefactor-lisp srefactor semantic-refactor alert highlight-parentheses org-present ht hl-todo helm-descbinds indent-guide f org-journal elpy frames-only-mode nix-sandbox company-nixos-options frames-mode frames--mode nix-mode frame-mode deadgrep creamsody-theme yaml-mode csv-mode slime typo poet-theme proselint flycheck deft company evil-cleverparens lispyville lispy paredit geiser apropospriate-theme evil-org evil-org-mode evil-collection intellij-theme markdown-mode powerline linum-relative evil-magit org-mode evil-commentary find-file-in-project base16-theme ripgrep helm magit evil))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

@@ -12,10 +12,12 @@ in
       automatic = true;
       options = "-d";
     };
-    buildCores = 8;
+    buildCores = 0;
     maxJobs = 8;
     allowedUsers = [ "@wheel" ];
     autoOptimiseStore = true;
+    daemonNiceLevel = 3;
+    daemonIONiceLevel = 3;
   };
 
 
@@ -67,11 +69,12 @@ in
       extraGroups = [
         "wheel"
         "disk"
-        "audio" "video" 
+        "audio" "video" "input" "tty"
         "networkmanager" 
         "systemd-journal" 
         "scanner" "lpadmin" 
         "bluetooth" 
+        "sway"
       ];
       initialPassword = "hagan lio"; # change immediately after install with passwd
     };

@@ -1,5 +1,8 @@
 {config, pkgs}:
 
+let
+  theme = import ../theme.nix;
+in
 ''
 set shell=${pkgs.bash}/bin/bash
 filetype plugin indent on    " required

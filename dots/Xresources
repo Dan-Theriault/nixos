@@ -1,3 +1,5 @@
+Xft.dpi: 192
+
 ! Colorscheme collection/navy-and-ivory from terminal.sexy
 ! special
 *.foreground:   #e8dfd6

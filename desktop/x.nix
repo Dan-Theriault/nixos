@@ -16,7 +16,7 @@
       package = pkgs.i3-gaps;
       configFile = pkgs.lib.mkDefault (pkgs.writeTextFile {
         name = "i3.conf";
-        text = import ../desktop/i3.nix { inherit config pkgs; };
+        text = import ../dots/i3.nix { inherit config pkgs; };
       });
     };
   };
@@ -53,6 +53,7 @@
   };
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
+    arandr
     rofi dmenu              # program launchers
     xorg.xbacklight 
     xdotool 
