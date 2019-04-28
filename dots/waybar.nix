@@ -97,7 +97,7 @@ in
         "height": 45, 
         "modules-left": ["clock", "sway/workspaces", "sway/mode" ], 
         "modules-center": ["sway/window"],
-        "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "backlight", "network", "tray"],
+        "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "backlight", "network"],
         "sway/workspaces": { 
              "disable-scroll": true, 
              "all-outputs": true, 

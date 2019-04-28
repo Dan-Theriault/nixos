@@ -1,39 +1,25 @@
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-(package-initialize)
+;;; .emacs --- BLah
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;;; Commentary:
 
+;;; Code:
 (eval-when-compile (require 'use-package))
 
 (setq user-full-name "Daniel Theriault"
       user-mail-address "dan@theriault.codes")
 
-;;utils
-(use-package s :ensure t) ;;strings
-(use-package dash :ensure t) ;;lists
-(use-package f :ensure t) ;;files
-(use-package ht :ensure t) ;;hash tables
-(use-package alert :ensure t :config (setq alert-default-style 'libnotify))
+;; utils
+(use-package s) ;;strings
+(use-package dash) ;;lists
+(use-package f) ;;files
+(use-package ht) ;;hash tables
+(use-package alert :config (setq alert-default-style 'libnotify))
 
-(use-package elpy
-  :ensure t
-  :config
-  (setq python-shell-interpreter "ipython"
-	python-shell-interpreter-args "--simple-prompt -i")
-  (elpy-enable))
-
-(use-package exec-path-from-shell :ensure t
-  :config (exec-path-from-shell-initialize))
-
-(setq evil-want-integration t
-    evil-want-keybinding nil
-    evil-want-C-u-scroll t)
 (use-package evil
-  :ensure t
+  :init
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   :bind
   (:map evil-visual-state-map
 	("<" . (lambda ()
@@ -56,7 +42,6 @@
 	("C-p" . 'counsel-find-file))
   (:map evil-insert-state-map
 	("C-p" . 'counsel-find-file))
-
   :config
   (evil-define-command custom-save-and-close (file &optional bang)
     "saves the current buffer and closes the buffer"
@@ -69,40 +54,40 @@
   (evil-ex-define-cmd "quit" 'evil-quit)
   (evil-ex-define-cmd "x" 'custom-save-and-close)
   (evil-ex-define-cmd "wq" 'custom-save-and-close)
-
-  (use-package evil-collection
-    :ensure t
-    :custom (evil-collection-setup-minibuffer t)
-    :config (evil-collection-init))
-
-  (use-package evil-leader
-    :ensure t
-    :config (global-evil-leader-mode))
-
-  (use-package evil-surround :ensure t
-    :config (global-evil-surround-mode))
-
-  (use-package evil-indent-textobject :ensure t)
-
-  (use-package evil-commentary :ensure t
-    :config (evil-commentary-mode))
-
-  ;; (use-package evil-cleverparens
-  ;;   :ensure t
-  ;;   :functions evil-cleverparens-mode
-  ;;   :hook (emacs-lisp-mode slime-mode geiser-mode)
-  ;;   :config
-  ;;   (require 'evil-cleverparens-text-objects))
-
   (evil-mode 1))
 
-(use-package org
-  :ensure t
+;; Keeps breaking things
+;; (use-package evil-collection
+;;   :after evil
+;;   :custom (evil-collection-setup-minibuffer t)
+;;   :config
+;;   (evil-collection-init))
+
+(use-package evil-leader
+  :config (global-evil-leader-mode))
+
+(use-package evil-surround
+  :config (global-evil-surround-mode))
+
+(use-package evil-indent-textobject)
+
+(use-package evil-commentary
+  :config (evil-commentary-mode))
+
+(use-package evil-cleverparens
+  ;; :hook (emacs-lisp-mode slime-mode geiser-mode)
   :config
-  (use-package org-journal :ensure t))
+  (require 'evil-cleverparens-text-objects))
+
+(use-package evil-goggles
+  :config
+  (evil-goggles-mode))
+
+(use-package org
+  :config
+  (use-package org-journal))
 
 (use-package evil-org
-  :ensure t
   :after org evil
   :hook org-mode
   :config
@@ -110,35 +95,20 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
+(use-package elpy
+  :config
+  (setq python-shell-interpreter "ipython"
+	python-shell-interpreter-args "--simple-prompt -i")
+  (elpy-enable))
+
+(use-package exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
+
 (use-package find-file-in-project
-  :ensure t
   :config (setq ffip-use-rust-fd t))
 
 (use-package frames-only-mode
-  :ensure t
   :config (frames-only-mode))
-
-(use-package counsel
-  :ensure t
-  :bind*
-  (([remap execute-extended-command] . counsel-M-x)
-   ([remap find-library] . counsel-find-library)
-   ([remap find-file] . counsel-find-file)
-   ([remap apropos] . counsel-apropos)
-   ([remap describe-bindings] . counsel-descbinds)
-   ([remap describe-face] . counsel-describe-faces)
-   ([remap list-faces-display] . counsel-faces)
-   ([remap imenu] . counsel-imenu)
-   ([remap load-library] . counsel-load-library)
-   ([remap load-theme] . counsel-load-theme)
-   ([remap yank-pop] . counsel-yank-pop)
-   ([remap info-lookup-symbol] . counsel-info-lookup-symbol)
-   ([remap pop-to-mark-command] . counsel-mark-ring)
-   ([remap bookmark-jump] . counsel-bookmark)))
-
-(use-package srefactor
-  :ensure t
-  :config (require 'srefactor-lisp))
 
 (use-package ivy
   :bind
@@ -153,38 +123,76 @@
   (setq projectile-completion-system 'ivy
         magit-completing-read-function 'ivy-completing-read))
 
+(use-package counsel
+  :bind*
+  (([remap find-library] . counsel-find-library)
+   ([remap execute-extended-command] . counsel-M-x)
+   ([remap find-file] . counsel-find-file)
+   ([remap apropos] . counsel-apropos)
+   ([remap describe-bindings] . counsel-descbinds)
+   ([remap describe-face] . counsel-describe-faces)
+   ([remap list-faces-display] . counsel-faces)
+   ([remap imenu] . counsel-imenu)
+   ([remap load-library] . counsel-load-library)
+   ([remap load-theme] . counsel-load-theme)
+   ([remap yank-pop] . counsel-yank-pop)
+   ([remap info-lookup-symbol] . counsel-info-lookup-symbol)
+   ([remap pop-to-mark-command] . counsel-mark-ring)
+   ([remap bookmark-jump] . counsel-bookmark)))
+
+(use-package swiper)
+
+(use-package srefactor
+  :config (require 'srefactor-lisp))
+
+;; (use-package aggressive-indent
+;;   :hook emacs-lisp-mode)
+
+(use-package ws-butler :config (ws-butler-global-mode))
+
 (use-package magit
-  :ensure t
+  :after evil
   :config
-  (use-package evil-magit :ensure t))
+  (use-package evil-magit))
 
 (use-package markdown-mode
-  :ensure t
   :mode (("\\.md\\'" . gfm-mode))
-  :hook (markdown-mode . flyspell-mode))
+  :hook flyspell-mode)
+
+(use-package tex
+  :config
+  (use-package auctex-latexmk)
+  (use-package pdf-tools)
+  (use-package magic-latex-buffer :hook latex-mode))
+
+(use-package json-mode)
 
 ;; Nix Stuff
-(use-package nix-mode :ensure t)
-(use-package company-nixos-options :ensure t)
-(use-package nix-sandbox :ensure t)
-(use-package nixos-options :ensure t)
+(use-package nix-mode)
+(use-package company-nixos-options)
+(use-package nix-sandbox)
+(use-package nixos-options)
 
 (use-package geiser
-  :ensure t
   :config
   (setq geiser-guile-binary "/run/current-system/sw/bin/guile"))
 
 (use-package slime
-  :ensure t
   :config
   (setq inferior-lisp-program "/run/current-system/sw/bin/sbcl"))
 
 (use-package company
-  :ensure t
-  :config (global-company-mode))
+  :config
+  ; (use-package company-auctex)
+  ; (use-package company-lsp)
+  (use-package company-quickhelp :config (company-quickhelp-mode))
+  (use-package company-shell)
+  (add-to-list 'company-backends 'company-shell)
+  (global-company-mode))
+
+(use-package undo-tree)
 
 (use-package deft
-  :ensure t
   :config
   (setq deft-directory "~/Notes")
   (setq deft-default-extension "md")
@@ -195,7 +203,6 @@
   (setq deft-auto-save-interval 0))
 
 (use-package flycheck
-  :ensure t
   :hook (prog-mode . flycheck-mode)
   :config
   (flycheck-define-checker proselint
@@ -208,8 +215,9 @@
     :modes (text-mode markdown-mode gfm-mode org-mode)))
 
 ;;appearance
-(use-package hl-todo :ensure t :config (global-hl-todo-mode))
-(use-package highlight-parentheses :ensure t)
+(use-package diff-hl :config (global-diff-hl-mode))
+(use-package hl-todo :config (global-hl-todo-mode))
+(use-package highlight-parentheses)
 
 (set-face-attribute 'default nil
   :family "IBM Plex Mono"
@@ -220,14 +228,12 @@
 
 ; poet settings
 (use-package poet-theme
-  :ensure t
   :config
-  (use-package olivetti :ensure t)
-  (use-package typo :ensure t)
+  (use-package olivetti)
+  (use-package typo)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . light))
-  (add-hook 'text-mode-hook
-	    (lambda ()
+  (add-hook 'text-mode-hook (lambda ()
 	      (variable-pitch-mode 1)
 	      (olivetti-mode 1)
 	      (olivetti-set-width 120)

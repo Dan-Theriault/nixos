@@ -170,8 +170,8 @@ exec ${pkgs.xorg.xrdb}/bin/xrdb -load /etc/nixos/dots/Xresources
 exec ${pkgs.swayidle}/bin/swayidle -w \
   timeout 600 '/etc/nixos/scripts/lock.sh' \
   lock '/etc/nixos/scripts/lock.sh' \
-  before-sleep '/etc/nixos/scripts/lock.sh && swaymsg "output * dpms off"' \
-  after-resume '/etc/nixos/scripts/lock.sh && swaymsg "output * dpms on"' 
+  before-sleep 'swaymsg "output * dpms off"' \
+  after-resume 'swaymsg "output * dpms on"' 
 
 # ======= APPEARANCE =======
 font pango:IBMPlexMono 12, FontAwesome 10 # Font for window titles. 

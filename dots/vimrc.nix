@@ -4,7 +4,7 @@ let
   theme = import ../theme.nix;
 in
 ''
-set shell=${pkgs.bash}/bin/bash
+set shell=${pkgs.bashInteractive}/bin/bash
 filetype plugin indent on    " required
 
 syntax on
@@ -78,17 +78,13 @@ let g:airline_section_y='%{strftime("%c")}'
 let g:airline_section_a = airline#section#create_left(['mode', 'crypt', 'paste', 'keymap', 'capslock', 'xkblayout', 'iminsert'])
 
 "colorscheme
+colorscheme dim
+let g:airline_theme = 'base16'
 let base16colorspace=256
-let g:airline_theme='base16_ocean'
 
 hi LineNr ctermbg=None
 hi Normal ctermbg=None
 hi SignColumn ctermbg=None
-
-hi BufTabLineCurrent cterm=italic ctermfg=15 ctermbg=242
-hi BufTabLineActive cterm=italic ctermfg=15 ctermbg=242
-hi BufTabLineHidden cterm=italic ctermfg=15 ctermbg=None
-hi TabLineFill ctermbg=None cterm=None
 
 hi SpellBad ctermbg=None
 
@@ -138,10 +134,6 @@ let g:ctrlp_user_command ='${pkgs.fd}/bin/fd --type file --color never "" %s'
 
 "Use elm-vim and vimtex instead of polyglot
 let g:polyglot_disabled = ['elm', 'latex', 'markdown']
-
-"Start nerdtree if no files specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 "other nerdtree stuf
 nmap <C-n> :NERDTreeToggle<CR>

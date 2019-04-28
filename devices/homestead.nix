@@ -29,7 +29,7 @@
   environment.systemPackages = (import ../desktop/pkgs.nix {
     inherit config pkgs;
     tex = true;
-  }) ++ (with pkgs; [chromium solaar]);
+  }) ++ (with pkgs; [chromium solaar ntfs3g ]);
   
   # Handle two encrypted partitions
   boot.initrd.luks.devices.aCrypt = { # large HDD
@@ -96,4 +96,7 @@
   hardware.opengl.extraPackages = with pkgs; [
     vaapiIntel
   ];
+
+
+  i18n.consoleFont = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 }

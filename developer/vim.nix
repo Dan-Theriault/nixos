@@ -20,37 +20,49 @@ let
         sha256 = "1d0mjjyissjvl80wgmn7z1gsjs3fhk0vnmx84l9q7g04ql4l9pja";
       };
     };
+    vim-dim = pkgs.vimUtils.buildVimPlugin {
+      name = "vim-dim";
+      src = pkgs.fetchFromGitHub {
+        owner = "jeffkreeftmeijer";
+        repo = "vim-dim";
+        rev = "00d1b3beacf22cf061b95261d7afbba461701826";
+        sha256 = "13x3bx1dv8ivfvjlzaj7c8386ps93a2y7h56viai1xnqhbvjjvqy";
+      };
+    };
   };
 
   vim-configuration = {
     customRC = import ../dots/vimrc.nix {inherit config pkgs;};
-    vam.knownPlugins = pkgs.vimPlugins // customPlugins;
-    vam.pluginDictionaries = [ {
-      names = [
-        "ack-vim"
-        "airline"
-        "ale"
-        "commentary"
-        "ctrlp"
-        "polyglot"
-        "surround"
-        "vim-airline-themes"
-        "vim-colorschemes"
-        "vim-nix"
-        "vim-signify"
-        "vim-markdown"
+    plug.plugins = with (pkgs.vimPlugins // customPlugins); [
+      ack-vim
+      airline
+      ale
+      commentary
+      ctrlp
+      polyglot
+      surround
+      vim-airline-themes
+      vim-colorschemes
+      vim-nix
+      vim-signify
+      vim-markdown
 
-        # Custom Packages
-        "vim-buftabline"
-        "vim-lastplace"
-      ];
-    } ];
+      # Custom Packages
+      vim-buftabline
+      vim-lastplace
+      vim-dim
+    ];
+  };
+  vim-env = pkgs.buildEnv {
+    name = "vim-env";
+    paths = with pkgs; [
+      wl-clipboard
+      (neovim.override { configure = vim-configuration; })
+    ];
   };
 in
   { 
-    environment.systemPackages = [ 
-      ( pkgs.neovim.override { configure = vim-configuration; } )
-    ]; 
+    environment.systemPackages = [ vim-env ]; 
     programs.fish.shellAliases = {
       vim = "nvim";
       svim = "sudo nvim";

@@ -28,7 +28,7 @@ in
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "Lat2-Terminus16";
+    consoleFont = pkgs.lib.mkDefault "Lat2-Terminus16";
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
@@ -63,7 +63,7 @@ in
 
   # Setup user account(s)
   users = {
-    defaultUserShell = pkgs.bash;
+    defaultUserShell = pkgs.bashInteractive;
     users.dtheriault3 = {
       isNormalUser = true;
       extraGroups = [

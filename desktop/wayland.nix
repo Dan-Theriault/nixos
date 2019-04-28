@@ -10,7 +10,7 @@ let
       export _SWAY_WRAPPER_ALREADY_EXECUTED=1
       # export XDG_SESSION_TYPE=wayland
       export CLUTTER_BACKEND=wayland
-      export SDL_VIDEODRIVER=wayland
+      # export SDL_VIDEODRIVER=wayland
       export GDK_BACKEND=wayland
       export QT_QPA_PLATFORM=wayland-egl
       export QT_QPA_PLATFORMTHEME=qt5ct

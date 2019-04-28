@@ -4,9 +4,14 @@ let
   emacsLucid = pkgs.emacs.overrideDerivation (old: {
     configureFlags = [ "--with-x-toolkit=lucid" ];
   });
-  emacsWithPackages = (pkgs.emacsPackagesNgGen pkgs.emacs).emacsWithPackages;
+  emacsWithPackages = (pkgs.emacsPackagesNgGen emacsLucid).emacsWithPackages;
   myEmacs = emacsWithPackages ( epkgs:
-    (with epkgs.melpaPackages; [
+    (with epkgs.elpaPackages; [
+      aggressive-indent
+      auctex
+      delight
+      undo-tree
+    ]) ++ (with epkgs.melpaPackages; [
       alert
       company
       company-nixos-options
@@ -18,6 +23,7 @@ let
       evil-cleverparens
       evil-collection
       evil-commentary
+      evil-goggles
       evil-indent-textobject
       evil-leader
       evil-magit
@@ -40,11 +46,28 @@ let
       nixos-options
       olivetti
       org-journal
+      pdf-tools
       poet-theme
       s
       slime
       srefactor
       typo
+      use-package
+
+      amx
+      auctex-latexmk
+      # company-auctex
+      # company-lsp
+      company-quickhelp
+      company-shell
+      diff-hl
+      # hlint-refactor intero
+      json-mode
+      latex-extra
+      magic-latex-buffer
+      swiper
+      use-package
+      ws-butler
     ]) ++ (with epkgs.orgPackages; [
       org
       org-plus-contrib
