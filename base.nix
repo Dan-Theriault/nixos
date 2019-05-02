@@ -29,8 +29,8 @@ in
   # Select internationalisation properties.
   i18n = {
     consoleFont = pkgs.lib.mkDefault "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
+    consoleKeyMap = pkgs.lib.mkDefault "us";
+    defaultLocale = pkgs.lib.mkDefault "en_US.UTF-8";
   };
 
   # Set your time zone.

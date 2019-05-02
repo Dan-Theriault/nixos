@@ -3,6 +3,7 @@
 { config, pkgs, ... }:
 
 {
+  i18n.consoleUseXkbConfig = true;
   services.gnome3.at-spi2-core.enable = true;
   sound.enable = true;
 

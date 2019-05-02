@@ -3,34 +3,12 @@
 {
   fonts = {
     fontconfig = {
-      penultimate.enable = true;
+      penultimate.enable = pkgs.lib.mkDefault true;
       defaultFonts = {
         monospace = [ "IBM Plex Mono" ];
         sansSerif = [ "IBM Plex Sans" ];
         serif     = [ "IBM Plex Serif" ];
       };
-      localConf = ''
-        <match target="font">
-          <edit name="hinting" mode="assign">
-            <bool>true</bool>
-          </edit>
-          <edit name="hintstyle" mode="assign">
-            <const>hintfull</const>
-          </edit>
-          <edit name="rgba" mode="assign">
-            <const>rgb</const>
-          </edit>
-          <edit name="lcdfilter" mode="assign">
-            <const>lcddefault</const>
-          </edit>
-          <test name="weight" compare="more">
-            <const>medium</const>
-          </test>
-          <edit name="autohint" mode="assign">
-            <bool>false</bool>
-          </edit>
-        </match>
-      '';
     };
     fonts = with pkgs; [
       google-fonts # ~300mb tarball download. Slow. Lots of junk. But oh-so-many fonts!
