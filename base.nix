@@ -46,6 +46,7 @@ in
     abduco # detached sessions
     dnsutils
     file
+    fd
     git
     gnupg
     htop 
@@ -54,6 +55,7 @@ in
     neofetch
     netsniff-ng # flowtop, others
     psmisc # killall and friends
+    ripgrep
     tree
     unzip
     vim

@@ -9,7 +9,6 @@
     xkbOptions = "compose:ralt, caps:escape"; # may not work as expected in vm
 
     desktopManager.plasma5.enable = true;
-    desktopManager.mate.enable = true;
 
     windowManager.i3 = {
       enable = true;

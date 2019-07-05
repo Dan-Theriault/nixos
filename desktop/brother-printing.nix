@@ -22,7 +22,8 @@
   };
 
   environment.systemPackages = ( with pkgs; [
-    xsane paperwork
+    xsane 
+    # paperwork
   ]);
 
   services.avahi.enable = true; # needed for pdf export in papework... for some reason?

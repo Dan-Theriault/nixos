@@ -55,6 +55,9 @@
     enable = true;
     dates = "02:30";
   };
+  systemd.services.nixos-upgrade.path = with pkgs; [
+    gnutar xz.bin gzip config.nix.package.out
+  ];
 
   services.udev.packages = with pkgs; [ solaar ];
 

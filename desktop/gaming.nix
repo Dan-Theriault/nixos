@@ -8,9 +8,9 @@
   environment.systemPackages = with pkgs; [
     steam
     steam-run
-    wineWowPackages.base
-    winetricks
-    samba
-    p7zip
+    # wineWowPackages.base
+    # winetricks
+    # samba
+    # p7zip
   ];
 }

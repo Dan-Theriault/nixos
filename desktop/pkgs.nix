@@ -1,7 +1,5 @@
 { config, pkgs,
   tex ? false,
-  bluej ? false,
-  
 }:
 
 with pkgs; [
@@ -17,10 +15,12 @@ with pkgs; [
   sc-im
   wireshark
   zathura
-
-  ( wrapFirefox firefox-devedition-bin-unwrapped {
-    browserName = "firefox";
-  })
+  firefox-wayland
+#   ( wrapFirefox firefox-devedition-bin-unwrapped {
+#     browserName = "firefox";
+#     gdkWayland = true;
+#     # extraNativeMessagingHosts = [ keepassxc ];
+#   })
   keepassxc
 ] ++ ( with pkgs.kdeApplications; [
   okular
@@ -29,8 +29,6 @@ with pkgs; [
   kate
   kgpg
   spectacle
-] ) ++ ( if !bluej then [] else
-  import ../desktop/bluej.nix {inherit config pkgs;}
-) ++ (if !tex then [] else
+] ) ++ (if !tex then [] else
   import ../desktop/tex.nix {inherit config pkgs;}
 )

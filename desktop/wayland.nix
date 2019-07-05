@@ -3,6 +3,7 @@
 let
   url = "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz";
   waylandOverlay = (import (builtins.fetchTarball url));
+  waylandPkgs = pkgs.extend waylandOverlay;
   swaypkg = pkgs.sway;
   swayWrapped = pkgs.writeShellScriptBin "sway" ''
     set -o errexit
@@ -19,9 +20,9 @@ let
     fi
     if [ "$DBUS_SESSION_BUS_ADDRESS" ]; then
       export DBUS_SESSION_BUS_ADDRESS
-      exec sway-setcap "$@"
+      exec ${swaypkg}/bin/sway -c /etc/sway-config "$@"
     else
-      exec ${pkgs.dbus}/bin/dbus-run-session sway-setcap -c /etc/sway-config "$@"
+      exec ${pkgs.dbus}/bin/dbus-run-session ${swaypkg}/bin/sway -c /etc/sway-config "$@"
     fi
   '';
   swayJoined = pkgs.symlinkJoin {
@@ -30,20 +31,9 @@ let
   };
 in
 {
-  nixpkgs.overlays = [ waylandOverlay ];
+  programs.sway.enable = true;
 
-  security.wrappers.sway = {
-    program = "sway-setcap";
-    source = "${swaypkg}/bin/sway";
-    capabilities = "cap_sys_ptrace,cap_sys_tty_config=eip";
-    owner = "root";
-    group = "sway";
-    permissions = "u+rx,g+rx";
-  };
-
-  environment.systemPackages = with pkgs; [
-    swayJoined
-
+  environment.systemPackages = with waylandPkgs; [
     grim
     mako
     slurp
@@ -53,10 +43,10 @@ in
     wf-recorder
     wl-clipboard
     xwayland
-  ];
+    cage
+  ] ++ [ swayJoined ];
 
-  environment.etc."sway-config".text = import ../dots/sway.nix { inherit config pkgs; };
+  environment.etc."sway-config".text = import ../dots/sway.nix { inherit config; pkgs = waylandPkgs; };
 
-  security.pam.services.swaylock = {};
   hardware.opengl.enable = true;
 }

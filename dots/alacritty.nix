@@ -68,9 +68,6 @@ font:
     x: 0
     y: 0
 
-# Should display the render timer
-render_timer: false
-
 colors:
   # Default colors
   primary:

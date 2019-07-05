@@ -6,7 +6,6 @@
   nix.allowedUsers = [ "@wheel" "@builders" ];
 
   security = {
-    hideProcessInformation = true;
     apparmor.enable = true;
   };
 
@@ -51,8 +50,6 @@
         USB_EHCI_TT_NEWSCHED y
       '';
       features.ia32Emulation = true;
-      
-        
       autoModules = false;
       ignoreConfigErrors = true;
       kernelPreferBuiltin = true;
@@ -69,7 +66,6 @@
       "net.core.bpf_jit_enable" = pkgs.lib.mkDefault false;
       "net.core.bpf_jit_harden" = true;
       "kernel.yama.ptrace_scope" = 1;
-
       "kernel.unprivileged_userns_clone" = 1; # required for steam
     };
     initrd.kernelModules = [ "dm-crypt" ]; 

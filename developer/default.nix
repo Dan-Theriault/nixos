@@ -44,7 +44,7 @@ let
       nix-mode
       nix-sandbox
       nixos-options
-      olivetti
+      # olivetti
       org-journal
       pdf-tools
       poet-theme
@@ -86,20 +86,21 @@ in
     # nixos-shell
     # pgmanage pgcli pg_top 
     arduino platformio
-    fd ripgrep 
     # tokei 
 
     telnet netcat
     jq
     # postman
-    jdk8
+    jdk11
 
     shellcheck
     go
     sqlite
 
     myEmacs
-    guile sbcl lispPackages.quicklisp
+    guile 
+    sbcl lispPackages.quicklisp
+    scala sbt scalafix idea.idea-community
   ];
 
   # emacs service

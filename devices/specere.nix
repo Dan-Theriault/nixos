@@ -32,7 +32,6 @@
   environment.systemPackages = (import ../desktop/pkgs.nix {
     inherit config pkgs;
     tex = true;
-    BlueJ = true;
   }) ++ (with pkgs; [
       wpa_supplicant_gui
       solaar
