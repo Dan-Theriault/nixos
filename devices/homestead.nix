@@ -59,8 +59,6 @@
     gnutar xz.bin gzip config.nix.package.out
   ];
 
-  services.udev.packages = with pkgs; [ solaar ];
-
   services.xserver.resolutions = [ { x = 3840; y = 2160; } ];
   services.xserver.xrandrHeads = [
     {
@@ -82,7 +80,13 @@
     "vm.dirty_writeback_centisecs" = 1500; # reduce window for data loss 
   };
 
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth.enable = false;
+
+  hardware.logitech = {
+    enable = true;
+    enableGraphical = true;
+  };
+
   services.xserver.videoDrivers = [ "amdgpu" "intel" ];
   boot.kernelPatches = [
     {

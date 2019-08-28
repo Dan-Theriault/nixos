@@ -17,6 +17,8 @@ let
       export QT_QPA_PLATFORMTHEME=qt5ct
       export QT_WAYLAND_FORCE_DPI=physical
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      export _JAVA_AWT_WM_NONPARENTING=1
+      export MOZ_ENABLE_WAYLAND=1
     fi
     if [ "$DBUS_SESSION_BUS_ADDRESS" ]; then
       export DBUS_SESSION_BUS_ADDRESS

@@ -4,11 +4,11 @@ with pkgs; [
     pdfpc
     ( texlive.combine {
       inherit (texlive) 
-      scheme-full
+      scheme-medium
 
       # XeTeX Compiler
-      # xetex xetex-def
-      # fontspec euenc
+      xetex 
+      fontspec euenc
 
       # Compilation
       latexmk pdftex
@@ -26,8 +26,6 @@ with pkgs; [
       microtype
       xcolor
 
-      # Fonts - Internal tex fonts aren't working for some reason.
-      # Debug later, use system fonts for now.
       gfsdidot 
       crimson
       roboto

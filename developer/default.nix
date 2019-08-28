@@ -100,7 +100,10 @@ in
     myEmacs
     guile 
     sbcl lispPackages.quicklisp
-    scala sbt scalafix idea.idea-community
+    (buildEnv { 
+      name = "scala-dev-env";
+      paths = [ scala sbt scalafix idea.idea-community jdk8 ];
+    })
   ];
 
   # emacs service

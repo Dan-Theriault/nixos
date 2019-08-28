@@ -1,17 +1,27 @@
 { config, pkgs, ... }:
 
+
 {
   fonts = {
     fontconfig = {
       penultimate.enable = pkgs.lib.mkDefault true;
       defaultFonts = {
-        monospace = [ "IBM Plex Mono" ];
-        sansSerif = [ "IBM Plex Sans" ];
-        serif     = [ "IBM Plex Serif" ];
+        monospace = [ "Fira Code" ];
+        sansSerif = [ "Inria Sans" ];
+        serif     = [ "Inria Serif" ];
       };
     };
     fonts = with pkgs; [
-      google-fonts # ~300mb tarball download. Slow. Lots of junk. But oh-so-many fonts!
+      # google-fonts # ~300mb tarball download. Slow. Lots of junk. But oh-so-many fonts!
+      inriafonts
+      jost
+      cooper-hewitt
+      libre-franklin
+      libre-baskerville
+      libre-caslon
+      libre-bodoni
+      manrope
+      inter
 
       ibm-plex
 

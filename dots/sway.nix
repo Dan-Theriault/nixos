@@ -164,6 +164,7 @@ bindsym $mod+Shift+x exec loginctl lock-session
 bindsym $mod+c exec rofi -show calc -modi "calc:${pkgs.libqalculate}/bin/qalc +u8 -nocurrencies"
 
 # ======= AUTORUNS =======
+exec ${pkgs.wmname}/bin/wmname LG3D  # Makes IntelliJ Work
 exec ${pkgs.waybar}/bin/waybar -c ${waybarConfig.config} -s ${waybarConfig.style}
 exec ${pkgs.mako}/bin/mako
 exec ${pkgs.xorg.xrdb}/bin/xrdb -load /etc/nixos/dots/Xresources
@@ -174,7 +175,7 @@ exec ${pkgs.swayidle}/bin/swayidle -w \
   after-resume 'swaymsg "output * dpms on"' 
 
 # ======= APPEARANCE =======
-font pango:IBMPlexMono 12, FontAwesome 10 # Font for window titles. 
+font pango:Jost* 12, FontAwesome 10 # Font for window titles. 
 default_border pixel
 for_window [tiling] border pixel 3
 for_window [floating] border pixel 7

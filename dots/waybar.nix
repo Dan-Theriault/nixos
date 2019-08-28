@@ -9,7 +9,7 @@ in
     * {
         border: none;
         border-radius: 0;
-        font-family: IBM_Plex_Mono, Roboto, Helvetica, Arial, sans-serif;
+        font-family: Jost, IBM_Plex_Mono, Roboto, Helvetica, Arial, sans-serif;
         font-size: 14px;
         min-height: 0;
         color: ${theme.foreground};

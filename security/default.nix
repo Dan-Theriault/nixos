@@ -48,6 +48,9 @@
         KVM_INTEL m
 
         USB_EHCI_TT_NEWSCHED y
+
+        HID_LOGITECH_DJ y
+        HID_LOGITECH_HIDPP y
       '';
       features.ia32Emulation = true;
       autoModules = false;

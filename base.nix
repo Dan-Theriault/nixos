@@ -34,7 +34,11 @@ in
   };
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = pkgs.lib.mkDefault "America/New_York";
+  location = pkgs.lib.mkDefault {
+    latitude = 42.3;
+    longitude = -71.1;
+  };
   # services.openntpd.enable = true;
   boot.kernelPackages = pkgs.lib.mkDefault pkgs.linuxPackages_latest;
 

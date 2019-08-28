@@ -20,36 +20,32 @@
     };
   };
 
-  services.redshift = {
-    enable = true;
-    latitude = "33";
-    longitude = "-84";
-  };
+  services.redshift.enable = true;
 
-  services.compton = { # bad idea with vms or DEs
-    enable = pkgs.lib.mkDefault true;
-    vSync = "opengl";
-    backend = "glx";
-    # inactiveOpacity = "0.8";
-    opacityRules = [
-      "85:class_g = 'st-256color'"
-    ];
-    shadow = true;
-    shadowOffsets = [ (-7) (-7) ];
-    extraOptions = ''
-      paint-on-overlay = true;
-      glx-no-stencil = true;
+  # services.compton = { # bad idea with vms or DEs
+  #   enable = pkgs.lib.mkDefault true;
+  #   vSync = "opengl";
+  #   backend = "glx";
+  #   # inactiveOpacity = "0.8";
+  #   opacityRules = [
+  #     "85:class_g = 'st-256color'"
+  #   ];
+  #   shadow = true;
+  #   shadowOffsets = [ (-7) (-7) ];
+  #   extraOptions = ''
+  #     paint-on-overlay = true;
+  #     glx-no-stencil = true;
 
-      blur-background = true;
-      blur-background-fixed = true;
-      blur-kern = "7x7box";
+  #     blur-background = true;
+  #     blur-background-fixed = true;
+  #     blur-kern = "7x7box";
 
-      no-dock-shadow = true;
-      no-dnd-shadow = true;
-      shadow-radius = 7;
-    '';
+  #     no-dock-shadow = true;
+  #     no-dnd-shadow = true;
+  #     shadow-radius = 7;
+  #   '';
 
-  };
+  # };
 
   environment.systemPackages = ( pkgs.lib.flatten ( with pkgs; [
     arandr
