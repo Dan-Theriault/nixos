@@ -36,16 +36,17 @@ in
   programs.sway.enable = true;
 
   environment.systemPackages = with waylandPkgs; [
+    cage
     grim
     mako
     slurp
     swayidle
     swaylock
     waybar
+    wdisplays
     wf-recorder
     wl-clipboard
     xwayland
-    cage
   ] ++ [ swayJoined ];
 
   environment.etc."sway-config".text = import ../dots/sway.nix { inherit config; pkgs = waylandPkgs; };

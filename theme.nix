@@ -1,6 +1,6 @@
-{
-    foreground =   "#e8dfd6";
-    background =   "#021b21";
+rec {
+    foreground = "#e8dfd6";
+    background = "#021b21";
     
     # black
     black1 = "#032c36";
@@ -33,4 +33,9 @@
     # white
     white1 = "#f2f1b9";
     white2 = "#f6f6c9";
+
+    # aliases
+    highlight1 = cyan2;
+    highlight2 = magenta2;
+    border = black2;
 }

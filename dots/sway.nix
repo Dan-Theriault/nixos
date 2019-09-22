@@ -9,7 +9,8 @@
 }:
 
 let
-  waybarConfig = import ../dots/waybar.nix {inherit config pkgs;};
+  waybarConfig = import ../dots/waybar.nix { inherit config pkgs; };
+  XResources = import ../dots/XResources.nix { inherit config pkgs; };
   theme = import ../theme.nix;
 in
 ''
@@ -167,7 +168,7 @@ bindsym $mod+c exec rofi -show calc -modi "calc:${pkgs.libqalculate}/bin/qalc +u
 exec ${pkgs.wmname}/bin/wmname LG3D  # Makes IntelliJ Work
 exec ${pkgs.waybar}/bin/waybar -c ${waybarConfig.config} -s ${waybarConfig.style}
 exec ${pkgs.mako}/bin/mako
-exec ${pkgs.xorg.xrdb}/bin/xrdb -load /etc/nixos/dots/Xresources
+exec ${pkgs.xorg.xrdb}/bin/xrdb -load ${pkgs.writeText "XResources" XResources}
 exec ${pkgs.swayidle}/bin/swayidle -w \
   timeout 600 '/etc/nixos/scripts/lock.sh' \
   lock '/etc/nixos/scripts/lock.sh' \
@@ -175,19 +176,19 @@ exec ${pkgs.swayidle}/bin/swayidle -w \
   after-resume 'swaymsg "output * dpms on"' 
 
 # ======= APPEARANCE =======
-font pango:Jost* 12, FontAwesome 10 # Font for window titles. 
+font pango:Sans 12, FontAwesome 10 # Font for window titles. 
 default_border pixel
-for_window [tiling] border pixel 3
+for_window [tiling] border pixel 2
 for_window [floating] border pixel 7
-gaps inner 7
-gaps outer 0
+gaps inner 8
+gaps outer 18
 smart_gaps off
 smart_borders off
 
 # ======= Colors
-set $focused ${theme.cyan2}
-set $unfocused ${theme.black2}
-set $urgent ${theme.magenta2}
+set $focused ${theme.highlight1}
+set $unfocused ${theme.border}
+set $urgent ${theme.highlight2}
 
 client.focused $focused $focused $focused $focused $focused 
 client.focused_inactive $unfocused $unfocused $unfocused $unfocused $unfocused 

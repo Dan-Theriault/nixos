@@ -3,6 +3,7 @@
 }:
 
 with pkgs; [
+  anbox
   antimony gmsh # weird CAD and a STL viewer.
   inkscape
   libav

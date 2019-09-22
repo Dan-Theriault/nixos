@@ -1,10 +1,11 @@
 { config, pkgs, ... }:
 
 let 
-  emacsLucid = pkgs.emacs.overrideDerivation (old: {
-    configureFlags = [ "--with-x-toolkit=lucid" ];
-  });
-  emacsWithPackages = (pkgs.emacsPackagesNgGen emacsLucid).emacsWithPackages;
+  # emacsLucid = pkgs.emacs.overrideDerivation (old: {
+  #   configureFlags = [ "--with-x-toolkit=lucid" ];
+  # });
+  emacs = pkgs.emacs26-nox;
+  emacsWithPackages = (pkgs.emacsPackagesNgGen emacs).emacsWithPackages;
   myEmacs = emacsWithPackages ( epkgs:
     (with epkgs.elpaPackages; [
       aggressive-indent
@@ -18,7 +19,7 @@ let
       counsel
       dash
       deft
-      elpy
+      # elpy
       evil
       evil-cleverparens
       evil-collection
@@ -102,7 +103,7 @@ in
     sbcl lispPackages.quicklisp
     (buildEnv { 
       name = "scala-dev-env";
-      paths = [ scala sbt scalafix idea.idea-community jdk8 ];
+      paths = [ sbt idea.idea-community ];
     })
   ];
 

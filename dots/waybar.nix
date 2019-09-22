@@ -2,27 +2,26 @@
 
 let
   theme = import ../theme.nix;
-  border = theme.black2;
 in
 {
   style = pkgs.writeText "waybar-style" ''
     * {
         border: none;
         border-radius: 0;
-        font-family: Jost, IBM_Plex_Mono, Roboto, Helvetica, Arial, sans-serif;
+        font-family: sans-serif;
         font-size: 14px;
         min-height: 0;
         color: ${theme.foreground};
     }
 
     window#waybar {
-        border-top: 2px solid ${border};
+        border-top: 2px solid ${theme.border};
         background: ${theme.background};
         color: ${theme.foreground};
     }
 
     #workspaces, #clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #tray {
-        border: 2px solid ${border};
+        border: 2px solid ${theme.border};
         padding: 3px 9px;
         margin: 7px 2px 5px 2px;
     }

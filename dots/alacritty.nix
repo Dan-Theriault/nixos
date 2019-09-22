@@ -8,19 +8,14 @@ in
 env:
   TERM: xterm-256color
 
-# Window dimensions in character columns and lines
-# (changes require restart)
-window.dimensions:
-  columns: 80
-  lines: 24
-
 # Adds this many blank pixels of padding around the window
 # Units are physical pixels; this is not DPI aware.
 # (change requires restart)
-window.padding:
-  x: 10
-  y: 10
-dynamic_padding: true
+window:
+  padding:
+    x: 10
+    y: 10
+  dynamic_padding: false
 
 # The FreeType rasterizer needs to know the device DPI for best results
 # (changes require restart)
@@ -73,10 +68,6 @@ colors:
   primary:
     background: '${theme.background}'
     foreground: '${theme.foreground}'
-
-  cursor: # used if `custom_cursor_colors` is true
-    text: '0x000000'
-    cursor: '0xffffff'
 
   # Normal colors
   normal:

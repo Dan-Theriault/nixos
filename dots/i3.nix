@@ -6,6 +6,9 @@
   lockMessage ? "\"DO NOT DISTURB\""
 }:
 
+let
+  XResources = import ../dots/XResources.nix { inherit config pkgs; };
+in
 ''
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
@@ -147,7 +150,7 @@ bindsym $mod+c exec rofi -show calc -modi "calc:qalc +u8 -nocurrencies"
 # ======= AUTORUNS =======
 exec_always ${pkgs.feh}/bin/feh --bg-fill ${wallpaper} &
 exec_always ${pkgs.dunst}/bin/dunst -config /etc/nixos/dots/dunstrc
-exec ${pkgs.xorg.xrdb}/bin/xrdb -load /etc/nixos/dots/Xresources
+exec ${pkgs.xorg.xrdb}/bin/xrdb -load ${pkgs.writeText "XResources" XResources}
 exec export KDEWM=${pkgs.i3-gaps}/bin/i3
 exec export QT_QPA_PLATFORMTHEME="qt5ct"
 ${if isVm then "" else ''
