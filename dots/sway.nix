@@ -1,7 +1,7 @@
 { config, pkgs,
   terminal ? ''${pkgs.alacritty}/bin/alacritty --config-file \
-    ${pkgs.writeText "alacritty.yml" (import ../dots/alacritty.nix {inherit config pkgs;})
-  }'',
+    ${pkgs.writeText "alacritty.yml" (import ../dots/alacritty.nix {inherit config pkgs;})} \
+  '',
   shell ? "${pkgs.fish}/bin/fish",
   wallpaper ? "~/.wallpaper",
   isVm ? false,
@@ -10,7 +10,12 @@
 
 let
   waybarConfig = import ../dots/waybar.nix { inherit config pkgs; };
+  makoConfig = pkgs.writeText "mako.config" (import ../dots/mako.nix { inherit config pkgs; });
   XResources = import ../dots/XResources.nix { inherit config pkgs; };
+  wofi = ''${pkgs.wofi}/bin/wofi -ib \
+    -p "" \
+    -s ${pkgs.writeText "wofi.css" (import ../dots/wofi.nix { inherit config pkgs; })} \
+  '';
   theme = import ../theme.nix;
 in
 ''
@@ -158,8 +163,8 @@ bindsym XF86AudioNext exec ${pkgs.playerctl}/bin/playerctl next 2> /dev/null
 bindsym XF86AudioPrev exec ${pkgs.playerctl}/bin/playerctl previous 2> /dev/null 
 
 # ====== ROFI ======
-bindsym $mod+space exec rofi -show run
-bindsym $mod+Shift+d exec rofi -show drun
+bindsym $mod+space exec ${wofi} --show run
+bindsym $mod+Shift+d exec ${wofi} --show drun
 bindsym $mod+w exec rofi -show window
 bindsym $mod+Shift+x exec loginctl lock-session
 bindsym $mod+c exec rofi -show calc -modi "calc:${pkgs.libqalculate}/bin/qalc +u8 -nocurrencies"
@@ -167,7 +172,7 @@ bindsym $mod+c exec rofi -show calc -modi "calc:${pkgs.libqalculate}/bin/qalc +u
 # ======= AUTORUNS =======
 exec ${pkgs.wmname}/bin/wmname LG3D  # Makes IntelliJ Work
 exec ${pkgs.waybar}/bin/waybar -c ${waybarConfig.config} -s ${waybarConfig.style}
-exec ${pkgs.mako}/bin/mako
+exec ${pkgs.mako}/bin/mako --config ${makoConfig}
 exec ${pkgs.xorg.xrdb}/bin/xrdb -load ${pkgs.writeText "XResources" XResources}
 exec ${pkgs.swayidle}/bin/swayidle -w \
   timeout 600 '/etc/nixos/scripts/lock.sh' \

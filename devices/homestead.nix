@@ -105,5 +105,5 @@
   ];
 
   # i18n.consoleFont = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-  i18n.consoleFont = "sun12x22";
+  console.font = "sun12x22";
 }

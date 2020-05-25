@@ -27,10 +27,10 @@ in
   };
 
   # Select internationalisation properties.
-  i18n = {
-    consoleFont = pkgs.lib.mkDefault "Lat2-Terminus16";
-    consoleKeyMap = pkgs.lib.mkDefault "us";
-    defaultLocale = pkgs.lib.mkDefault "en_US.UTF-8";
+  console = {
+    font = pkgs.lib.mkDefault "Lat2-Terminus16";
+    keyMap = pkgs.lib.mkDefault "us";
+    # defaultLocale = pkgs.lib.mkDefault "en_US.UTF-8";
   };
 
   # Set your time zone.

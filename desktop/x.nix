@@ -60,7 +60,7 @@
     xdg_utils
     xorg.xkill
     xorg.xhost
-    xclip
+    # xclip
     xbindkeys
   ] ) );
 }

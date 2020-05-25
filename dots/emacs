@@ -187,6 +187,7 @@
   ; (use-package company-lsp)
   (use-package company-quickhelp :config (company-quickhelp-mode))
   (use-package company-shell)
+  (use-package company-coq)
   (add-to-list 'company-backends 'company-shell)
   (global-company-mode))
 
@@ -238,6 +239,8 @@
 	      (olivetti-mode 1)
 	      (olivetti-set-width 120)
 	      (typo-mode))))
+
+(use-package proof-general)
 
 (savehist-mode 1)
 (tool-bar-mode -1)

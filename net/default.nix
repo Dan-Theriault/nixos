@@ -5,14 +5,6 @@
 {
   networking = {
     firewall.allowPing = true;
-    defaultMailServer = {
-      directDelivery = true;
-      domain = "theriault.codes";
-      hostName = "smtp.fastmail.com:465";
-      authUser = "dan@theriault.codes";
-      authPassFile = "/etc/secrets/mail";
-      useTLS = true;
-    };
   };
   
   systemd.services = {
@@ -27,6 +19,13 @@
   };
 
   services = {
+    ssmtp = {
+      domain = "theriault.codes";
+      hostName = "smtp.fastmail.com:465";
+      authUser = "dan@theriault.codes";
+      authPassFile = "/etc/secrets/mail";
+      useTLS = true;
+    };
     stubby = {
       enable = true;
       listenAddresses = [ "127.0.0.1@8053" "0::1@8053" ];

@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 let 
-  # emacsLucid = pkgs.emacs.overrideDerivation (old: {
-  #   configureFlags = [ "--with-x-toolkit=lucid" ];
-  # });
-  emacs = pkgs.emacs26-nox;
+  emacs = pkgs.emacs.overrideDerivation (old: {
+    configureFlags = [ "--with-x-toolkit=lucid" ];
+  });
+  # emacs = pkgs.emacs26-nox;
   emacsWithPackages = (pkgs.emacsPackagesNgGen emacs).emacsWithPackages;
   myEmacs = emacsWithPackages ( epkgs:
     (with epkgs.elpaPackages; [
@@ -49,6 +49,7 @@ let
       org-journal
       pdf-tools
       poet-theme
+      proof-general
       s
       slime
       srefactor
@@ -105,6 +106,7 @@ in
       name = "scala-dev-env";
       paths = [ sbt idea.idea-community ];
     })
+    coq
   ];
 
   # emacs service
