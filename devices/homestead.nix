@@ -88,17 +88,18 @@
   };
 
   services.xserver.videoDrivers = [ "amdgpu" "intel" ];
-  boot.kernelPatches = [
-    {
-      name = "amdgpu-config";
-      patch = null;
-      extraConfig = ''
-        DRM_AMDGPU m
-        DRM_AMDGPU_SI y
-        DRM_AMDGPU_CIK y
-      '';
-    }
-  ];
+  # boot.kernelPatches = [
+  #   {
+  #     name = "amdgpu-config";
+  #     patch = null;
+  #     extraConfig = ''
+  #       DRM_AMDGPU m
+  #       DRM_AMDGPU_SI y
+  #       DRM_AMDGPU_CIK y
+  #     '';
+  #   }
+  # ];
+  powerManagement.cpuFreqGovernor = "performance";
 
   hardware.opengl.extraPackages = with pkgs; [
     vaapiIntel
