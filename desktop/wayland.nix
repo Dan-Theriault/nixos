@@ -4,7 +4,6 @@ let
   url = "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz";
   waylandOverlay = (import (builtins.fetchTarball url));
   waylandPkgs = pkgs.extend waylandOverlay;
-  wayMacs = import ../desktop/emacs.nix { pkgs = waylandPkgs; emacsPkg = waylandPkgs.emacs-pgtk; };
 in
 {
   programs.sway = {
@@ -33,7 +32,7 @@ in
       wf-recorder
       wl-clipboard
       xwayland
-      wayMacs
+      emacs-pgtk
     ];
   };
 
@@ -43,7 +42,7 @@ in
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    package = wayMacs;
+    package = waylandPkgs.emacs-pgtk;
   };
 
   hardware.opengl.enable = true;

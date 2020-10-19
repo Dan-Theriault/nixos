@@ -5,6 +5,7 @@
     mosh
   ];
 
+  # TODO: ssh-server config BEFORE RE-ENABLING ON ANY DEVICE
   services.openssh = {
     enable = true;
     hostKeys = [

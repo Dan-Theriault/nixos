@@ -37,6 +37,7 @@
   users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" "docker" "dialout" ];
   # networking.firewall.checkReversePath = "loose";
 
+  # TODO
   environment.etc."deploy/ssh".text = ''
     Host github.com
       IdentityFile /etc/deploy/id_rsa

@@ -25,38 +25,11 @@
 
     spotify
   ] );
+  # TODO: spotifyd, spotify-tui, remove spotify
 
   boot.kernelModules = [ "snd_usb_audio" ]; # external DAC/AMP support
 
   programs.fish.shellAliases = {
     lyrics = "glyrc lyrics -a (playerctl metadata artist 2>/dev/null) -t (playerctl metadata title 2>/dev/null) -v 0 -w /tmp/lyrics; and cat /tmp/lyrics";
   };
-
-  # Here be dragons
-  # services.mopidy = {
-  #   enable = true;
-  #   extensionPackages = ( with pkgs; [
-  #     mopidy-iris
-  #     mopidy-mopify
-  #     mopidy-spotify
-  #     mopidy-spotify-tunigo
-  #     mopidy-youtube
-  #   ] );
-  #   configuration = '' 
-  #     [core]
-  #     restore_state = true
-
-  #     [audio]
-  #     mixer = none
-  #     output = pulsesink server=127.0.0.1
-  #     mixer_volume = 100
-
-  #     [youtube]
-  #     enabled = true
-
-  #     [mopify]
-  #     enabled = true
-  #   '';
-  #   extraConfigFiles = [ "/etc/secrets/mopidy-spotify" ]; # secret login details
-  # };
 }

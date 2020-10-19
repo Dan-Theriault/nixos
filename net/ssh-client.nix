@@ -9,6 +9,7 @@
 
   environment.systemPackages = with pkgs; [ mosh ];
   
+  # TODO: review ssh-client config
   programs.ssh = {
     agentTimeout = "1h";
 

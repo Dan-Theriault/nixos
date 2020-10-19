@@ -15,6 +15,7 @@
         Type = "oneshot";
         ExecStart = ''/bin/sh -c '${pkgs.systemd}/bin/systemctl status %i | ${pkgs.mailutils}/bin/mail -s "[%i] Failure" dan@theriault.codes' '';
       };
+      enable = true;
     };
   };
 
@@ -26,6 +27,8 @@
       authPassFile = "/etc/secrets/mail";
       useTLS = true;
     };
+
+    # TODO: review DNS
     stubby = {
       enable = true;
       listenAddresses = [ "127.0.0.1@8053" "0::1@8053" ];
@@ -51,12 +54,12 @@
     };
 
     # Secure serverless sync
-    syncthing = {
-      enable = pkgs.lib.mkDefault true;
-      openDefaultPorts = true;
-      user = "dtheriault3";
-      group = "users";
-      dataDir = "/home/dtheriault3/.syncthing";
-    };
+    # syncthing = {
+    #   enable = pkgs.lib.mkDefault true;
+    #   openDefaultPorts = true;
+    #   user = "dtheriault3";
+    #   group = "users";
+    #   dataDir = "/home/dtheriault3/.syncthing";
+    # };
   };
 }

@@ -28,7 +28,10 @@
   environment.systemPackages = (import ../desktop/pkgs.nix {
     inherit config pkgs;
     tex = true;
-  }) ++ (with pkgs; [chromium solaar ntfs3g ]);
+  }) ++ (with pkgs; [
+    chromium solaar ntfs3g 
+    mullvad-vpn
+  ]);
   
   # Handle two encrypted partitions
   boot.initrd.luks.devices.aCrypt = { # large HDD
@@ -71,7 +74,6 @@
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
-  services.compton.enable = false;
 
   # Tweaks from nixos-hardware
   boot.kernel.sysctl = {
@@ -87,23 +89,14 @@
   };
 
   services.xserver.videoDrivers = [ "amdgpu" "intel" ];
-  # boot.kernelPatches = [
-  #   {
-  #     name = "amdgpu-config";
-  #     patch = null;
-  #     extraConfig = ''
-  #       DRM_AMDGPU m
-  #       DRM_AMDGPU_SI y
-  #       DRM_AMDGPU_CIK y
-  #     '';
-  #   }
-  # ];
   powerManagement.cpuFreqGovernor = "performance";
 
   hardware.opengl.extraPackages = with pkgs; [
     vaapiIntel
   ];
 
-  # i18n.consoleFont = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
   console.font = "sun12x22";
+
+  networking.iproute2.enable = true; #required for mullvad
+  services.mullvad-vpn.enable = true;
 }

@@ -2,6 +2,7 @@
 
 
 {
+  # TODO change up the fonts
   fonts = {
     fontconfig = {
       defaultFonts = {

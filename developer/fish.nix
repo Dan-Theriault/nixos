@@ -6,13 +6,14 @@
     promptInit = builtins.readFile ../scripts/fish-prompt.fish;   
     
     shellAliases = {
-      o = "xdg-open";
+      open = "xdg-open";
       ipy = "ipython3";
       sgit = "sudo -E git";
-      lopdf = "libreoffice --writer --headless --convert-to pdf";
+      lo2pdf = "libreoffice --writer --headless --convert-to pdf";
       doom = "~/.emacs.d/bin/doom";
     };
 
+    # TODO
     interactiveShellInit = ''
       function bind_bang
         switch (commandline -t)[-1]
