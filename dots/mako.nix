@@ -5,7 +5,7 @@ in
 ''
 max-history=20
 layer=overlay
-anchor=bottom-right
+anchor=top-center
 font=sans-serif 10
 background-color=${theme.background}
 text-color=${theme.foreground}

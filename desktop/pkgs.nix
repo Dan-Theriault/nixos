@@ -3,7 +3,7 @@
 }:
 
 with pkgs; [
-  anbox
+  # anbox
   # antimony gmsh # weird CAD and a STL viewer.
   inkscape
   libav
@@ -12,6 +12,7 @@ with pkgs; [
   libreoffice-fresh detox
   kdenlive
   mpv youtube-dl
+  pandoc
   # meld # graphical diffs
   sc-im
   wireshark

@@ -1,80 +1,5 @@
 { config, pkgs, ... }:
 
-let 
-  emacs = pkgs.emacs.overrideDerivation (old: {
-    configureFlags = [ "--with-x-toolkit=lucid" ];
-  });
-  # emacs = pkgs.emacs26-nox;
-  emacsWithPackages = (pkgs.emacsPackagesNgGen emacs).emacsWithPackages;
-  myEmacs = emacsWithPackages ( epkgs:
-    (with epkgs.elpaPackages; [
-      aggressive-indent
-      auctex
-      delight
-      undo-tree
-    ]) ++ (with epkgs.melpaPackages; [
-      alert
-      company
-      company-nixos-options
-      counsel
-      dash
-      deft
-      # elpy
-      evil
-      evil-cleverparens
-      evil-collection
-      evil-commentary
-      evil-goggles
-      evil-indent-textobject
-      evil-leader
-      evil-magit
-      evil-org
-      evil-surround
-      exec-path-from-shell
-      f
-      find-file-in-project
-      flycheck
-      frames-only-mode
-      geiser
-      highlight-parentheses
-      hl-todo
-      ht
-      ivy
-      magit
-      markdown-mode
-      nix-mode
-      nix-sandbox
-      nixos-options
-      # olivetti
-      org-journal
-      pdf-tools
-      poet-theme
-      proof-general
-      s
-      slime
-      srefactor
-      typo
-      use-package
-
-      amx
-      auctex-latexmk
-      # company-auctex
-      # company-lsp
-      company-quickhelp
-      company-shell
-      diff-hl
-      # hlint-refactor intero
-      json-mode
-      latex-extra
-      magic-latex-buffer
-      swiper
-      use-package
-      ws-butler
-    ]) ++ (with epkgs.orgPackages; [
-      org
-      org-plus-contrib
-    ]));
-in
 {
   imports = [
     ../developer/fish.nix
@@ -84,37 +9,29 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
-    nixops 
-    # nixos-shell
-    # pgmanage pgcli pg_top 
+    nixops nixfmt
     arduino platformio
-    # tokei 
-
+    tokei
+    direnv
+    pandoc
+    hunspell aspell
     telnet netcat
     jq
-    # postman
-    jdk11
-
     shellcheck
-    go
-    sqlite
+    editorconfig-checker editorconfig-core-c
 
-    myEmacs
-    guile 
+    jdk11
+    kotlin ktlint
+    scala sbt scalafmt metals ammonite coursier
+
+    guile
     sbcl lispPackages.quicklisp
-    (buildEnv { 
-      name = "scala-dev-env";
-      paths = [ sbt idea.idea-community ];
-    })
-    coq
-  ];
+    racket
 
-  # emacs service
-  services.emacs = {
-    enable = true;
-    defaultEditor = true;
-    package = myEmacs;
-  };
+    coq
+
+    glslang
+  ];
 
   # virtualisation.libvirtd.enable = true;
   users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" "docker" "dialout" ];

@@ -23,7 +23,6 @@
     # ../net/wireguard.nix
 
     ../security
-    ../security/keybase.nix
   ];
 
   environment.systemPackages = (import ../desktop/pkgs.nix {
@@ -82,7 +81,7 @@
 
   hardware.bluetooth.enable = false;
 
-  hardware.logitech = {
+  hardware.logitech.wireless = {
     enable = true;
     enableGraphical = true;
   };

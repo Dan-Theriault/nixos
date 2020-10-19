@@ -18,7 +18,6 @@
     glyr
 
     ffmpeg
-    gstreamer
     ncmpcpp
     mpc_cli
     sonata

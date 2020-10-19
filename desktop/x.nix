@@ -10,14 +10,14 @@
 
     desktopManager.plasma5.enable = true;
 
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      configFile = pkgs.lib.mkDefault (pkgs.writeTextFile {
-        name = "i3.conf";
-        text = import ../dots/i3.nix { inherit config pkgs; };
-      });
-    };
+    # windowManager.i3 = {
+    #   enable = true;
+    #   package = pkgs.i3-gaps;
+    #   configFile = pkgs.lib.mkDefault (pkgs.writeTextFile {
+    #     name = "i3.conf";
+    #     text = import ../dots/i3.nix { inherit config pkgs; };
+    #   });
+    # };
   };
 
   services.redshift.enable = true;

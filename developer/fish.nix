@@ -10,7 +10,7 @@
       ipy = "ipython3";
       sgit = "sudo -E git";
       lopdf = "libreoffice --writer --headless --convert-to pdf";
-      emacs = "emacsclient -cn";
+      doom = "~/.emacs.d/bin/doom";
     };
 
     interactiveShellInit = ''

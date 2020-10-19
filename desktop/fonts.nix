@@ -4,7 +4,6 @@
 {
   fonts = {
     fontconfig = {
-      penultimate.enable = pkgs.lib.mkDefault true;
       defaultFonts = {
         monospace = [ "Fira Code" ];
         sansSerif = [ "Inria Sans" ];

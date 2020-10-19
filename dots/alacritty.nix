@@ -100,7 +100,7 @@ colors:
   #   white:   '0xdddddd'
 
 # To completely disable the visual bell, set its duration to 0.
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
 

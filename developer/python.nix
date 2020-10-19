@@ -6,16 +6,23 @@ let
       black
       flake8
       ipython
+      isort
       jedi
       matplotlib
       # neovim
+      nose
       numpy
       pandas
+      pytest
       scipy
       yapf
     ];
   };
 in
 {
-  environment.systemPackages = [ loadedPython pkgs.mypy ];
+  environment.systemPackages = with pkgs; [
+    loadedPython
+    mypy
+    pipenv
+  ];
 }
