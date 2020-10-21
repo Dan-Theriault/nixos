@@ -29,8 +29,9 @@
     inherit config pkgs;
     tex = true;
   }) ++ (with pkgs; [
-    chromium solaar ntfs3g 
+    chromium ntfs3g 
     mullvad-vpn
+    solaar # TODO: package logiops
   ]);
   
   # Handle two encrypted partitions

@@ -19,6 +19,7 @@
     jq
     shellcheck
     editorconfig-checker editorconfig-core-c
+    gnumake
 
     jdk11
     kotlin ktlint
