@@ -2,9 +2,6 @@
 
 { config, pkgs, ... }:
 
-let
-  mozilla = builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
-in
 {
   # Nix settings
   nix = {
@@ -23,7 +20,6 @@ in
 
   nixpkgs.config = {
     allowUnfree = true;
-    overlays = [ (import "${mozilla}/firefox-overlay.nix") ];
   };
 
   # Select internationalisation properties.
