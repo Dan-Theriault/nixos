@@ -1,11 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  hardware = {
-    opengl.enable = true;
-    opengl.driSupport32Bit = true;
-    pulseaudio.support32Bit = true;
-  };
+  programs.steam.enable = true;
 
   environment.systemPackages = with pkgs; [
     steam
