@@ -9,15 +9,16 @@ in
   programs.sway = {
     enable = true;
     extraSessionCommands = ''
-      # export XDG_SESSION_TYPE=wayland
+      export XDG_SESSION_TYPE=wayland
       export CLUTTER_BACKEND=wayland
       export SDL_VIDEODRIVER=wayland
       export GDK_BACKEND=wayland
       export QT_QPA_PLATFORM=wayland
-      export QT_WAYLAND_FORCE_DPI=physical
+      # export QT_WAYLAND_FORCE_DPI=physical
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
       export _JAVA_AWT_WM_NONPARENTING=1
       export MOZ_ENABLE_WAYLAND=1
+      export MOZ_USE_XINPUT2=1
     '';
     extraPackages = with waylandPkgs; [
       cage
@@ -45,5 +46,11 @@ in
     package = waylandPkgs.emacs-pgtk;
   };
 
+  services.pipewire.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-wlr ];
+    # gtkUsePortal = true; # causes issues with hidpi
+  };
   hardware.opengl.enable = true;
 }
