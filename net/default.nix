@@ -28,7 +28,6 @@
       useTLS = true;
     };
 
-    # TODO: review DNS
     stubby = {
       enable = true;
       listenAddresses = [ "127.0.0.1@8053" "0::1@8053" ];
@@ -50,6 +49,7 @@
         forward-zone:
           name: "."
             forward-addr: 127.0.0.1@8053
+            forward-addr: ::1@8053
       '';
     };
 
