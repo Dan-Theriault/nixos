@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  services.haveged.enable = true; # better entropy generation
-  networking.tcpcrypt.enable = true; # opportunistic TCP encryption. 
+  # services.haveged.enable = true; # better entropy generation
+  # networking.tcpcrypt.enable = true; # opportunistic TCP encryption. 
   nix.allowedUsers = [ "@wheel" "@builders" ];
 
   security = {

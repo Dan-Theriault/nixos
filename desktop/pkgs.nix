@@ -6,10 +6,10 @@ with pkgs; [
   # anbox
   # antimony gmsh # weird CAD and a STL viewer.
   inkscape
-  libav
   libnotify
   libqalculate
   libreoffice-fresh detox
+  ffmpeg
   kdenlive
   mpv youtube-dl
   pandoc
@@ -18,11 +18,6 @@ with pkgs; [
   wireshark
   zathura
   firefox-wayland
-#   ( wrapFirefox firefox-devedition-bin-unwrapped {
-#     browserName = "firefox";
-#     gdkWayland = true;
-#     # extraNativeMessagingHosts = [ keepassxc ];
-#   })
   keepassxc
 ] ++ ( with pkgs.kdeApplications; [
   okular

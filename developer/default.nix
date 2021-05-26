@@ -35,7 +35,7 @@
   ];
 
   # virtualisation.libvirtd.enable = true;
-  users.extraUsers.dtheriault3.extraGroups = [ "libvirtd" "docker" "dialout" ];
+  users.extraUsers.dan.extraGroups = [ "libvirtd" "docker" "dialout" ];
   # networking.firewall.checkReversePath = "loose";
 
   # TODO

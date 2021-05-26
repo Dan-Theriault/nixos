@@ -1,9 +1,13 @@
 { config, pkgs, ... }:
 
 let
-  url = "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz";
-  waylandOverlay = (import (builtins.fetchTarball url));
-  waylandPkgs = pkgs.extend waylandOverlay;
+  waylandUrl = "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz";
+  waylandOverlay = (import (builtins.fetchTarball waylandUrl));
+  # waylandPkgs = pkgs.extend waylandOverlay;
+  waylandPkgs = pkgs;
+  emacsUrl = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+  emacsOverlay = (import (builtins.fetchTarball emacsUrl));
+  emacsPkgs = pkgs.extend emacsOverlay;
 in
 {
   programs.sway = {
@@ -33,7 +37,7 @@ in
       wf-recorder
       wl-clipboard
       xwayland
-      emacs-pgtk
+      # emacs-pgtk
     ];
   };
 
@@ -43,7 +47,7 @@ in
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    package = waylandPkgs.emacs-pgtk;
+    package = emacsPkgs.emacsPgtkGcc;
   };
 
   services.pipewire.enable = true;

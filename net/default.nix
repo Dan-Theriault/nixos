@@ -7,27 +7,7 @@
     firewall.allowPing = true;
   };
   
-  systemd.services = {
-    "nixos-upgrade".onFailure = [ "notify-email@%i.service" ];
-    "notify-email@" = {
-      description = "Send an email with service status";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = ''/bin/sh -c '${pkgs.systemd}/bin/systemctl status %i | ${pkgs.mailutils}/bin/mail -s "[%i] Failure" dan@theriault.codes' '';
-      };
-      enable = true;
-    };
-  };
-
   services = {
-    ssmtp = {
-      domain = "theriault.codes";
-      hostName = "smtp.fastmail.com:465";
-      authUser = "dan@theriault.codes";
-      authPassFile = "/etc/secrets/mail";
-      useTLS = true;
-    };
-
     stubby = {
       enable = true;
       listenAddresses = [ "127.0.0.1@8053" "0::1@8053" ];
@@ -52,14 +32,5 @@
             forward-addr: ::1@8053
       '';
     };
-
-    # Secure serverless sync
-    # syncthing = {
-    #   enable = pkgs.lib.mkDefault true;
-    #   openDefaultPorts = true;
-    #   user = "dtheriault3";
-    #   group = "users";
-    #   dataDir = "/home/dtheriault3/.syncthing";
-    # };
   };
 }

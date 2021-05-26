@@ -10,7 +10,7 @@
       options = "-d";
     };
     buildCores = 0;
-    maxJobs = 8;
+    maxJobs = 12;
     allowedUsers = [ "@wheel" ];
     autoOptimiseStore = true;
     daemonNiceLevel = 3;
@@ -68,7 +68,7 @@
   # Setup user account(s)
   users = {
     defaultUserShell = pkgs.bashInteractive;
-    users.dtheriault3 = {
+    users.dan = {
       isNormalUser = true;
       extraGroups = [
         "wheel"
@@ -80,7 +80,7 @@
         "bluetooth" 
         "sway"
       ];
-      initialPassword = "hagan lio"; # change immediately after install with passwd
+      initialPassword = "password"; # change immediately after install with passwd
     };
   };
   security.sudo.extraConfig = ''
