@@ -1,13 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, system, ... }:
 
-let
-  waylandUrl = "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz";
-  waylandOverlay = (import (builtins.fetchTarball waylandUrl));
-  # waylandPkgs = pkgs.extend waylandOverlay;
-  waylandPkgs = pkgs;
-  emacsUrl = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-  emacsOverlay = (import (builtins.fetchTarball emacsUrl));
-  emacsPkgs = pkgs.extend emacsOverlay;
+let 
+  waylandPkgs = pkgs.extend inputs.nixpkgs-wayland.overlay;
+  emacsPkgs = pkgs.extend inputs.emacs-overlay.overlay;
 in
 {
   programs.sway = {
@@ -37,11 +32,13 @@ in
       wf-recorder
       wl-clipboard
       xwayland
-      # emacs-pgtk
     ];
   };
 
-  environment.etc."sway/config".text = import ../dots/sway.nix { inherit config; pkgs = waylandPkgs; };
+  environment.etc."sway/config".text = import ../dots/sway.nix { 
+    inherit config;
+    pkgs = waylandPkgs;
+  };
 
   # emacs service
   services.emacs = {

@@ -5,16 +5,20 @@
 {
   # Nix settings
   nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
     gc = {
       automatic = true;
       options = "-d";
     };
-    buildCores = 0;
-    maxJobs = 12;
+    # buildCores = 0;
+    # maxJobs = 12;
     allowedUsers = [ "@wheel" ];
     autoOptimiseStore = true;
-    daemonNiceLevel = 3;
-    daemonIONiceLevel = 3;
+    # daemonNiceLevel = 3;
+    # daemonIONiceLevel = 3;
   };
 
 

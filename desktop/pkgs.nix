@@ -1,4 +1,4 @@
-{ config, pkgs,
+{ pkgs,
   tex ? false,
 }:
 
@@ -19,13 +19,13 @@ with pkgs; [
   zathura
   firefox-wayland
   keepassxc
-] ++ ( with pkgs.kdeApplications; [
+# ] ++ ( with pkgs.kdeApplications; [
   okular
   filelight
   dolphin
   kate
   kgpg
   spectacle
-] ) ++ (if !tex then [] else
+]  ++ (if !tex then [] else
   import ../desktop/tex.nix {inherit config pkgs;}
 )

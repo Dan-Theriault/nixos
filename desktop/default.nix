@@ -4,7 +4,7 @@
 
 {
   console.useXkbConfig = true;
-  services.gnome3.at-spi2-core.enable = true;
+  services.gnome.at-spi2-core.enable = true;
   sound.enable = true;
 
   environment.systemPackages = with pkgs; [

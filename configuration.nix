@@ -1,1 +1,0 @@
-./devices/geist.nix

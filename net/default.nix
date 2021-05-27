@@ -14,23 +14,29 @@
     };
     unbound = {
       enable = true;
-      allowedAccess = [ "127.0.0.1/24" ];
-      extraConfig = ''
-        hide-identity: yes
-        hide-version: yes
-        qname-minimisation: yes
-        harden-short-bufsize: yes
-        harden-large-queries: yes
-        harden-glue: yes
-        harden-dnssec-stripped: yes
-        harden-below-nxdomain: yes
-        harden-referral-path: yes
-        do-not-query-localhost: no
-        forward-zone:
-          name: "."
-            forward-addr: 127.0.0.1@8053
-            forward-addr: ::1@8053
-      '';
+      settings = {
+        server = {
+          access-control = ''
+            127.0.0.1/8 allow
+          '';
+          hide-identity = true;
+          hide-version = true;
+          qname-minimisation = true;
+          harden-short-bufsize = true;
+          harden-large-queries = true;
+          harden-glue = true;
+          harden-dnssec-stripped = true;
+          harden-below-nxdomain = true;
+          harden-referral-path = true;
+          do-not-query-localhost = false;
+        };
+        forward-zone = [
+          {
+            name = ".";
+            forward-addr = [ "127.0.0.1@8053" "::1@8053" ];
+          }
+        ];
+      };
     };
   };
 }
