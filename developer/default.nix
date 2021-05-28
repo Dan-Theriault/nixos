@@ -1,37 +1,17 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ../developer/fish.nix
-    ../developer/vim.nix
-    # ../developer/android.nix
-    ../developer/python.nix
-  ];
-
   environment.systemPackages = with pkgs; [
     nixops nixfmt
-    arduino platformio
     tokei
     direnv
     pandoc
     hunspell aspell
-    telnet netcat
     jq
     shellcheck
     editorconfig-checker editorconfig-core-c
     gnumake
-
-    jdk11
-    kotlin ktlint
-    scala sbt scalafmt metals ammonite coursier
-
     guile
-    sbcl lispPackages.quicklisp
-    racket
-
-    coq
-
-    glslang
   ];
 
   # virtualisation.libvirtd.enable = true;

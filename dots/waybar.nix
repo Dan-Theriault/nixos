@@ -1,4 +1,4 @@
-{config, pkgs}:
+{ pkgs }:
 
 let
   theme = import ../theme.nix;

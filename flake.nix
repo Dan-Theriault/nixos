@@ -3,14 +3,14 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    latest.url = "nixpkgs";
+    # latest.url = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
 
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     nix-doom-emacs.url = "github:srid/nix-doom-emacs";
@@ -18,13 +18,15 @@
 
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
     nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs-wayland.inputs.master.follows = "master";
+    # nixpkgs-wayland.inputs.master.follows = "master";
 
-    # wayland-overlay
     # sops-nix
     # mozilla overlay ?
     # neovim overlay ?
     # apparmor-nix ?
+
+    vim-dim.url = "github:jeffkreeftmeijer/vim-dim";
+    vim-dim.flake = false;
 
     # devOS-style custom packages
     # pkgs.url = "path:./pkgs";
@@ -57,12 +59,23 @@
         ./devices/geist.nix 
         [ ( { config, pkgs, ...}: 
           {
+            nixpkgs.overlays = [
+              inputs.nixpkgs-wayland.overlay
+              inputs.emacs-overlay.overlay
+              # inputs.neovim-nightly-overlay.overlay
+            ];
+
             environment.systemPackages = (import ./desktop/pkgs.nix {
               inherit pkgs;
               tex = true;
             }) ++ (with pkgs; [
               mullvad-vpn
               solaar # TODO: package logiops
+              grim
+              imv
+              slurp
+              wf-recorder
+              wl-clipboard
             ]);
             
             boot.loader.systemd-boot = {
@@ -73,6 +86,21 @@
 
             networking.hostName = "geist"; 
 
+            # emacs service
+            services.emacs = {
+              enable = true;
+              # defaultEditor = true;
+              package = pkgs.emacsPgtkGcc;
+            };
+
+            services.pipewire.enable = true;
+
+            xdg.portal = {
+              enable = true;
+              extraPortals = with pkgs; [ xdg-desktop-portal-wlr ];
+              gtkUsePortal = true; # causes issues with hidpi
+            };
+
             # system.autoUpgrade = {
             #   enable = true;
             #   dates = "02:30";
@@ -81,14 +109,6 @@
             # systemd.services.nixos-upgrade.path = with pkgs; [
             #   gnutar xz.bin gzip config.nix.package.out
             # ];
-
-            services.xserver.resolutions = [ { x = 3840; y = 2160; } ];
-            services.xserver.xrandrHeads = [
-              {
-                output = "DisplayPort-2";
-                primary = true;
-              }
-            ];
 
             hardware.bluetooth.enable = false;
 
@@ -103,6 +123,7 @@
             services.spice-vdagentd.enable = true;
             powerManagement.cpuFreqGovernor = "performance";
 
+            hardware.opengl.enable = true;
             hardware.opengl.extraPackages = with pkgs; [ ];
 
             console.font = "sun12x22";
@@ -114,10 +135,8 @@
 
           ./desktop
           # ../desktop/audio.nix
-          # ../desktop/brother-printing.nix
           ./desktop/fonts.nix
           # ../desktop/gaming.nix
-          ./desktop/wayland.nix
 
           ./developer
 

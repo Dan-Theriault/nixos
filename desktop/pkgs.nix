@@ -28,4 +28,4 @@ with pkgs; [
   spectacle
 ]  ++ (if !tex then [] else
   import ../desktop/tex.nix {inherit config pkgs;}
-)
+) 

@@ -24,8 +24,12 @@
   # pin nixpkgs to system version
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
+  # may not work as expected in vm
+  services.xserver.xkbOptions = "compose:ralt, caps:escape"; 
+
   # Select internationalisation properties.
   console = {
+    useXkbConfig = true;
     font = pkgs.lib.mkDefault "Lat2-Terminus16";
     keyMap = pkgs.lib.mkDefault "us";
     # defaultLocale = pkgs.lib.mkDefault "en_US.UTF-8";
@@ -50,6 +54,7 @@
     coreutils
     dnsutils
     file
+    fish
     fd
     git
     gnupg
