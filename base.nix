@@ -21,11 +21,6 @@
     # daemonIONiceLevel = 3;
   };
 
-
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
   # Select internationalisation properties.
   console = {
     font = pkgs.lib.mkDefault "Lat2-Terminus16";
