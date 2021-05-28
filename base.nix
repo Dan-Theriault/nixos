@@ -1,6 +1,6 @@
 # Base system with editor and major shell utilities
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # Nix settings
@@ -20,6 +20,9 @@
     # daemonNiceLevel = 3;
     # daemonIONiceLevel = 3;
   };
+
+  # pin nixpkgs to system version
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
   # Select internationalisation properties.
   console = {
