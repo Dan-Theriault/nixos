@@ -85,6 +85,7 @@
             boot.loader.efi.canTouchEfiVariables = true;
 
             networking.hostName = "geist"; 
+            # networking.wireless.iwd.enable = true;
 
             # emacs service
             services.emacs = {
