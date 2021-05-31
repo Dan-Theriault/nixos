@@ -64,6 +64,7 @@
               inputs.emacs-overlay.overlay
               # inputs.neovim-nightly-overlay.overlay
             ];
+            nixpkgs.config.allowUnfree = true;
 
             environment.systemPackages = (import ./desktop/pkgs.nix {
               inherit pkgs;
@@ -76,6 +77,7 @@
               slurp
               wf-recorder
               wl-clipboard
+              android-studio
             ]);
             
             boot.loader.systemd-boot = {
@@ -85,6 +87,7 @@
             boot.loader.efi.canTouchEfiVariables = true;
 
             networking.hostName = "geist"; 
+            # networking.interfaces."ens3".useDHCP = true;
             # networking.wireless.iwd.enable = true;
 
             # emacs service
@@ -94,11 +97,23 @@
               package = pkgs.emacsPgtkGcc;
             };
 
-            services.pipewire.enable = true;
+            # security.rtkit.enable = true;
+            services.pipewire = {
+              enable = true;
+              alsa = {
+                enable = true;
+                support32Bit = true;
+              };
+              pulse.enable = true;
+              # jack.enable = true;
+            };
 
             xdg.portal = {
               enable = true;
-              extraPortals = with pkgs; [ xdg-desktop-portal-wlr ];
+              extraPortals = with pkgs; [ 
+                xdg-desktop-portal-wlr 
+                xdg-desktop-portal-gtk
+              ];
               gtkUsePortal = true; # causes issues with hidpi
             };
 
@@ -137,6 +152,7 @@
           ./desktop
           # ../desktop/audio.nix
           ./desktop/fonts.nix
+          ./desktop/kiosk.nix
           # ../desktop/gaming.nix
 
           ./developer

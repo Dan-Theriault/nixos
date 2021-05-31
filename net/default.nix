@@ -4,13 +4,17 @@
 
 {
   networking = {
-    useNetworkd = true;
-    useDHCP = false;
+    nameservers = [ "127.0.0.1" "::1" ];
+    resolvconf.enable = false;
+    dhcpcd.extraConfig = ''
+      nohook resolv.conf
+    '';
+
+    # useNetworkd = true;
+    # useDHCP = false;
+
     firewall.allowPing = true;
     firewall.allowedTCPPorts = [ 53 ];
-    resolvconf = {
-      useLocalResolver = true;
-    };
   };
   
   services = {

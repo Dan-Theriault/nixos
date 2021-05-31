@@ -3,6 +3,7 @@
 { config, pkgs, ... }:
 
 {
+  programs.dconf.enable = true;
   services.gnome.at-spi2-core.enable = true;
   sound.enable = true;
 

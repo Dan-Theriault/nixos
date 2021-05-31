@@ -19,7 +19,6 @@ rec {
     nix-index.enable = true;
   };
 
-  # TODO: neovim
   # TODO: nix-doom-emacs
   # TODO: user-packages ?
   # TODO: waybar, wofi ?
@@ -42,17 +41,22 @@ rec {
   #     name = "moka";
   #   };
   # };
+  # qt.platformTheme = "gtk";
 
   programs.git = {
     enable = true;
+
     userName = "Dan Theriault";
     userEmail = "dan@theriault.codes";
-    # TODO
+
     aliases = { };
-    ignores = [];
+    ignores = [ ];
+
     extraConfig = {
       init.defaultBranch = "master";
-      pull.rebase = "true";
+      pull.rebase = true;
+      rebase.autoStash = true;
+      core.autocrlf = false;
     };
   };
 
@@ -362,6 +366,25 @@ rec {
       nnoremap <leader>fb <cmd>Telescope buffers<cr>
       nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     '';
+  };
+
+  services.playerctl.enable = true;
+
+  services.spotifyd = {
+    enable = true;
+    package = pkgs.spotifyd.override { 
+      withMpris = true; 
+      withKeyring = true;
+      dbus = pkgs.dbus; 
+    };
+    settings.global = {
+      username = "dan@theriault.codes";
+      use_keyring = true; # TODO: replace with sops
+      device_name = "spotifyd"; 
+      device_type = "computer";
+      backend = "pulseaudio";
+      bitrate = 320;
+    };
   };
 
   wayland.windowManager.sway = let
