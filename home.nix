@@ -43,23 +43,6 @@ rec {
   # };
   # qt.platformTheme = "gtk";
 
-  programs.git = {
-    enable = true;
-
-    userName = "Dan Theriault";
-    userEmail = "dan@theriault.codes";
-
-    aliases = { };
-    ignores = [ ];
-
-    extraConfig = {
-      init.defaultBranch = "master";
-      pull.rebase = true;
-      rebase.autoStash = true;
-      core.autocrlf = false;
-    };
-  };
-
   programs.alacritty = {
     enable = true;
     settings = {
@@ -162,6 +145,11 @@ rec {
     };
   };
 
+  programs.direnv = {
+    enable = true;
+    enableNixDirenvIntegration = true;
+  };
+
   programs.fish = {
     enable = true;
     promptInit = builtins.readFile ./scripts/fish-prompt.fish;   
@@ -189,6 +177,23 @@ rec {
     '';
   };
 
+  programs.git = {
+    enable = true;
+
+    userName = "Dan Theriault";
+    userEmail = "dan@theriault.codes";
+
+    aliases = { };
+    ignores = [ ];
+
+    extraConfig = {
+      init.defaultBranch = "master";
+      pull.rebase = true;
+      rebase.autoStash = true;
+      core.autocrlf = false;
+    };
+  };
+
   programs.mako = {
     enable = true;
     layer = "overlay";
@@ -205,6 +210,32 @@ rec {
     actions = true;
     # history = true;
     # max-history = 20;
+  };
+
+  programs.mpv = {
+    enable = true;
+    # TODO: explore the wrapper features
+    package = pkgs.mpv;
+
+    defaultProfiles = [ "gpu-hq" ];
+    config = {
+      sub-auto = "fuzzy";
+      sub-bold = "yes";
+      save-position-on-quit = true;
+
+      vo = "gpu";
+      gpu-context = "wayland";
+
+      scale = "ewa_lanczossharp";
+      cscale = "ewa_lanczossharp";
+
+      # Resample audio rather than dropping frames
+      video-sync = "display-resample";
+
+      interpolation = true;
+      tscale = "oversample";
+      hwdec = "auto-safe";
+    };
   };
 
   programs.neovim = let
@@ -228,6 +259,7 @@ rec {
       # nvim-dap
 
       commentary
+      direnv-vim
       editorconfig-vim
       lightline-bufferline
       lightline-vim
@@ -368,7 +400,8 @@ rec {
     '';
   };
 
-  services.playerctl.enable = true;
+  # determine the currently-playing media
+  services.playerctld.enable = true;
 
   services.spotifyd = {
     enable = true;
