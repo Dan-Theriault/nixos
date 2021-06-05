@@ -4,28 +4,25 @@
 
 {
   networking = {
-    nameservers = [ "127.0.0.1" "::1" ];
-    resolvconf.enable = false;
-    dhcpcd.extraConfig = ''
-      nohook resolv.conf
-    '';
-
-    # useNetworkd = true;
-    # useDHCP = false;
+    nameservers = [ "127.0.0.1" ];
+    dhcpcd.extraConfig = "nohook resolv.conf";
 
     firewall.allowPing = true;
     firewall.allowedTCPPorts = [ 53 ];
   };
   
+  # Tailscale configuration
+  services.tailscale.enable = true;
+  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+  networking.search = [ "theriault.codes.beta.tailscale.net" ];
+  boot.kernel.sysctl = { 
+    # for exit nodes
+    "net.ipv4.conf.all.fowarding" = true;
+    "net.ipv6.conf.all.fowarding" = true;
+  };
+  # there's also the forward zone, below
+
   services = {
-    tailscale.enable = true;
-
-    resolved = {
-      enable = true;
-      dnssec = "true";
-      fallbackDns = [ "127.0.0.1" ];
-    };
-
     stubby = {
       enable = true;
       listenAddresses = [ "127.0.0.1@8053" "0::1@8053" ];
@@ -53,7 +50,14 @@
         forward-zone = [
           {
             name = ".";
-            forward-addr = [ "127.0.0.1@8053" "::1@8053" ];
+            forward-addr = [ 
+              "127.0.0.1@8053"
+              "::1@8053"
+            ];
+          }
+          {
+            name = "theriault.codes.beta.tailscale.net";
+            forward-addr = [ "100.100.100.100" ];
           }
         ];
       };
